@@ -1,4 +1,0 @@
-La programación es una disciplina que se ha convertido en imprescindible para todos los perfiles profesionales.
-Sin embargo, muy poca gente conoce cuál es su origen y cómo ha ido evolucionando a lo largo de los años.
-
-Modifiacion hecha en el main, en el archivo de PruebaAlejandro.txt
