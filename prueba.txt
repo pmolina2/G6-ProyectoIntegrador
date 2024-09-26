@@ -1,5 +1,5 @@
 alejandro (vista)
-
+Modificacion hecha en la rama vista, para luego hacer un pull desde el main
 
 edwin (controlador)
 
