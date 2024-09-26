@@ -1,7 +1,0 @@
-Alejandro (Vista)
-
-
-Edwin (Controlador)
-Lorem ipsum dolor sit amet consectetur adipiscing elit nostra dui, netus interdum placerat feugiat penatibus diam eleifend curae, accumsan praesent sociosqu natoque semper neque curabitur habitant. Fames nullam quis nam hac morbi faucibus hendrerit magnis class
-
-Pierre (Modelo)
