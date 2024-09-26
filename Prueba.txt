@@ -1,0 +1,7 @@
+Alejandro (Vista)
+
+
+Edwin (Controlador)
+
+
+Pierre (Modelo)
