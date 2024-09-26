@@ -2,6 +2,6 @@ alejandro (vista)
 Modificacion hecha en la rama vista, para luego hacer un pull desde el main :D
 
 edwin (controlador)
-
+https://github.com/pmolina2/G6-ProyectoIntegrador.git
 
 pierre (modelo)
