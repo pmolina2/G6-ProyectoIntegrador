@@ -9,20 +9,16 @@ import java.util.logging.*;
 
 /**
  *
- * @author pierr
+ * @author pierre
  */
 public class ConexionBd {
 
-    private String url = "";
-    private String usuario = "";
-    private String contraseña = "";
+    private String url = "jdbc:oracle:thin:@localhost:1521:XE";
+    private String usuario = "proyectoIntegradorpg6";
+    private String contraseña = "pg6";
     public Connection con = null;
 
     public ConexionBd(){
-
-        url = "jdbc:oracle:thin:@localhost:1521:XE";
-        usuario = "proyectoIntegrador";
-        contraseña = "pg6";
 
         try {
             con = DriverManager.getConnection(url, usuario, contraseña);
@@ -52,38 +48,23 @@ public class ConexionBd {
         }
     }
 
-    // método para el verificado del inicio de sesión de asesores
-    public ResultSet DatosInicioAsesor(String cedula, String contraseña) throws SQLException {
-
-        PreparedStatement statement = con.prepareStatement("SELECT cedula, contrasenna FROM asesor WHERE cedula = ? AND contrasenna = ?");
-        statement.setString(1, cedula);
-        statement.setString(2, contraseña);
-        ResultSet res = statement.executeQuery();
-
-        return res;
-
-    }
-
-    // método para obtener la información del asesor
-    public ResultSet obtenerAsesor(String cedula) throws SQLException {
-
-        PreparedStatement statement = con.prepareStatement("SELECT * FROM asesor WHERE cedula=?");
-        statement.setString(1, cedula);
-        ResultSet res = statement.executeQuery();
-
-        return res;
-
-    }
-    
-
     // método para obtener los datos de las tablas
     public ResultSet consultarBd(String nombreTabla) throws SQLException {
 
-        PreparedStatement statement = con.prepareStatement("SELECT * FROM ?");
-        statement.setString(1, nombreTabla);
+        PreparedStatement statement = con.prepareStatement("SELECT * FROM "+nombreTabla);
         ResultSet res = statement.executeQuery();
 
         return res;
+    }
+    
+    //método para que el constructor cree la sentencia que quiere realizar
+    public ResultSet consultarBdSentencia(String sentencia) throws SQLException{
+        
+        PreparedStatement statement = con.prepareStatement(sentencia);
+        ResultSet res = statement.executeQuery();
+        
+        return res;
+        
     }
 
 }
