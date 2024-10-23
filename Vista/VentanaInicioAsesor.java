@@ -7,6 +7,7 @@ package Vista;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import CONTROLADOR.*;
 
 /**
  *
@@ -24,6 +25,9 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         LabelImagen3.setIcon(miIcono);
         LabelNombre2.setOpaque(true);
         LabelRol2.setOpaque(true);
+        
+        
+        
     }
 
     /**

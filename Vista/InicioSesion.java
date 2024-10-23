@@ -8,6 +8,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+import CONTROLADOR.InicioSesionC;
+import java.util.ArrayList;
 
 
 public class InicioSesion extends javax.swing.JFrame {
@@ -180,19 +182,24 @@ public class InicioSesion extends javax.swing.JFrame {
     
     
     private void BotonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEntrarActionPerformed
-     String cedulaUsuario = CampoCedula.getText();
+        String cedulaUsuario = CampoCedula.getText();
         String contraseñaUsuario = CampoContraseña.getText();
-        if (cedulaUsuario.equals("admin") && contraseñaUsuario.equals("admin")) {
-            VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin();
-            this.dispose();
-            VentanaAdmin.setVisible(true);   }
-        else if(cedulaUsuario.equals("asesor") && contraseñaUsuario.equals("asesor")){
-            VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
-            this.dispose();
-            VentanaAsesor.setVisible(true);
-        }
-        else {
-            JOptionPane.showMessageDialog(this, "Cédula o contraseña incorrectas, \nintente nuevamente", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        
+        InicioSesionC inicio = new InicioSesionC();       
+        ArrayList<String> datos = inicio.verificacionInicio(cedulaUsuario, contraseñaUsuario);
+        
+        if (datos != null){
+            if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("administrador")) {
+                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin();
+                this.dispose();
+                VentanaAdmin.setVisible(true);   
+            } else if(datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("asesor")){
+                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
+                this.dispose();
+                VentanaAsesor.setVisible(true);
+            }else {
+                JOptionPane.showMessageDialog(this, "Cédula o contraseña incorrectas, \nintente nuevamente", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     
     }//GEN-LAST:event_BotonEntrarActionPerformed
