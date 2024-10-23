@@ -7,6 +7,7 @@ package CONTROLADOR;
 import MODELO.ConexionBd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,46 +17,52 @@ import java.sql.SQLException;
 // Clase para el inicio de sesion
 public class InicioSesionC {
 
-    // metodo para verificar el inicio de sesion
-    public boolean verificacionInicio(String cedula, String contraseña) {
-
-        ConexionBd c = new ConexionBd();
+    ConexionBd conexion = new ConexionBd();
+    
+    //método para verificar el inicio de sesión
+    public ArrayList<String> verificacionInicio(String cedula, String contraseña){
+        
+        ArrayList<String> datos = new ArrayList<>();
+        
         try {
-            ResultSet rs = c.DatosInicioAsesor(cedula, contraseña);
-            while (rs.next()) {
-                return cedula.equals(rs.getString("cedula"))
-                        && contraseña.equals(rs.getString("contrasenna"));
+            ResultSet asesor = conexion.consultarBd("asesor");
+            ResultSet administrador = conexion.consultarBd("administrador");
+            
+            while(asesor.next()){
+                String cedAsesor = asesor.getString("cedula");
+                String contraAsesor = asesor.getString("contrasenna");
+                
+                if (cedAsesor.equals(cedula) && contraAsesor.equals(contraseña)){
+                    datos.add(cedula);
+                    datos.add(contraseña);
+                    datos.add("asesor");
+                    
+                    
+                    return datos;
+                }
+                
             }
-        } catch (SQLException sqlex) {
-            System.out.println("Error " + sqlex.getMessage());
-            return false;
+            
+            while(administrador.next()){
+                String cedAdmin = administrador.getString("cedula");
+                String contraAdmin = administrador.getString("contrasenna");
+                
+                if(cedAdmin.equals(cedula) && contraAdmin.equals(contraseña)){
+                    datos.add(cedula);
+                    datos.add(contraseña);
+                    datos.add("administrador");
+                    
+                    return datos;
+                } else {
+                    return null;
+                }
+               
+            }            
+        } catch(SQLException sqlx){
+            System.out.println("Error "+sqlx.getMessage());
         }
-
-        c.closeConnection(c.con);
-        return true;
-
+        return null;
     }
-
+   
     // metodo para obtener la informacion del asesor
-    public String consultarAsesor(String cedula) {
-
-        ConexionBd c = new ConexionBd();
-        try {
-            ResultSet rs = c.obtenerAsesor(cedula);
-            while (rs.next()) {
-                System.out.println(rs.getString("nombreCompleto"));
-            }
-
-            while (rs.next()) {
-                return rs.getString("NombreCompleto");
-            }
-        } catch (SQLException sqlex) {
-            System.out.println("Error " + sqlex.getMessage());
-        }
-
-        c.closeConnection(c.con);
-        return "";
-
-    }
-
 }
