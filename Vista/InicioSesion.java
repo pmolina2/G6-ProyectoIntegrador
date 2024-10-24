@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import CONTROLADOR.*;
 
+
 public class InicioSesion extends javax.swing.JFrame {
 
     FondoPanel fondo = new FondoPanel();
@@ -191,6 +192,7 @@ public class InicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_CampoCedulaActionPerformed
 
+  
     private void BotonEntrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotonEntrarActionPerformed
         String cedulaUsuario = CampoCedula.getText();
         String contraseñaUsuario = CampoContraseña.getText();

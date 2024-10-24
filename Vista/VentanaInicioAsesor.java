@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -29,10 +30,8 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         String NombreAsesor = asesorActual.getNombreCompleto().toUpperCase();
         LabelNombre2.setText(NombreAsesor);
         LabelRol2.setOpaque(true);
-<<<<<<< Updated upstream
-=======
         LabelRol2.setText("ASESOR");
->>>>>>> Stashed changes
+
     }
 
     /**
