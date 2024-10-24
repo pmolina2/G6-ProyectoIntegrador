@@ -22,4 +22,36 @@ public class Proyecto {
         this.numTorres = numTorres;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public int getNumTorres() {
+        return numTorres;
+    }
+
+    public void setNumTorres(int numTorres) {
+        this.numTorres = numTorres;
+    }
+
 }

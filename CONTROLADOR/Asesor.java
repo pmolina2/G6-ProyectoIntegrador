@@ -9,11 +9,12 @@ package CONTROLADOR;
  * @author pierr
  */
 public class Asesor {
-    
+
     private String cedula, nombreCompleto, direccion, telefono;
     private String correoElectronico, contrasenna;
 
-    public Asesor(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico, String contrasenna) {
+    public Asesor(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico,
+            String contrasenna) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.direccion = direccion;
@@ -69,8 +70,5 @@ public class Asesor {
     public void setContrasenna(String contrasenna) {
         this.contrasenna = contrasenna;
     }
-    
-    
-    
-    
+
 }
