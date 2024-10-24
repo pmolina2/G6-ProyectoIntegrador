@@ -8,9 +8,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
-import CONTROLADOR.InicioSesionC;
 import java.util.ArrayList;
-
+import CONTROLADOR.*;
 
 public class InicioSesion extends javax.swing.JFrame {
 
@@ -190,29 +189,34 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void CampoCedulaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CampoCedulaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CampoCedulaActionPerformed
+    }// GEN-LAST:event_CampoCedulaActionPerformed
 
-    
-    
-    private void BotonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEntrarActionPerformed
+    private void BotonEntrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotonEntrarActionPerformed
         String cedulaUsuario = CampoCedula.getText();
         String contraseñaUsuario = CampoContraseña.getText();
-        
-        InicioSesionC inicio = new InicioSesionC();       
+        InicioSesionC inicio = new InicioSesionC();
+        ConsultarAsesor ConsultaAsesor = new ConsultarAsesor();
+        ConsultarAdmin ConsultaAdmin = new ConsultarAdmin();
+
         ArrayList<String> datos = inicio.verificacionInicio(cedulaUsuario, contraseñaUsuario);
-        
-        if (datos != null){
-            if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("administrador")) {
-                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin();
+
+        if (datos != null) {
+            if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario)
+                    && datos.get(2).equals("administrador")) {
+                Admin AdminActual = ConsultaAdmin.devolverAdmin(cedulaUsuario);
+                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin(AdminActual);
                 this.dispose();
-                VentanaAdmin.setVisible(true);   
-            } else if(datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("asesor")){
-                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
+                VentanaAdmin.setVisible(true);
+            } else if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario)
+                    && datos.get(2).equals("asesor")) {
+                Asesor AsesorActual = ConsultaAsesor.devolverAsesor(cedulaUsuario);
+                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(AsesorActual);
                 this.dispose();
                 VentanaAsesor.setVisible(true);
-            }else {
-                JOptionPane.showMessageDialog(this, "Cédula o contraseña incorrectas, \nintente nuevamente", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Cédula o contraseña incorrectas, \nintente nuevamente",
+                    "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
