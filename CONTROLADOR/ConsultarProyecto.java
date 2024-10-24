@@ -2,40 +2,42 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package CONTROLADOR;
 
 import java.sql.*;
 import java.util.ArrayList;
-import MODELO.ConexionBd;
 
 /**
  *
- * @author gutie
+ * @author pierr
  */
+public class ConsultarProyecto implements ConexionControladorBd {
 
-public class ConsultarProyecto {
+    // método para devolver un objeto proyecto a la vista
+    public ArrayList<Proyecto> devolverProyectos() {
 
-    public ArrayList<Proyecto> consultarProyectos() {
-
-        ConexionBd c = new ConexionBd();
-        ArrayList<Proyecto> ListaProyectos = new ArrayList<>();
+        ArrayList<Proyecto> listaProyectos = new ArrayList<>();
 
         try {
-            ResultSet rs = c.consultarBd("proyecto");
-            while (rs.next()) {
-                String id = rs.getString("id");
-                String nombre = rs.getString("nombre");
-                String direccion = rs.getString("direccion");
-                int numTorres = rs.getInt("numTorres");
 
+            ResultSet proyecto = conexion.consultarBd("proyecto");
+            while (proyecto.next()) {
+                String id = proyecto.getString("id");
+                String nombre = proyecto.getString("nombre");
+                String direccion = proyecto.getString("direccion");
+                int numTorres = proyecto.getInt("numTorres");
                 Proyecto p = new Proyecto(id, nombre, direccion, numTorres);
-                ListaProyectos.add(p);
+
+                listaProyectos.add(p);
+                return listaProyectos;
             }
-        } catch (SQLException sqlex) {
-            System.out.println("Error " + sqlex.getMessage());
+
+        } catch (SQLException sqlx) {
+            System.out.println("Error " + sqlx.getMessage());
         }
 
-        return ListaProyectos;
+        return null;
+
     }
+
 }
