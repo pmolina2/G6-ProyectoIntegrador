@@ -29,8 +29,8 @@ public class ConsultarProyecto implements ConexionControladorBd {
                 Proyecto p = new Proyecto(id, nombre, direccion, numTorres);
 
                 listaProyectos.add(p);
-                return listaProyectos;
             }
+            return listaProyectos;
 
         } catch (SQLException sqlx) {
             System.out.println("Error " + sqlx.getMessage());
