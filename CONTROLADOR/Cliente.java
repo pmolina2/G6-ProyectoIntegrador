@@ -3,11 +3,10 @@ package CONTROLADOR;
 //Clase para manejar la informacion de cliente, incluyendo su constructor, getters y setters.
 
 public class Cliente {
-    private String cedula, nombre, apellido, direccion, correoElectronico, sisben;
-    private int telefono;
+    private String cedula, nombre, apellido, direccion, correoElectronico, sisben, telefono;
     private boolean subsidio;
 
-    public Cliente(String cedula, String nombre, String apellido, String direccion, String correoElectronico, String sisben, int telefono, boolean subsidio) {
+    public Cliente(String cedula, String nombre, String apellido, String direccion, String correoElectronico, String sisben, String telefono, boolean subsidio) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -66,11 +65,11 @@ public class Cliente {
         this.sisben = sisben;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
