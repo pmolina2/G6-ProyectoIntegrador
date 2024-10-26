@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
 
-/**
- *
- * @author pierr
- */
+//Clase admin, sirve para manejar la información de los administradores, ademas de su constructor, tenemos los getters y setters de la clase.
 public class Admin {
 
     private String cedula, nombreCompleto, direccion, telefono, correoElectronico, contrasenna;

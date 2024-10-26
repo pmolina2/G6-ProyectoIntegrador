@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
 
 import MODELO.ConexionBd;
@@ -9,17 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author pierr
- */
+// Clase de operacion entre vista y logica, encargada del inicio de sesion.
 
-// Clase para el inicio de sesion
 public class InicioSesionC {
 
     ConexionBd conexion = new ConexionBd();
 
-    // método para verificar el inicio de sesión
+    // Método para verificar las credenciales del usuario, recibiendo un string cedula y otro string contraseña, proveniente del package vista
+    // utilizamos un Arraylist llamado datos, el cual, después de verificar que la cedula ingresada, existe en la tabla de asesor o en
+    // la tabla de administrador, agrega la informacion al arraylist y esta se retorna hacia el package vista.
+
     public ArrayList<String> verificacionInicio(String cedula, String contraseña) {
 
         ArrayList<String> datos = new ArrayList<>();
@@ -61,5 +56,4 @@ public class InicioSesionC {
         return null;
     }
 
-    // metodo para obtener la informacion del asesor
 }

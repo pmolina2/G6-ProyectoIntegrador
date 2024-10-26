@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
 
-/**
- *
- * @author gutie
- */
+// Clase entidad para manejar la informacion de las torres., incluyendo su constructor, sus getters y sus setters.
 
 public class Torre {
     @SuppressWarnings("unused")

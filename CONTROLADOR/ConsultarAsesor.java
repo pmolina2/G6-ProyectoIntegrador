@@ -1,18 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
-
 import java.sql.*;
 
-/**
- *
- * @author pierr
- */
+//Clase de operacion entre logica y modelo, implementa la interfaz ConexionControladorBd para agilizar el proceso de conexion a base de datos.
+
 public class ConsultarAsesor implements ConexionControladorBd {
 
-    // método para devolver un objeto asesor a la vista
+    // Método de tipo "Asesor", recibe un parametro String ced (cedula), sirve para validar la existencia del asesor relacionado con esa cedula
+    // además, retornando la informacion correspondiente a ese asesor, hacia el package vista.
+
     public Asesor devolverAsesor(String ced) {
 
         try {

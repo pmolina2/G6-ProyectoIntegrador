@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
 
-/**
- *
- * @author pierr
- */
+//Clase para manejar la informacion de los asesores, incluyendo el constructor y sus gettes y setters.
+
 public class Asesor {
 
     private String cedula, nombreCompleto, direccion, telefono;

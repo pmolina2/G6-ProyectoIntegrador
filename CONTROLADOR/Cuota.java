@@ -1,26 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
-
 import java.util.Date;
 
-/**
- *
- * @author gutie
- */
+//Clase entidad para manejar la información de las cuotas, incluyendo su constructor y sus getters y setters.
+
 public class Cuota {
     private int id, valor, numeroCuota;
-    private String estado, cedullaCliente;
+    private String estado, cedulaCliente;
     private Date fechaCuota;
 
-    public Cuota(int id, int valor, int numeroCuota, String estado, String cedullaCliente, Date fechaCuota) {
+    public Cuota(int id, int valor, int numeroCuota, String estado, String cedulaCliente, Date fechaCuota) {
         this.id = id;
         this.valor = valor;
         this.numeroCuota = numeroCuota;
         this.estado = estado;
-        this.cedullaCliente = cedullaCliente;
+        this.cedulaCliente = cedulaCliente;
         this.fechaCuota = fechaCuota;
     }
 
@@ -56,12 +49,12 @@ public class Cuota {
         this.estado = estado;
     }
 
-    public String getCedullaCliente() {
-        return cedullaCliente;
+    public String getCedulaCliente() {
+        return cedulaCliente;
     }
 
-    public void setCedullaCliente(String cedullaCliente) {
-        this.cedullaCliente = cedullaCliente;
+    public void setCedulaCliente(String cedulaCliente) {
+        this.cedulaCliente = cedulaCliente;
     }
 
     public Date getFechaCuota() {

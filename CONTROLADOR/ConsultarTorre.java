@@ -1,19 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package CONTROLADOR;
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- *
- * @author pierr
- */
+//Clase de operacion entre logica y modelo, implementa la interfaz ConexionControladorBd para agilizar el proceso de conexion a base de datos.
+
 public class ConsultarTorre implements ConexionControladorBd {
 
-    // método para devolver un objeto proyecto a la vista
+    // Método de tipo ArrayList de la clase "Torre", sirve para almacenar los objetos en listaTorres
+    // y al final del ciclo lo retorna al package vista.
+
+
     public ArrayList<Torre> devolverTorres(String idProyecto) {
 
         ArrayList<Torre> listaTorres = new ArrayList<>();

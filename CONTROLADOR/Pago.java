@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
-
 import java.util.Date;
 
-/**
- *
- * @author gutie
- */
+// Clase entidad para manejar la informacion de pagos, incluyendo su constructor, sus getters y sus setters.
+
 public class Pago {
     private int numPago, valorPago;
     private String cedulaCliente, cedulaAsesor;
