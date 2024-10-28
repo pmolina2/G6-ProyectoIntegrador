@@ -1,6 +1,7 @@
 
 package Vista;
 
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -11,14 +12,18 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import CONTROLADOR.*;
 
-
 public class InicioSesion extends javax.swing.JFrame {
 
+    //Se crea un objeto del tipo FondoPanel
     FondoPanel fondo = new FondoPanel();
 
+    /*Método constructor de la clase. En este, se utiliza el método setContentPane, pasandole como parámetro el objeto creado, para establecer el 
+    fondo del componente principal del Jframe. Además, se establece el icono del Jframe, utilizando la imagen "Logo Ventana" que se encuentra en la carpeta Iconos.
+    Luego se coloca una imagen, con ayuda de la interfaz Icon, y el LabelImagen. Por último se establece que el LabelInicioSesion sea opaco, y su fondo sea de color blanco.
+    */
     public InicioSesion() {
-        this.setContentPane(fondo);
-        setIconImage(new ImageIcon(getClass().getResource("/Iconos/IconoSinFondo.png")).getImage());
+        this.setContentPane(fondo); 
+        setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
         initComponents();
         Icon miIcono = new ImageIcon(new ImageIcon(getClass().getResource("/Iconos/IconoSinFondo.png")).getImage()
                 .getScaledInstance(labelImagen.getWidth(), labelImagen.getHeight(), 0));
@@ -28,9 +33,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    /* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.  */
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -186,45 +189,63 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void CampoContraseñaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CampoContraseñaActionPerformed
         // TODO add your handling code here:
-    }// GEN-LAST:event_CampoContraseñaActionPerformed
+    }
 
     private void CampoCedulaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CampoCedulaActionPerformed
         // TODO add your handling code here:
-    }// GEN-LAST:event_CampoCedulaActionPerformed
+    }
 
-  
+
+    /*Método que establece las acciones que se van a realizar cuando el botón "Entrar" sea presionado. Se obtienen los valores introducidos en los Campos de texto y 
+    se guardan en variables, luego, sea crea un objeto del tipo "InicioSesionC", "ConsultarAsesor", "ConsultarAdmin" y "ConsultarProyecto". Posterioromente se 
+    guarda en un ArrayList de strings, el ArrayList que devuelve el método "verificacionInicio" del objeto del tipo "InicioSesionC"*/
+
     private void BotonEntrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotonEntrarActionPerformed
         String cedulaUsuario = CampoCedula.getText();
         String contraseñaUsuario = CampoContraseña.getText();
         InicioSesionC inicio = new InicioSesionC();
         ConsultarAsesor ConsultaAsesor = new ConsultarAsesor();
         ConsultarAdmin ConsultaAdmin = new ConsultarAdmin();
+        ConsultarProyecto ConsultarProyectos = new ConsultarProyecto();
 
         ArrayList<String> datos = inicio.verificacionInicio(cedulaUsuario, contraseñaUsuario);
 
+
+        /*Condicional que maneja el inicio de Sesión. Si la Lista no está vacía, quiere decir que se encontró a algún usuario con las credenciales ingresadas, entonces, en
+        la posición 0, se encontraría su cedula, en la 1, su contraseña, y en la 2, su rol.
+        Si los datos concuerdan, y el rol es administrador, se guarda en un objeto del tipo Admin, el objeto que retorna el método "devolverAdmin" de la clase
+        "ConsultaAdmin" al pasarle como parámetro la cedula del usuario, luego en un ArrayList de objetos del tipo Proyecto, se guarda el ArrayList que devuelve 
+        el método "devolverProyectos" de la clase "ConsultarProyectos". Ahora, se inicializa la ventana del Adminstrador, pasandole como parámetros el AdminActual, 
+        y la lista de proyectos. Se cierra la ventana actual y se muestra la nueva ventana. Este mismo proceso se realiza cuando el rol es asesor, solo que se abre
+        la ventana del asesor.*/
+        
         if (datos != null) {
+
             if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario)
                     && datos.get(2).equals("administrador")) {
                 Admin AdminActual = ConsultaAdmin.devolverAdmin(cedulaUsuario);
-                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin(AdminActual);
+                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos();
+                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin(AdminActual, Proyectos);
                 this.dispose();
                 VentanaAdmin.setVisible(true);
+
             } else if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario)
                     && datos.get(2).equals("asesor")) {
                 Asesor AsesorActual = ConsultaAsesor.devolverAsesor(cedulaUsuario);
-                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(AsesorActual);
+                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos();
+                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(AsesorActual, Proyectos);
                 this.dispose();
                 VentanaAsesor.setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Cédula o contraseña incorrectas, \nintente nuevamente",
-                    "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cédula o contraseña incorrectas, \nintente nuevamente", //Si la lista está vacía, se le indica al usuario que no se 
+                    "Mensaje de Error", JOptionPane.ERROR_MESSAGE);       //encontró ninguna persona en la base de datos con esas credencialles
+                                                                     
         }
 
     }
 
-    // GEN-LAST:event_BotonEntrarActionPerformed
-
+    //Método Main definido por defecto al utilizar Java Swing con Netbeans.
     public static void main(String args[]) {
 
         try {
@@ -247,9 +268,7 @@ public class InicioSesion extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         }
-        // </editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InicioSesion().setVisible(true);
@@ -258,7 +277,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Declaración de Variables
     private javax.swing.JButton BotonEntrar;
     private javax.swing.JTextField CampoCedula;
     private javax.swing.JPasswordField CampoContraseña;
@@ -272,18 +291,20 @@ public class InicioSesion extends javax.swing.JFrame {
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
-    // End of variables declaration//GEN-END:variables
+    // Fin de la declaración de Variables
 
+
+    //Se crea una clase llamada FondoPanel, que hereda las propiedades y métodos de la clase Jpanel.
     class FondoPanel extends JPanel {
         private Image imagen;
 
         public void paint(Graphics g) {
-            imagen = new ImageIcon(getClass().getResource("/Iconos/Plantilla.png")).getImage();
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            imagen = new ImageIcon(getClass().getResource("/Iconos/Plantilla.png")).getImage(); //Se Carga la imagen desde la carpeta Iconos.
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this); //Se dibuja la imagen en el panel, ajustándola al tamaño actual de este.
 
-            setOpaque(false);
+            setOpaque(false);  // Se Configura el panel como "transparente" para que se muestre la imagen
 
-            super.paint(g);
+            super.paint(g); //Se Llama al método paint de la superclase para que se pinten los demás componentes del panel
 
         }
 
