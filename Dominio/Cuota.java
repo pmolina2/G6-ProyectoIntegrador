@@ -1,9 +1,10 @@
 package Dominio;
-//Clase entidad para manejar la información de las cuotas, incluyendo su constructor y sus getters y setters.
-
+//Clase entidad que guarda la informacion de los asesores.
 public class Cuota {
+    //atributos necesarios para almacenar la info.
     private String id, valor, numeroCuota, estado, cedulaCliente, fechaCuota;
 
+    //Constructor para darle valores a los atributos.
     public Cuota(String id, String valor, String numeroCuota, String estado, String cedulaCliente, String fechaCuota) {
         this.id = id;
         this.valor = valor;
@@ -13,6 +14,7 @@ public class Cuota {
         this.fechaCuota = fechaCuota;
     }
 
+    //getters para obtener los datos de los atributos y setters para modificar sus datos.
     public String getId() {
         return id;
     }

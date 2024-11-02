@@ -1,11 +1,12 @@
 package Dominio;
 
-// Clase entidad para manejar la informacion de las ventas, incluyendo su constructor, sus getters y sus setters.
-
+//Clase entidad que guarda la informacion de los asesores.
 public class Venta {
+    //atributos necesarios para almacenar la info.
     private int precioTotal, numeroCuotas, intereses;
     private String cedulaCliente, cedulaAsesor;
 
+    //Constructor para darle valores a los atributos.
     public Venta(int precioTotal, int numeroCuotas, int intereses, String cedulaCliente, String cedulaAsesor) {
         this.precioTotal = precioTotal;
         this.numeroCuotas = numeroCuotas;
@@ -14,6 +15,7 @@ public class Venta {
         this.cedulaAsesor = cedulaAsesor;
     }
 
+    //getters para obtener los datos de los atributos y setters para modificar sus datos.
     public int getPrecioTotal() {
         return precioTotal;
     }

@@ -1,14 +1,15 @@
-<<<<<<< Updated upstream:CONTROLADOR/Proyecto.java
 package CONTROLADOR;
 
-// Clase entidad para manejar la informacion de pagos, incluyendo su constructor, sus getters y sus setters.
-
+//Clase entidad que guarda la informacion de los asesores.
 public class Proyecto {
+
+    //atributos necesarios para almacenar la info.
     @SuppressWarnings("unused")
     private String id, nombre, direccion;
     @SuppressWarnings("unused")
     private int numTorres;
 
+//Constructor para darle valores a los atributos.
     public Proyecto(String id, String nombre, String direccion, int numTorres) {
         this.id = id;
         this.nombre = nombre;
@@ -16,6 +17,7 @@ public class Proyecto {
         this.numTorres = numTorres;
     }
 
+    //getters para obtener los datos de los atributos y setters para modificar sus datos.
     public String getId() {
         return id;
     }
@@ -49,59 +51,3 @@ public class Proyecto {
     }
 
 }
-=======
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Dominio;
-
-/**
- *
- * @author gutie
- */
-
-public class Proyecto {
-    private String id, nombre, direccion,numTorres;
-
-    public Proyecto(String id, String nombre, String direccion, String numTorres) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.numTorres = numTorres;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getNumTorres() {
-        return numTorres;
-    }
-
-    public void setNumTorres(String numTorres) {
-        this.numTorres = numTorres;
-    }
-
-}
->>>>>>> Stashed changes:Dominio/Proyecto.java

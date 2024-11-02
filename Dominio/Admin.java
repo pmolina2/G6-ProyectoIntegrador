@@ -1,10 +1,12 @@
 package Dominio;
 
-//Clase admin, sirve para manejar la información de los administradores, ademas de su constructor, tenemos los getters y setters de la clase.
+//Clase entidad que guarda la informacion de los administradores.
 public class Admin {
 
+    //atributos necesarios para almacenar la info.
     private String cedula, nombreCompleto, direccion, telefono, correoElectronico, contrasenna;
 
+    //Constructor para darle valores a los atributos.
     public Admin(String cedula, String nombreCompleto, String direccion, String telefono, String correoElectronico,
             String contrasenna) {
         this.cedula = cedula;
@@ -15,6 +17,8 @@ public class Admin {
         this.contrasenna = contrasenna;
 
     }
+
+    //getters para obtener los datos de los atributos y setters para modificar sus datos.
 
     public String getCedula() {
         return cedula;

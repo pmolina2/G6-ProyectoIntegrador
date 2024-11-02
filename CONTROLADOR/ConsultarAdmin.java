@@ -4,7 +4,7 @@ import Dominio.*;
 import MODELO.*;
 import java.util.ArrayList;
 
-//Clase de operacion entre logica y modelo, implementamos la interfaz de ConexionControladorBd para agilizar el proceso de conexion.
+//Clase de operacion entre logica y modelo, extendemos la clase abstracta ConexionControladorBd para la conexion a Bd
 
 public class ConsultarAdmin extends ConexionControladorBd {
 
@@ -13,12 +13,15 @@ public class ConsultarAdmin extends ConexionControladorBd {
  
     public Admin devolverAdmin(String ced) {
         try {
-            // Consulta los datos del usuario y almacénalos en el ArrayList
+            //Consulta la informacion haciendo una consulta en Modelo utilizando la clase llamada UsuarioBd
             UsuarioBd usuario = new UsuarioBd();
+
+            //La informacion de la consulta se almacena en un arraylist de tipo string
             ArrayList<String> admin = usuario.consultarUsuario("administrador", ced);
 
             // Verifica si el ArrayList no está vacío y si la cédula coincide con la buscada
             if (!admin.isEmpty() && admin.get(0).equals(ced)) {
+                //si existe, descompone el arraylist dandole valores a las variables declaradas
                 String cedula = admin.get(0);
                 String nombreCompleto = admin.get(1);
                 String direccion = admin.get(2);
@@ -26,7 +29,7 @@ public class ConsultarAdmin extends ConexionControladorBd {
                 String correo = admin.get(4);
                 String contraseña = admin.get(5);
 
-                // Crea y retorna el objeto Admin
+                // crea y retorna un nuevo objeto admin con las variables anteriores.
                 return new Admin(cedula, nombreCompleto, direccion, telefono, correo, contraseña);
             } else {
                 System.out.println("No se encontró un administrador con la cédula: " + ced);

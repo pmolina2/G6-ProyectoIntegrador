@@ -1,11 +1,13 @@
 package Dominio;
 
-//Clase para manejar la informacion de cliente, incluyendo su constructor, getters y setters.
-
+//Clase entidad que guarda la informacion de los asesores.
 public class Cliente {
+
+    //atributos necesarios para almacenar la info.
     private String cedula, nombre, apellido, direccion, correoElectronico, sisben, telefono;
     private boolean subsidio;
 
+    //Constructor para darle valores a los atributos.
     public Cliente(String cedula, String nombre, String apellido, String direccion, String correoElectronico, String sisben, String telefono, boolean subsidio) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -17,6 +19,7 @@ public class Cliente {
         this.subsidio = subsidio;
     }
 
+    //getters para obtener los datos de los atributos y setters para modificar sus datos.
     public String getCedula() {
         return cedula;
     }

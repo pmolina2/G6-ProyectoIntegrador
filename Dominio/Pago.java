@@ -1,13 +1,14 @@
 package Dominio;
 import java.util.Date;
 
-// Clase entidad para manejar la informacion de pagos, incluyendo su constructor, sus getters y sus setters.
-
+//Clase entidad que guarda la informacion de los asesores.
 public class Pago {
+    //atributos necesarios para almacenar la info.
     private int numPago, valorPago;
     private String cedulaCliente, cedulaAsesor;
     private Date fecha;
 
+    //Constructor para darle valores a los atributos.
     public Pago(int numPago, int valorPago, String cedulaCliente, String cedulaAsesor, Date fecha) {
         this.numPago = numPago;
         this.valorPago = valorPago;
@@ -16,6 +17,7 @@ public class Pago {
         this.fecha = fecha;
     }
 
+    //getters para obtener los datos de los atributos y setters para modificar sus datos.
     public int getNumPago() {
         return numPago;
     }
