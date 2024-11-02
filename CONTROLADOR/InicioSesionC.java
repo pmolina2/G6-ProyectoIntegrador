@@ -1,15 +1,23 @@
 package CONTROLADOR;
 
+<<<<<<< Updated upstream
 import MODELO.ConexionBd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+=======
+>>>>>>> Stashed changes
 import java.util.ArrayList;
+import MODELO.*;
 
 // Clase de operacion entre vista y logica, encargada del inicio de sesion.
 
+<<<<<<< Updated upstream
 public class InicioSesionC {
 
     ConexionBd conexion = new ConexionBd();
+=======
+public class InicioSesionC extends ConexionControladorBd{
+>>>>>>> Stashed changes
 
     // Método para verificar las credenciales del usuario, recibiendo un string cedula y otro string contraseña, proveniente del package vista
     // utilizamos un Arraylist llamado datos, el cual, después de verificar que la cedula ingresada, existe en la tabla de asesor o en
@@ -20,40 +28,28 @@ public class InicioSesionC {
         ArrayList<String> datos = new ArrayList<>();
 
         try {
-            ResultSet asesor = conexion.consultarBd("asesor");
-            ResultSet administrador = conexion.consultarBd("administrador");
+            InicioSesionBd inicioSesion = new InicioSesionBd();
+            ArrayList<String> asesor = inicioSesion.consultarInicioSesion("asesor", cedula, contraseña);
+            ArrayList<String> administrador = inicioSesion.consultarInicioSesion("administrador", cedula, contraseña);
 
-            while (asesor.next()) {
-                String cedAsesor = asesor.getString("cedula");
-                String contraAsesor = asesor.getString("contrasenna");
+            if(!administrador.isEmpty() && administrador.get(0).equals(cedula) && administrador.get(1).equals(contraseña)){
 
-                if (cedAsesor.equals(cedula) && contraAsesor.equals(contraseña)) {
-                    datos.add(cedula);
-                    datos.add(contraseña);
-                    datos.add("asesor");
+                datos.add(cedula);
+                datos.add(contraseña);
+                datos.add("administrador");
+                
+            } else if (!asesor.isEmpty() && asesor.get(0).equals(cedula) && asesor.get(1).equals(contraseña)) {
+                datos.add(cedula);
+                datos.add(contraseña);
+                datos.add("asesor");
 
-                    return datos;
-                }
-
-            }
-
-            while (administrador.next()) {
-                String cedAdmin = administrador.getString("cedula");
-                String contraAdmin = administrador.getString("contrasenna");
-
-                if (cedAdmin.equals(cedula) && contraAdmin.equals(contraseña)) {
-                    datos.add(cedula);
-                    datos.add(contraseña);
-                    datos.add("administrador");
-
-                    return datos;
-                }
 
             }
-        } catch (SQLException sqlx) {
-            System.out.println("Error " + sqlx.getMessage());
+
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
         }
-        return null;
+        return datos;
     }
 
 }

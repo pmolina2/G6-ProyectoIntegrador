@@ -1,38 +1,39 @@
 package CONTROLADOR;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+import Dominio.*;
+import MODELO.*;
 
 //Clase de operacion entre logica y modelo, implementa la interfaz ConexionControladorBd para agilizar el proceso de conexion a base de datos.
 
-public class ConsultarProyecto implements ConexionControladorBd {
+public class ConsultarProyecto extends ConexionControladorBd {
 
     // Método de tipo ArrayList de la clase "Proyecto", sirve para retornar una lista de la informacion de los proyectos hacia el package de vista.
 
     public ArrayList<Proyecto> devolverProyectos() {
 
-        ArrayList<Proyecto> listaProyectos = new ArrayList<>();
+    ArrayList<Proyecto> listaProyectos = new ArrayList<>();
 
-        try {
+    try {
+        ProyectosBd proyectos = new ProyectosBd();
+        Hashtable<String, ArrayList<String>> proyecto = proyectos.consultarProyectos();
 
-            ResultSet proyecto = conexion.consultarBd("proyecto");
-            while (proyecto.next()) {
-                String id = proyecto.getString("id");
-                String nombre = proyecto.getString("nombre");
-                String direccion = proyecto.getString("direccion");
-                int numTorres = proyecto.getInt("numTorres");
-                Proyecto p = new Proyecto(id, nombre, direccion, numTorres);
+        proyecto.forEach((key, values) -> {
+            
+            String id = key;
+            String nombre = values.get(0);
+            String direccion = values.get(1);
+            String numTorres = values.get(2);
 
-                listaProyectos.add(p);
-            }
-            return listaProyectos;
+            Proyecto Pproyecto = new Proyecto(id,nombre,direccion,numTorres);
+            listaProyectos.add(Pproyecto);
+        });
 
-        } catch (SQLException sqlx) {
-            System.out.println("Error " + sqlx.getMessage());
-        }
-
-        return null;
-
+    } catch (Exception e) {
+        System.out.println("Error " + e.getMessage());
     }
+
+    return listaProyectos;
+}
 
 }
