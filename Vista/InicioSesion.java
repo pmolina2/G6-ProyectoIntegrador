@@ -3,13 +3,11 @@ package Vista;
 
 //Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import Dominio.*;
 import CONTROLADOR.*;
 
 public class InicioSesion extends javax.swing.JFrame {
@@ -82,11 +80,6 @@ public class InicioSesion extends javax.swing.JFrame {
         CampoContraseña.setBorder(javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)),
                 javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
-        CampoContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CampoContraseñaActionPerformed(evt);
-            }
-        });
 
         CampoCedula.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
         CampoCedula.setForeground(new java.awt.Color(102, 102, 102));
@@ -94,11 +87,6 @@ public class InicioSesion extends javax.swing.JFrame {
                 javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)),
                 javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
         CampoCedula.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        CampoCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CampoCedulaActionPerformed(evt);
-            }
-        });
 
         BotonEntrar.setBackground(new java.awt.Color(0, 51, 102));
         BotonEntrar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
@@ -185,16 +173,7 @@ public class InicioSesion extends javax.swing.JFrame {
                                 .addContainerGap(158, Short.MAX_VALUE)));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void CampoContraseñaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CampoContraseñaActionPerformed
-        // TODO add your handling code here:
     }
-
-    private void CampoCedulaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CampoCedulaActionPerformed
-        // TODO add your handling code here:
-    }
-
 
     /*Método que establece las acciones que se van a realizar cuando el botón "Entrar" sea presionado. Se obtienen los valores introducidos en los Campos de texto y 
     se guardan en variables, luego, sea crea un objeto del tipo "InicioSesionC", "ConsultarAsesor", "ConsultarAdmin" y "ConsultarProyecto". Posterioromente se 
@@ -219,28 +198,33 @@ public class InicioSesion extends javax.swing.JFrame {
         y la lista de proyectos. Se cierra la ventana actual y se muestra la nueva ventana. Este mismo proceso se realiza cuando el rol es asesor, solo que se abre
         la ventana del asesor.*/
         
-        if (datos != null) {
+        if (datos.size() != 0) {
 
-            if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario)
-                    && datos.get(2).equals("administrador")) {
+            if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("administrador")) {
                 Admin AdminActual = ConsultaAdmin.devolverAdmin(cedulaUsuario);
                 ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos();
-                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin(AdminActual, Proyectos);
+                
+                @SuppressWarnings("unused")
+                Sesion SesionActual = new Sesion(AdminActual.getCedula(), AdminActual.getNombreCompleto(), Proyectos);
+        
+                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin();
                 this.dispose();
                 VentanaAdmin.setVisible(true);
 
-            } else if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario)
-                    && datos.get(2).equals("asesor")) {
+            } else if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("asesor")) {
                 Asesor AsesorActual = ConsultaAsesor.devolverAsesor(cedulaUsuario);
                 ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos();
-                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(AsesorActual, Proyectos);
+               
+                @SuppressWarnings("unused")
+                Sesion SesionActual = new Sesion(AsesorActual.getCedula(), AsesorActual.getNombreCompleto(), Proyectos);
+
+                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
                 this.dispose();
                 VentanaAsesor.setVisible(true);
-            }
+            } 
         } else {
-            JOptionPane.showMessageDialog(this, "Cédula o contraseña incorrectas, \nintente nuevamente", //Si la lista está vacía, se le indica al usuario que no se 
-                    "Mensaje de Error", JOptionPane.ERROR_MESSAGE);       //encontró ninguna persona en la base de datos con esas credencialles
-                                                                     
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta, \nintente nuevamente", //Si la lista está vacía, se le indica al usuario que no se 
+                "Mensaje de Error", JOptionPane.ERROR_MESSAGE);       //encontró ninguna persona en la base de datos con esas credenciales                                                 
         }
 
     }
@@ -293,20 +277,4 @@ public class InicioSesion extends javax.swing.JFrame {
     private java.awt.MenuBar menuBar1;
     // Fin de la declaración de Variables
 
-
-    //Se crea una clase llamada FondoPanel, que hereda las propiedades y métodos de la clase Jpanel.
-    class FondoPanel extends JPanel {
-        private Image imagen;
-
-        public void paint(Graphics g) {
-            imagen = new ImageIcon(getClass().getResource("/Iconos/Plantilla.png")).getImage(); //Se Carga la imagen desde la carpeta Iconos.
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this); //Se dibuja la imagen en el panel, ajustándola al tamaño actual de este.
-
-            setOpaque(false);  // Se Configura el panel como "transparente" para que se muestre la imagen
-
-            super.paint(g); //Se Llama al método paint de la superclase para que se pinten los demás componentes del panel
-
-        }
-
-    }
 }

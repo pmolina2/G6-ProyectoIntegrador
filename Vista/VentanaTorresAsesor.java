@@ -2,19 +2,15 @@
 package Vista;
 
 //Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
-import java.awt.Graphics;
-import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import CONTROLADOR.*;
 import java.util.ArrayList;
-
+import CONTROLADOR.*;
+import Dominio.*;
 
 public class VentanaTorresAsesor extends javax.swing.JFrame {
 
     //Se establecen como atributos un objeto del tipo "FondoPanel2", un objeto del tipo "Asesor", y un ArrayList de objetos del tipo "Torre"
-    FondoPanel2 fondo = new FondoPanel2();
-    Asesor AsesorActual;
+    FondoPanel fondoAs = new FondoPanel();
     ArrayList <Torre> Torres;
     
   /*Método constructor de la clase. Aqui se reciben como parámetros un objeto del tipo Proyecto, y un objeto del tipo Asesor. El objeto del tipo Asesor se le asigna al atributo
@@ -25,9 +21,8 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
    la torre correspondiente de la lista. Por ejemplo, para el BotonTorre1as se establece el número de la torre en la posición 0 de la lista. */
   
 
-    public VentanaTorresAsesor(Proyecto proyecto, Asesor AsesorActual) {
-        this.AsesorActual = AsesorActual;
-        this.setContentPane(fondo);
+    public VentanaTorresAsesor(Proyecto proyecto) {
+        this.setContentPane(fondoAs);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
         LabelNombreProyecto.setText(proyecto.getNombre().toUpperCase());
@@ -179,7 +174,14 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
         Torre torreSeleccionada = Torres.get(1); 
         VerAptosAsesor AptosAsesor = new VerAptosAsesor(torreSeleccionada); 
         AptosAsesor.setVisible(true);
-    }                                             
+    }                                   
+
+     private void BotonTorre3asActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        this.dispose();
+        Torre torreSeleccionada = Torres.get(2); 
+        VerAptosAsesor AptosAsesor = new VerAptosAsesor(torreSeleccionada); 
+        AptosAsesor.setVisible(true);
+    }                 
 
     private void BotonTorre4asActionPerformed(java.awt.event.ActionEvent evt) {                                              
         this.dispose();
@@ -188,33 +190,19 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
         AptosAsesor.setVisible(true);
     }                                             
 
-    private void BotonTorre3asActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        this.dispose();
-        Torre torreSeleccionada = Torres.get(2); 
-        VerAptosAsesor AptosAsesor = new VerAptosAsesor(torreSeleccionada); 
-        AptosAsesor.setVisible(true);
-    }                                             
+                                       
 
 
 /*Al presionar el botón "Regresar", se crea un objeto del tipo ConsultarProyecto, para ejecutar su método "devolverProyectos", que retornará un ArrayList de objetos del tipo
     proyecto, la cual se guarda en una variable, para pasarsela al método VolverInicioAsesor, que recibe tanto la lista de proyectos, como el AsesorActual, que es un atributo
     de la clase*/
-    private void BotonRegresar4ActionPerformed(java.awt.event.ActionEvent evt) {     
-        ConsultarProyecto ConsultaProyecto = new ConsultarProyecto();
-        ArrayList <Proyecto> proyectos = ConsultaProyecto.devolverProyectos();
-        VolverInicioAsesor(AsesorActual, proyectos);                        
+    private void BotonRegresar4ActionPerformed(java.awt.event.ActionEvent evt) {    
+        VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(); 
+        this.dispose();
+        VentanaAsesor.setVisible(true);
+                     
     }                                              
 
-
-/*Este método sirve para regresar a la ventana principal del Asesor. Recibe como parámetros un objeto del tipo Asesor, y un ArrayList de objetos del tipo "Proyecto".
-    Se encarga de cerrar la ventana Actual, y crear una nueva ventana de inicio de asesor, pasándole como parámetros el AsesorActual y la lista de proyectos, para 
-    posteriormente hacerla visible.*/
-
-    public void VolverInicioAsesor(Asesor AsesorActual, ArrayList <Proyecto> Proyectos){
-        this.dispose();
-        VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(AsesorActual, Proyectos);
-        VentanaAsesor.setVisible(true);
-    }
 
 
 //Método main definido por defecto por NetBeans
@@ -246,20 +234,4 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
     private javax.swing.JLabel LabelNombreProyecto;
     // Fin de declaración de variables 
 
-
-    //Se crea una clase llamada FondoPanel2, que hereda las propiedades y métodos de la clase Jpanel.
-    class FondoPanel2 extends JPanel{
-        private Image imagen;
-    
-        public void paint(Graphics g){
-            imagen = new ImageIcon(getClass().getResource("/Iconos/Plantilla.png")).getImage();  //Se Carga la imagen desde la carpeta Iconos.
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(),this);  //Se dibuja la imagen en el panel, ajustándola al tamaño actual de este.
-            
-            setOpaque(false);  // Se Configura el panel como "transparente" para que se muestre la imagen
-            
-            super.paint(g); //Se Llama al método paint de la superclase para que se pinten los demás componentes del panel
-    
-        } 
-    
-    }
 }
