@@ -2,37 +2,28 @@
 package Vista;
 
 //Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
+
 import CONTROLADOR.*;
-import java.util.ArrayList;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import Dominio.*;
+import javax.swing.*;
+
 
 
 public class VentanaInicioAsesor extends javax.swing.JFrame {
-
-//Se definen dos atributos, un ArrayList de objetos del tipo Proyecto, y un objeto del tipo Asesor.
-    private ArrayList<Proyecto> proyectos;
-    private Asesor AsesorActual;
-
-
 
 /*Método constructor de la clase. Primero, se asignan a los atributos de la clase, el Asesor, y la lista de proyectos que se pasaron como parámetros, luego
     se inicializan los componentes del Jframe, y se establece el icono de este, como la imagen "Logo Ventana" ubicada en la carpeta Iconos. Luego se coloca una imagen con
     la ayuda de la interfaz Icon, y el LabelImagen3. Se establece que el LabelNombre2 sea opaco, se guarda en una variable el nombre del asesor pasado como parametro,
     y luego se establece el texto del label nombre2, como el nombre del asesor, se establece que el LabelRol2 se opaco, y su texto sea la palabra "ASESOR".*/
 
-    public VentanaInicioAsesor(Asesor asesorActual, ArrayList <Proyecto> proyectos) {
-        this.proyectos = proyectos;
-        this.AsesorActual = asesorActual;
+    public VentanaInicioAsesor() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
         Icon miIcono = new ImageIcon(new ImageIcon(getClass().getResource("/Iconos/IconoSinFondo.png")).getImage()
                 .getScaledInstance(LabelImagen3.getWidth(), LabelImagen3.getHeight(), 0));
         LabelImagen3.setIcon(miIcono);
         LabelNombre2.setOpaque(true);
-        String NombreAsesor = asesorActual.getNombreCompleto().toUpperCase();
-        LabelNombre2.setText(NombreAsesor);
+        LabelNombre2.setText(Sesion.getNombre().toUpperCase());
         LabelRol2.setOpaque(true);
         LabelRol2.setText("ASESOR");
     }
@@ -142,38 +133,34 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         BotonProyecto5.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto5.setBorder(null);
         BotonProyecto5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto5.setText(proyectos.get(0).getNombre().toUpperCase());
-        BotonProyecto5.addActionListener(e -> abrirVentanaTorres(proyectos.get(0), AsesorActual));
+        BotonProyecto5.setText(Sesion.getListaProyectos().get(0).getNombre().toUpperCase());
+        BotonProyecto5.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(0)));
 
         BotonProyecto6.setBackground(new java.awt.Color(170, 170, 170));
         BotonProyecto6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonProyecto6.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto6.setBorder(null);
         BotonProyecto6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto6.setText(proyectos.get(1).getNombre().toUpperCase());
-        BotonProyecto6.addActionListener(e -> abrirVentanaTorres(proyectos.get(1), AsesorActual));
+        BotonProyecto6.setText(Sesion.getListaProyectos().get(1).getNombre().toUpperCase());
+        BotonProyecto6.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(1)));
 
         BotonProyecto7.setBackground(new java.awt.Color(170, 170, 170));
         BotonProyecto7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonProyecto7.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto7.setBorder(null);
         BotonProyecto7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto7.setText(proyectos.get(2).getNombre().toUpperCase());
-        BotonProyecto7.addActionListener(e -> abrirVentanaTorres(proyectos.get(2), AsesorActual));
+        BotonProyecto7.setText(Sesion.getListaProyectos().get(2).getNombre().toUpperCase());
+        BotonProyecto7.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(2)));
 
         BotonProyecto8.setBackground(new java.awt.Color(170, 170, 170));
         BotonProyecto8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonProyecto8.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto8.setBorder(null);
         BotonProyecto8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto8.setText(proyectos.get(3).getNombre().toUpperCase());
-        BotonProyecto8.addActionListener(e -> abrirVentanaTorres(proyectos.get(3), AsesorActual));
+        BotonProyecto8.setText(Sesion.getListaProyectos().get(3).getNombre().toUpperCase());
+        BotonProyecto8.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(3)));
 
-
-      
-
-       
-
+        
         javax.swing.GroupLayout PanelPrincipalAsLayout = new javax.swing.GroupLayout(PanelPrincipalAs);
         PanelPrincipalAs.setLayout(PanelPrincipalAsLayout);
         PanelPrincipalAsLayout.setHorizontalGroup(
@@ -245,9 +232,11 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         pack();
     }
 
-//Al presionar el botón ConsultarCuotas, se le muestra un mensaje al usuario que indica que esta ventana no está completada todavía, y no puede acceder a ella.
+
     private void BotonConsultarCuotasActionPerformed(java.awt.event.ActionEvent evt) {
-        JOptionPane.showMessageDialog(this, "Lo sentimos, esta ventana esta en construcción","Mensaje de Información", JOptionPane.INFORMATION_MESSAGE);
+        VentanaCuotas VentanaCuotas = new VentanaCuotas();
+        this.dispose();
+        VentanaCuotas.setVisible(true);
     }
 
 /*Al presionar el Boton CerrarSesion, se le muestra al usuario un mensaje confirmándole su acción, se cierra la ventana actual, se crea una nueva ventana de inicio de Sesion
@@ -262,8 +251,8 @@ y se hace visible*/
 
 /*Metodo para abrir la ventana de las torres del proyecto. Se crae un objeto del tipo VentanaTorresAsesor, pasandole como Parámetro, un objeto del tipo Proyecto, y el AsesorActual, 
 que es un atributo de la clase. Se cierra la ventana Actual, y se muestra la nueva ventana.*/
-   private void abrirVentanaTorres(Proyecto proyecto, Asesor AsesorActual) {
-        VentanaTorresAsesor VentanaTorresAsesor = new VentanaTorresAsesor(proyecto, AsesorActual);
+   private void abrirVentanaTorres(Proyecto proyecto) {
+        VentanaTorresAsesor VentanaTorresAsesor = new VentanaTorresAsesor(proyecto);
         this.dispose();
         VentanaTorresAsesor.setVisible(true);
     }

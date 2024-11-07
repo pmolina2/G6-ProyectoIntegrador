@@ -2,16 +2,14 @@
 package Vista;
 
 //Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
-import java.util.ArrayList;
 import javax.swing.*;
 import CONTROLADOR.*;
+import Dominio.*;
 
 public class VentanaInicioAdmin extends javax.swing.JFrame {
 
 
     //Se definen dos atributos, un ArrayList de objetos del tipo Proyecto, y un objeto del tipo Admin.
-    private ArrayList<Proyecto> proyectos;
-    private Admin AdminActual;
 
 
     /*Método constructor de la clase. Primero, se asignan a los atributos de la clase, el Administrador, y la lista de proyectos que se pasaron como parámetros, luego
@@ -19,17 +17,15 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
     la ayuda de la interfaz Icon, y el LabelImagen2. Se establece que el LabelNombre sea opaco, se guarda en una variable el nombre del administrador pasado como parametro,
     y luego se establece el texto del label nombre, como el nombre del administrador, y el texto de label rol, como la palabra "ADMINISTRADOR".*/
 
-    public VentanaInicioAdmin(Admin AdminActual, ArrayList<Proyecto> proyectos) {
-        this.proyectos = proyectos;
-        this.AdminActual = AdminActual;
+    public VentanaInicioAdmin() {
+
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
         Icon miIcono = new ImageIcon(new ImageIcon(getClass().getResource("/Iconos/IconoSinFondo.png")).getImage()
                 .getScaledInstance(LabelImagen2.getWidth(), LabelImagen2.getHeight(), 0));
         LabelImagen2.setIcon(miIcono);
         LabelNombre.setOpaque(true);
-        String NombreAdmin = AdminActual.getNombreCompleto().toUpperCase();
-        LabelNombre.setText(NombreAdmin);
+        LabelNombre.setText(Sesion.getNombre().toUpperCase());
         LabelRol.setOpaque(true);
         LabelRol.setText("ADMINISTRADOR");
     }
@@ -154,32 +150,32 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
         BotonProyecto1.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto1.setBorder(null);
         BotonProyecto1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto1.setText(proyectos.get(0).getNombre().toUpperCase());
-        BotonProyecto1.addActionListener(e -> abrirVentanaTorres(proyectos.get(0)));
+        BotonProyecto1.setText(Sesion.getListaProyectos().get(0).getNombre().toUpperCase());
+        BotonProyecto1.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(0)));
 
         BotonProyecto2.setBackground(new java.awt.Color(170, 170, 170));
         BotonProyecto2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
         BotonProyecto2.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto2.setBorder(null);
         BotonProyecto2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto2.setText(proyectos.get(1).getNombre().toUpperCase());
-        BotonProyecto2.addActionListener(e -> abrirVentanaTorres(proyectos.get(1)));
+        BotonProyecto2.setText(Sesion.getListaProyectos().get(1).getNombre().toUpperCase());
+        BotonProyecto2.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(1)));
 
         BotonProyecto3.setBackground(new java.awt.Color(170, 170, 170));
         BotonProyecto3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
         BotonProyecto3.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto3.setBorder(null);
         BotonProyecto3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto3.setText(proyectos.get(2).getNombre().toUpperCase());
-        BotonProyecto3.addActionListener(e -> abrirVentanaTorres(proyectos.get(2)));
+        BotonProyecto3.setText(Sesion.getListaProyectos().get(2).getNombre().toUpperCase());
+        BotonProyecto3.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(2)));
 
         BotonProyecto4.setBackground(new java.awt.Color(170, 170, 170));
         BotonProyecto4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
         BotonProyecto4.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto4.setBorder(null);
         BotonProyecto4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto4.setText(proyectos.get(3).getNombre().toUpperCase());
-        BotonProyecto4.addActionListener(e -> abrirVentanaTorres(proyectos.get(3)));
+        BotonProyecto4.setText(Sesion.getListaProyectos().get(3).getNombre().toUpperCase());
+        BotonProyecto4.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(3)));
 
         javax.swing.GroupLayout PanelPrincipalALayout = new javax.swing.GroupLayout(PanelPrincipalA);
         PanelPrincipalA.setLayout(PanelPrincipalALayout);
@@ -317,9 +313,9 @@ y se hace visible*/
 /*Metodo para abrir la ventana de las torres del proyecto. Se crae un objeto del tipo VentanaTorresAdmin, pasandole como Parámetro, un objeto del tipo Proyecto, y el AdminActual, 
 que es un  atributo de la clase. Se cierra la ventana Actual, y se muestra la nueva ventana.*/
     private void abrirVentanaTorres(Proyecto proyecto) {
-        VentanaTorresAdmin VentanaTorres = new VentanaTorresAdmin(proyecto, AdminActual);
-        this.dispose();
-        VentanaTorres.setVisible(true);
+        //VentanaTorresAdmin VentanaTorres = new VentanaTorresAdmin();
+        this.setVisible(false);
+       //VentanaTorres.setVisible(true);
     }
 
     // Declaración de Variables

@@ -7,6 +7,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import CONTROLADOR.*;
+import Dominio.*;
 import java.util.ArrayList;
 
 
@@ -200,21 +201,10 @@ public class VentanaTorresAdmin extends javax.swing.JFrame {
     proyecto, la cual se guarda en una variable, para pasarsela al método VolverInicioAdmin, que recibe tanto la lista de proyectos, como el AdminActual, que es un atributo
     de la clase*/
     private void BotonRegresar3ActionPerformed(java.awt.event.ActionEvent evt) {     
-        ConsultarProyecto ConsultaProyecto = new ConsultarProyecto();
-        ArrayList <Proyecto> proyectos = ConsultaProyecto.devolverProyectos();
-        VolverInicioAdmin(AdminActual, proyectos); 
-    }                                              
-
-    
-    /*Este método sirve para regresar a la ventana principal del administrador. Recibe como parámetros un objeto del tipo Admin, y un ArrayList de objetos del tipo "Proyecto".
-    Se encarga de cerrar la ventana Actual, y crear una nueva ventana de inicio de administrador, pasándole como parámetros el AdminActual y la lista de proyectos, para 
-    posteriormente hacerla visible.*/
-    public void VolverInicioAdmin(Admin AdminActual, ArrayList <Proyecto> Proyectos){
+        VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin();
         this.dispose();
-        VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin(AdminActual, Proyectos);
         VentanaAdmin.setVisible(true);
-    }
-
+    }                                              
 
 
     //Método main definido por defecto por Netbeans
