@@ -1,35 +1,49 @@
 package CONTROLADOR;
-
-import java.util.Date;
-import java.sql.*;
+import Dominio.*;
+import MODELO.*;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
-public class ConsultarApartamento implements ConexionControladorBd{
+
+//Clase encargada de la consulta de los apartamentos, extiende la clase abstracta ConexionControladorBd
+//para facilitar la conexion.
+public class ConsultarApartamento extends ConexionControladorBd{
+
+    //metodo de tipo Arraylist que contiene objetos de clase Apartamento, es el encargado de devolver
+    //los apartamentos pertenecientes a una torre, esto mediante consulta con Base de datos, recibiendo
+    //la id de la torre, proveniente desde el package Vista.
     
     public ArrayList<Apartamento> devolverApartamentos(String idTorre){
 
+        //Arraylist donde se almacenaran los objetos de tipo apartamento.
         ArrayList<Apartamento> listaApartamentos = new ArrayList<>();
+
         try {
+            //Creamos la conexion a BD mediante la clase ApartamentoBd
+            ApartamentoBd apartamentoBd = new ApartamentoBd();
+            //Obtenemos un Hashtable proveniente del metodo consultarAptoTorre de la clase ApartamentoBd
+            //le pasamos la id de la torre para que logre hacer la consulta en la BD
+            Hashtable<String, ArrayList<String>> apartamento = apartamentoBd.consultarAptoTorre(idTorre);
+            //Recorremos todos los elementos del hastable
+            apartamento.forEach((key, values) -> {
+            //Descomponemos los datos del hashtable para almacenarlos en variables
+            String matricula = key;
+            String numApto = values.get(0);
+            String tipoUnidad = values.get(1);
+            String area = values.get(2);
+            String valorApto = values.get(3);
+            //Con las variables anteriores, creamos el objeto de la clase Apartamento
+            //y la agregamos a la lista "listaApartamentos".
+            Apartamento pApartamento = new Apartamento(matricula, numApto, tipoUnidad, area, valorApto);
+            listaApartamentos.add(pApartamento);
+        });
 
-            ResultSet apartamento = conexion.consultarBdSentencia("SELECT * FROM apartamento WHERE idTorre = "+ idTorre);
-            while (apartamento.next()) {
-                String matricula = apartamento.getString("matricula");
-                String numApto = apartamento.getString("numApto");
-                String tipoUnidad = apartamento.getString("tipoUnidad");
-                String area = apartamento.getString("area");
-                long valorApto = apartamento.getLong("valorApto");
-                Date fechaEscritura = apartamento.getDate("fechaEscritura");
-                Apartamento a = new Apartamento(matricula, numApto,tipoUnidad,area,valorApto,fechaEscritura );
-
-                listaApartamentos.add(a);
-            }
-            return listaApartamentos;
-
-        } catch (SQLException sqlx) {
-            System.out.println("Error " + sqlx.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
         }
 
-        return null;
+        //Retornamos "listaApartamentos", con los objetos de la clase Apartamento creados anterioremente
+        return listaApartamentos;
 
     }
     
