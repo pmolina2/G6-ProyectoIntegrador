@@ -27,15 +27,15 @@ public class ConsultarTorre extends ConexionControladorBd {
             //Recorrido de cada uno de los elementos del hashtable.
             torre.forEach((key, values) -> {
             //Descompicision de los elementos en variables, 
-            String id = key;
-            String numTorre = values.get(0);
-            String numApartamento = values.get(1);
-            String idProyecto1 = values.get(2);
-            //Creacion de un nuevo objeto de tipo torre, con la informacion almacenada en las variables
-            Torre pTorre = new Torre(id,numTorre,numApartamento,idProyecto1);
-            //Agregamos a la lista de torres, el objeto con la info de la torre.
-            listaTorres.add(pTorre);
-        });
+                String id = key;
+                String numTorre = values.get(0);
+                String numApartamento = values.get(1);
+                String idProyecto1 = values.get(2);
+                //Creacion de un nuevo objeto de tipo torre, con la informacion almacenada en las variables
+                Torre pTorre = new Torre(id,numTorre,numApartamento,idProyecto1);
+                //Agregamos a la lista de torres, el objeto con la info de la torre.
+                listaTorres.add(pTorre);
+            });
 
 
         } catch (Exception e) {

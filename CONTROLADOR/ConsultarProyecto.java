@@ -27,7 +27,7 @@ public class ConsultarProyecto extends ConexionControladorBd {
             String id = key;
             String nombre = values.get(0);
             String direccion = values.get(1);
-            String numTorres = values.get(2);
+            int numTorres = Integer.valueOf(values.get(2));
 
             //Con las variables creamos un nuevo objeto de tipo proyecto.
             Proyecto Pproyecto = new Proyecto(id,nombre,direccion,numTorres);

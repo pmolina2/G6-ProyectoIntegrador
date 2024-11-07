@@ -1,12 +1,10 @@
-package CONTROLADOR;
+package Dominio;
 
 //Clase entidad que guarda la informacion de los asesores.
 public class Proyecto {
 
     //atributos necesarios para almacenar la info.
-    @SuppressWarnings("unused")
     private String id, nombre, direccion;
-    @SuppressWarnings("unused")
     private int numTorres;
 
 //Constructor para darle valores a los atributos.

@@ -1,4 +1,4 @@
-package CONTROLADOR;
+package Dominio;
 
 //Clase entidad que guarda la informacion de los asesores.
 public class Torre {
@@ -13,5 +13,21 @@ public class Torre {
         this.numTorre = numTorre;
         this.numApartamento = numApartamento;
         this.idProyecto = idProyecto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNumTorre() {
+        return numTorre;
+    }
+
+    public String getNumApartamento() {
+        return numApartamento;
+    }
+
+    public String getIdProyecto() {
+        return idProyecto;
     }
 }
