@@ -1,27 +1,38 @@
 package MODELO;
-import java.util.*;
 import java.sql.*;
+import java.util.*;
 
-//CLASE CuotasBd QUE EXTIENDE LA CLASE ConexionBd PARA REALIZAR LAS CONSULTAS
 public class CuotasBd extends ConexionBd{
 
     //METODO DE LA CLASE ENCARGADO DE CONSULTAR TODAS LAS CUOTAS ALMACENADAS EN LA BD
-    public Hashtable<String, ArrayList<String>> consultarCuotas() throws SQLException{
+    public Hashtable<String, ArrayList<String>> consultarCuotas() throws SQLException {
      
         //SE INICIALIZA LA CONEXION Y EL HASH DONDE SE GUARDARAN LOS DATOS DE LA CONSULTA
-        Connection conexion = this.getConnection();
+        Connection conexion = this.getConnection("asesor", "asesor");
         Hashtable<String, ArrayList<String>> hashCuotas = new Hashtable<>();
 
-        //SENTENCIA SQL
+        //PREPARAR EL PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR LOS ESTADOS
+        CallableStatement callableStatement = conexion.prepareCall("{call proyectointegrador.actualizarEstadoCuota}");
+
+        try {
+            callableStatement.execute();
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar el procedimiento: " + e.getMessage());
+            throw e; 
+        } finally {
+            callableStatement.close();
+        }
+
+        //SENTENCIA SQL PARA CONSULTAR LAS CUOTAS
         String sentencia = """
                 SELECT *
-                FROM CUOTA
+                FROM proyectointegrador.CUOTA
                 """;
         PreparedStatement statement = conexion.prepareStatement(sentencia);
         ResultSet resultset = statement.executeQuery();
         
         //EJECUTAR EL CODIGO HASTA QUE EL RESULTSET NO DEVUELVA NADA
-        while(resultset.next()){
+        while (resultset.next()) {
 
             //SE INICIALIZA LA LISTA DE datosCuota POR CADA OBJETO EN EL RESULTSET PARA PODER SEPARARLOS DENTRO DEL HASHTABLE
             ArrayList<String> datosCuota = new ArrayList<>();
@@ -30,10 +41,10 @@ public class CuotasBd extends ConexionBd{
             datosCuota.add(resultset.getString("fechaCuota"));
             datosCuota.add(resultset.getString("numeroCuota"));
             datosCuota.add(resultset.getString("cedulaCliente"));
+            datosCuota.add(resultset.getString("idVenta"));
 
             //SE AGREGAN LOS DATOS AL HASH TOMANDO EL ID COMO KEY Y LA LISTA datosCuota COMO VALUE
             hashCuotas.put(resultset.getString("id"), datosCuota);
-
         }
 
         //SE USA EL METODO close PARA LOS OBJETOS
@@ -43,7 +54,5 @@ public class CuotasBd extends ConexionBd{
 
         //SE RETORNA EL HASHTABLE
         return hashCuotas;
-
     }
-    
 }

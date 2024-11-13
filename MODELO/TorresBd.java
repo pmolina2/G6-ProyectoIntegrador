@@ -3,14 +3,16 @@ import java.util.*;
 import java.sql.*;
 
 public class TorresBd extends ConexionBd{
-    
-    public Hashtable<String, ArrayList<String>> consultarTorreProyecto(String idProyecto) throws SQLException {
 
-        Connection conexion = this.getConnection();
+
+    
+    public Hashtable<String, ArrayList<String>> consultarTorreProyecto(String idProyecto, String usuario, String contraseña) throws SQLException {
+
+        Connection conexion = this.getConnection(usuario, contraseña);
 
         Hashtable<String, ArrayList<String>> hashTorres = new Hashtable<>();
 
-        String sentencia = "SELECT * FROM torre WHERE idProyecto = ?";
+        String sentencia = "SELECT * FROM proyectoIntegrador.torre WHERE idProyecto = ?";
         
         PreparedStatement statement = conexion.prepareStatement(sentencia);
         statement.setString(1, idProyecto);

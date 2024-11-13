@@ -1,5 +1,6 @@
 package MODELO;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 //CLASE CuotaCedulaBd QUE EXTIENDE LA CLASE ConexionBd PARA REALIZAR LA CONEXION A LA BD
@@ -10,13 +11,13 @@ public class CuotaCedulaBd extends ConexionBd{
 
         //SE INICIALIZA LA CONEXION Y LA LISTA DONDE SE GUARDARAN LOS DATOS DE LA CONSULTA.
         //SE USA UN ARRAYLIST DE TIPO STRING EN LUGAR DE UN RESULTSET PORQUE LA CONSULTA SOLO DEVOLVERA UN RESULTADO.
-        Connection conexion = this.getConnection();
+        Connection conexion = this.getConnection("asesor", "asesor");
         ArrayList<String> datosCuota = new ArrayList<>();
 
         //SENTENCIA SQL
         String sentencia = """
                 SELECT *
-                FROM cuota
+                FROM proyectoIntegrador.cuota
                 WHERE cedulaCliente = ?
                 """;
 
@@ -31,12 +32,18 @@ public class CuotaCedulaBd extends ConexionBd{
 
             //SE AGREGAN LOS DATOS EN ORDEN DE APARICION EN LA BD A LA LISTA
             datosCuota.add(resultset.getString("id"));
-            datosCuota.add(String.valueOf(resultset.getString("valor")));
+            datosCuota.add(resultset.getString("valor"));
             datosCuota.add(resultset.getString("estado"));
-            datosCuota.add(resultset.getString("fechaCuota"));
+
+            // Obtener la fecha de la base de datos y formatearla
+            java.sql.Date fecha = resultset.getDate("fechaCuota");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaFormateada = sdf.format(fecha);
+            datosCuota.add(fechaFormateada);
+
             datosCuota.add(resultset.getString("numeroCuota"));
             datosCuota.add(resultset.getString("cedulaCliente"));
-
+            datosCuota.add(resultset.getString("idVenta"));
         }
 
         //SE USA EL METODO close CON TODOS LOS OBJETOS
@@ -46,7 +53,5 @@ public class CuotaCedulaBd extends ConexionBd{
 
         //SE RETORNA LA LISTA CON LOS DATOS
         return datosCuota;
-
     }
-
 }

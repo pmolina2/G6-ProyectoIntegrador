@@ -11,30 +11,24 @@ import java.util.logging.*;
  * @author pierre
  */
 
-
-
 //CLASE PADRE ConexionBd QUE HACE LA CONEXION Y SE EXTIENDE A TODAS LAS CLASES PARA RELIZAR LAS CONSULTAS
 public class ConexionBd {
 
     //VARIABLES DE LA CLASE
 
     //ENCARGADA DE REALIZAR LA CONEXION, LOS DATOS SE OBTIENEN DEL ARCHIVO LISTENER.ORA EN LOS ARCHIVOS DE ORACLE
-    private String url = "jdbc:oracle:thin:@localhost:1521:XE";
-
-    //USUARIO Y CONTRASEÑA DEL USUARIO DE LA BASE DE DATOS.
-    private String usuario = "proyectoIntegradorpg6";
-    private String contraseña = "pg6";
+    private final String url = "jdbc:oracle:thin:@localhost:1521:XE";
 
     //OBJETO Connection con QUE ALMACENA LA CONEXION EN UNA VARIABLE, VALOR POR DEFECTO NULL.
     public Connection con = null;
 
     //CONSTRUCTOR DE LA CLASE
     public ConexionBd(){
-        
+
     }
 
     //METODO PARA OBTENER LA CONEXION
-    public Connection getConnection() {
+    public Connection getConnection(String usuario, String contraseña) {
         try {
             this.con = DriverManager.getConnection(url, usuario, contraseña);
         } catch (SQLException e) {

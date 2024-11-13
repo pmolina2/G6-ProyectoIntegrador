@@ -5,12 +5,12 @@ public class NumeroTorreBd extends ConexionBd{
     
     public String consultarNumTorre(String matricula) throws SQLException{
 
-        Connection conexion = this.getConnection();
+        Connection conexion = this.getConnection("asesor","asesor");
 
         String sentencia = """
                 SELECT t.numTorre
-                FROM apartamento a
-                JOIN torre t ON a.idTorre = t.id
+                FROM proyectointegrador.apartamento a
+                JOIN proyectointegrador.torre t ON a.idTorre = t.id
                 WHERE a.matricula = ?
                 """;
         PreparedStatement statement = conexion.prepareStatement(sentencia);

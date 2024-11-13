@@ -8,16 +8,16 @@ public class ApartamentoBd extends ConexionBd{
     
 
     //METODO consultarAptoTorre QUE PIDE COMO PARAMETRO EL ID DE LA TORRE EN LA VARIABLE idTorre
-    public Hashtable<String, ArrayList<String>> consultarAptoTorre(String idTorre) throws SQLException{
+    public Hashtable<String, ArrayList<String>> consultarAptoTorre(String idTorre, String usuario, String contraseña) throws SQLException{
         
       
         //SE CREA LA CONEXION A LA BASE DE DATOS CON EL METODO getConnection DE LA CLASE PADRE
-        Connection conexion = this.getConnection();
+        Connection conexion = this.getConnection(usuario, contraseña);
 
         //SE INICIALIZAN EL HASHTABLE hashApartamentos PARA ALMACENAR LOS DATOS DEL RESULTSET
         //Y LA VARIABLE SENTENCIA QUE CONTIENE LA SENTENCIA SQL
         Hashtable<String, ArrayList<String>> hashApartamentos = new Hashtable<>();
-        String sentencia = "SELECT * FROM apartamento where idTorre = ? ";
+        String sentencia = "SELECT * FROM proyectoIntegrador.apartamento where idTorre = ? ";
 
         //SE INICIALIZAN LOS OBJETOS DE LA LIBRERIA SQL PreparedStatement y ResultSet PARA REALIZAR LA CONSULTA
         PreparedStatement statement = conexion.prepareStatement(sentencia);

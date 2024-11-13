@@ -4,14 +4,14 @@ import java.sql.*;
 
 public class ProyectosBd extends ConexionBd{
     
-    public Hashtable<String, ArrayList<String>> consultarProyectos() throws SQLException{
+    public Hashtable<String, ArrayList<String>> consultarProyectos(String usuario, String contraseña) throws SQLException{
 
-        Connection conexion = this.getConnection();
+        Connection conexion = this.getConnection(usuario, contraseña);
         
         Hashtable<String, ArrayList<String>> hashProyectos = new Hashtable<>();
         String sentencia = """
                 SELECT * 
-                FROM PROYECTO
+                FROM proyectoIntegrador.PROYECTO
                 """;
         PreparedStatement statement = conexion.prepareStatement(sentencia);
         ResultSet resultset = statement.executeQuery();

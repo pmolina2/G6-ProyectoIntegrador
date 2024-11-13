@@ -6,17 +6,18 @@ public class UsuarioBd extends ConexionBd{
     
     public ArrayList<String> consultarUsuario(String nombreTabla, String cedula){
 
-        Connection conexion = this.getConnection();
+        Connection conexion = this.getConnection("userInicio", "userInicio");
         
         ArrayList<String> datosUsuario = new ArrayList<>();
 
         String sentencia = String.format("""
                 SELECT *
-                FROM %s
+                FROM proyectoIntegrador.%s
                 WHERE cedula = ?
                 """, nombreTabla);
+        
         try {
-            
+
             PreparedStatement statement = conexion.prepareStatement(sentencia);
             statement.setString(1, cedula);
             ResultSet resultset = statement.executeQuery();
@@ -34,14 +35,14 @@ public class UsuarioBd extends ConexionBd{
 
             statement.close();
             resultset.close();
-            closeConnection();
-            return datosUsuario;
             
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error "+e.getMessage());
         }
 
-        return null;
+        closeConnection();
+        return datosUsuario;
+
     }
 
 }

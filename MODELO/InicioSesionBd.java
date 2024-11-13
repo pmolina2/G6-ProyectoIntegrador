@@ -1,9 +1,10 @@
 package MODELO;
-import java.util.*;
 import java.sql.*;
+import java.util.*;
 
 //CLASE InicioSesionBd QUE EXTIENDE LA CLASE ConexionBd PARA REALIZAR LAS CONSULTAS
 public class InicioSesionBd extends ConexionBd{
+
 
     /*METODO DE LA CLASE PARA HACER LA CONSULTAR EN LA BD E INICIAR SESION DEPENDIENDO DEL USUARIO
      *SE LE PASA COMO PARAMETRO EL NOMBRE DE LA TABLA EN LA QUE SE QUIERE HACER LA CONSULTA, ADEMAS DE LA CEDULA Y 
@@ -12,13 +13,13 @@ public class InicioSesionBd extends ConexionBd{
     public ArrayList<String> consultarInicioSesion(String nombreTabla, String cedula, String contraseña) throws SQLException {
 
         //SE INICIALIZA LA CONEXION A LA BD Y EL ARRAYLIST listaDatos PARA ALMACENAR LOS DATOS DE LA CONSULTA
-        Connection conexion = this.getConnection();   
+        Connection conexion = this.getConnection("UserInicio", "UserInicio");   
         ArrayList<String> listaDatos = new ArrayList<>();    
         
         //SENTENCIA SQL
         String sentencia = String.format("""
                 SELECT cedula, contrasenna
-                FROM %s
+                FROM proyectoIntegrador.%s
                 WHERE cedula = ? 
                 AND contrasenna = ?
                 """, nombreTabla);
@@ -36,6 +37,7 @@ public class InicioSesionBd extends ConexionBd{
             //SE AGREGAN LOS DATOS DE LA CONSULTA EN EL ARRAYLIST listaDatos
             listaDatos.add(resultset.getString("cedula"));
             listaDatos.add(resultset.getString("contrasenna"));
+
         }
         
         //SE USA EL METODO close PARA LOS OBJETOS 
