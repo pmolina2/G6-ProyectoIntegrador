@@ -1,24 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CONTROLADOR;
-import MODELO.UsuarioBd;
+
+import MODELO.*;
 import java.util.ArrayList;
 
-/**
- *
- * @author pierr
- */
-public class ConsultarCliente {
-    
-    public boolean consultaCliente(String cedula){
+//Clase encargada de obtener el nombre del cliente, extendemos la clase abstracta ConexionControladorBd para facilitar la conexion.
+
+public class ConsultarCliente extends ConexionControladorBd{
+
+    //Metodo encargado de obtener la informacion del cliente, recibe la cedula del cliente como parametro.
+
+    public String consultarCliente(String cedulaCliente){
+
+        //Creamos un arraylist donde recibimos la informacion desde la capa modelo.
+        ArrayList<String> cliente = new ArrayList<>();
+        //Creamos un objeto de la clase de la capa modelo.
+        ClienteBd Cliente = new ClienteBd();
+        //le damos valores al arraylist con el arraylist que devuelve el metodo consultarCliente de modelo, pasandole la cedula del cliente como parametro.
+        cliente = Cliente.consultarCliente(cedulaCliente);
+        //Obtenemos los datos en la posicion 1 del arraylist, lo que vendria siendo el nombre del cliente.
+        String nombreCliente = cliente.get(1);
         
-        UsuarioBd u = new UsuarioBd(());
-        
-        
-        
-        
+        //retornamos el nombre del cliente.
+        return nombreCliente;
         
     }
+
 }

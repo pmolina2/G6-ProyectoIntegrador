@@ -10,7 +10,7 @@ public class ConsultarProyecto extends ConexionControladorBd {
 
     // Método encargado de retornar la informacion de los proyectos, retornandolos en un arraylist de tipo proyecto.
 
-    public ArrayList<Proyecto> devolverProyectos() {
+    public ArrayList<Proyecto> devolverProyectos(String usuario, String contraseña) {
 
     //Creacion del arraylist de tipo proyecto, encargado de almacenar los objetos con la info de los mismos.
     ArrayList<Proyecto> listaProyectos = new ArrayList<>();
@@ -19,7 +19,7 @@ public class ConsultarProyecto extends ConexionControladorBd {
         //Inicio de la conexion a BD con la clase ProyectosBd
         ProyectosBd proyectos = new ProyectosBd();
         //Se obtiene un hashtable proveniente de la consulta realizada en el metodo consultarProyectos de la clase ProyectosBd
-        Hashtable<String, ArrayList<String>> proyecto = proyectos.consultarProyectos();
+        Hashtable<String, ArrayList<String>> proyecto = proyectos.consultarProyectos(usuario, contraseña);
 
         //Recorrido de cada uno de los elementos en el hashtable.
         proyecto.forEach((key, values) -> {

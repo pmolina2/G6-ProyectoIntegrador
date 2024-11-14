@@ -1,8 +1,8 @@
 package CONTROLADOR;
 
+import MODELO.*;
 import java.util.*;
 import Dominio.*;
-import MODELO.*;
 
 //Clase encargada de obtener la info de las cuotas de todos los clientes, extiende la clase abstracta ConexionControladorBd
 //para facilitar la conexion a BD
@@ -26,13 +26,13 @@ public class ConsultarCuotas extends ConexionControladorBd {
                 //Descomposicion los elementos del hashtable con la informacion de las cuotas en variables
                 String id = key;
                 String valor = values.get(0);
-                String numeroCuota = values.get(1);
-                String estado = values.get(2);
-                String cedulaCliente = values.get(3);
-                String fechaCuota = values.get(4);
-
+                String estado = values.get(1);
+                String fechaCuota = values.get(2);
+                String numeroCuota = values.get(3);
+                String cedulaCliente = values.get(4);
+                String idVenta = values.get(5);
                 //Con las variables, se crea un objeto de tipo cuota.
-                Cuota pCuotas = new Cuota(id, valor, numeroCuota, estado, cedulaCliente, fechaCuota);
+                Cuota pCuotas = new Cuota(id, valor, numeroCuota, estado, cedulaCliente, fechaCuota, idVenta);
                 //Se almacena en el arraylist creado en el principio.
                 listaCuotas.add(pCuotas);
             });

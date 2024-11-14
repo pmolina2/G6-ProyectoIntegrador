@@ -13,7 +13,7 @@ public class ConsultarApartamento extends ConexionControladorBd{
     //los apartamentos pertenecientes a una torre, esto mediante consulta con Base de datos, recibiendo
     //la id de la torre, proveniente desde el package Vista.
     
-    public ArrayList<Apartamento> devolverApartamentos(String idTorre){
+    public ArrayList<Apartamento> devolverApartamentos(String idTorre, String usuario, String contraseña){
 
         //Arraylist donde se almacenaran los objetos de tipo apartamento.
         ArrayList<Apartamento> listaApartamentos = new ArrayList<>();
@@ -23,7 +23,7 @@ public class ConsultarApartamento extends ConexionControladorBd{
             ApartamentoBd apartamentoBd = new ApartamentoBd();
             //Obtenemos un Hashtable proveniente del metodo consultarAptoTorre de la clase ApartamentoBd
             //le pasamos la id de la torre para que logre hacer la consulta en la BD
-            Hashtable<String, ArrayList<String>> apartamento = apartamentoBd.consultarAptoTorre(idTorre);
+            Hashtable<String, ArrayList<String>> apartamento = apartamentoBd.consultarAptoTorre(idTorre, usuario, contraseña);
             //Recorremos todos los elementos del hastable
             apartamento.forEach((key, values) -> {
             //Descomponemos los datos del hashtable para almacenarlos en variables

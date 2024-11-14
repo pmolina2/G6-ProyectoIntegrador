@@ -13,7 +13,7 @@ public class ConsultarTorre extends ConexionControladorBd {
     // Método encargado de devolver la informacion de las torres, almacenando objetos en un arraylist, ademas
     //recibe como parametros la id del proyecto.
 
-    public ArrayList<Torre> devolverTorres(String idProyecto) {
+    public ArrayList<Torre> devolverTorres(String idProyecto, String usuario, String contraseña) {
 
         //Creacion del arraylist de tipo torre donde se almacenara la info.
         ArrayList<Torre> listaTorres = new ArrayList<>();
@@ -23,7 +23,7 @@ public class ConsultarTorre extends ConexionControladorBd {
             TorresBd torres = new TorresBd();
             //Obtenemos un hashtable con la informacion en strings, provenientes del metodo consultarTorreProyecto, enviando como parametro
             //la id del proyecto
-            Hashtable<String, ArrayList<String>> torre = torres.consultarTorreProyecto(idProyecto);
+            Hashtable<String, ArrayList<String>> torre = torres.consultarTorreProyecto(idProyecto, usuario, contraseña);
             //Recorrido de cada uno de los elementos del hashtable.
             torre.forEach((key, values) -> {
             //Descompicision de los elementos en variables, 
