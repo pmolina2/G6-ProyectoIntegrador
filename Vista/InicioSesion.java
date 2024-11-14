@@ -1,4 +1,3 @@
-
 package Vista;
 
 //Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
@@ -57,7 +56,7 @@ public class InicioSesion extends javax.swing.JFrame {
         menuBar1.add(menu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Inicio de Sesión");
+        setTitle("SGPU - Inicio de Sesión");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -202,7 +201,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
             if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("administrador")) {
                 Admin AdminActual = ConsultaAdmin.devolverAdmin(cedulaUsuario);
-                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos();
+                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos("admin", "admin");
                 
                 @SuppressWarnings("unused")
                 Sesion SesionActual = new Sesion(AdminActual.getCedula(), AdminActual.getNombreCompleto(), Proyectos);
@@ -213,7 +212,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
             } else if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("asesor")) {
                 Asesor AsesorActual = ConsultaAsesor.devolverAsesor(cedulaUsuario);
-                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos();
+                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos("asesor","asesor");
                
                 @SuppressWarnings("unused")
                 Sesion SesionActual = new Sesion(AsesorActual.getCedula(), AsesorActual.getNombreCompleto(), Proyectos);

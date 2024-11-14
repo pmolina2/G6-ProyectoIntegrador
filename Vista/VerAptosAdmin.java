@@ -4,9 +4,6 @@ package Vista;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
-import javax.swing.JPanel;
-import java.awt.Image;
-import java.awt.Graphics;
 import java.awt.BorderLayout;
 import CONTROLADOR.*;
 import Dominio.*;
@@ -22,7 +19,6 @@ public class VerAptosAdmin extends javax.swing.JFrame {
      private ButtonGroup buttonGroup;
      ArrayList <Apartamento> Apartamentos;
 
-     FondoPanel2 fondo2 = new FondoPanel2();
 
 
 /*Método que inicializa la clase. Primero se inicializan los componentes, luego se establece el icono del Jframe, utilizando el método SetIconImage y la imagen "Logo Ventana" que 
@@ -38,7 +34,7 @@ public VerAptosAdmin(Torre torre) {
     initComponents();
     
     // Configurar el panel de fondo
-    FondoPanel2 fondo2 = new FondoPanel2();
+    FondoPanel fondo2 = new FondoPanel();
     fondo2.setLayout(new BorderLayout());
     
     // Agregar el panel principal al panel de fondo
@@ -60,7 +56,7 @@ public VerAptosAdmin(Torre torre) {
     buttonGroup.add(BotonApto5);
     
     ConsultarApartamento ConsultaApto = new ConsultarApartamento();
-    this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId());
+    this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId(), "admin", "admin");
     BotonApto1.setText(Apartamentos.get(0).getNumApto());
     BotonApto2.setText(Apartamentos.get(1).getNumApto());
     BotonApto3.setText(Apartamentos.get(2).getNumApto());
@@ -89,7 +85,7 @@ public VerAptosAdmin(Torre torre) {
         BotonApto1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Visualizacion Aptos");
+        setTitle("SGPU - Apartamentos");
         setResizable(false);
 
         PanelPrincipalAptos.setBackground(new java.awt.Color(255, 255, 255));
@@ -274,9 +270,9 @@ public VerAptosAdmin(Torre torre) {
 
 
     private void BotonRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {      
-
-    
-
+        VentanaTorresAdmin VentanaTorresAd = new VentanaTorresAdmin();
+        this.dispose();
+        VentanaTorresAd.setVisible(true);
     }  
 
     /*Al presionar cualquiera de los botones, se muestra la información del Apartamento que representan. Se establece el texto de LabelArea, usando el método "getArea" del objeto
@@ -355,20 +351,6 @@ public VerAptosAdmin(Torre torre) {
     private javax.swing.JPanel PanelPrincipalAptos;
     // Fin de declaración de Variables
 
-
-class FondoPanel2 extends JPanel {
-    private Image imagen;
-    
-    public FondoPanel2() {
-        imagen = new ImageIcon(getClass().getResource("/Iconos/Plantilla.png")).getImage();
-    }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-    }
-}
 }
 
 

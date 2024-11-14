@@ -5,6 +5,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;  // Para usar Swing components like JLabel and JTextField
 import java.awt.*;
+import CONTROLADOR.*;
+import Dominio.*;
+import java.util.*;
 
 public class VentanaCuotas extends javax.swing.JFrame {
 
@@ -24,32 +27,46 @@ public class VentanaCuotas extends javax.swing.JFrame {
         PanelPrincipalCuotas.setOpaque(false);
 
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
-        Icon miIcono = new ImageIcon(new ImageIcon(getClass().getResource("/Iconos/IconoLupa.png")).getImage().getScaledInstance(LabelLupa.getWidth(), LabelLupa.getHeight(), 0));
+        Icon miIcono = new ImageIcon(new ImageIcon(getClass().getResource("/Iconos/LupaIcono.png")).getImage().getScaledInstance(LabelLupa.getWidth(), LabelLupa.getHeight(), 0));
         LabelLupa.setIcon(miIcono);
-        PanelCuotas.setLayout(new javax.swing.BoxLayout(PanelCuotas, javax.swing.BoxLayout.Y_AXIS));
-        agregarPanelesCuota(10);
-        
-        
-        //Mover esta parte al initcomponents
         LabelLupa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        PanelCuotas.setLayout(new javax.swing.BoxLayout(PanelCuotas, javax.swing.BoxLayout.Y_AXIS));
+        
+        ConsultarCuotas consultaCuotas = new ConsultarCuotas();
+        ArrayList<Cuota> ListaCuotas = consultaCuotas.devolverCuotas();
+        agregarPanelesCuota(ListaCuotas);
+       
     }
     
     
-    private void agregarPanelesCuota(int cantidad) {
-    for (int i = 0; i < cantidad; i++) {
-        JPanel nuevoPanel = crearPanelCuota("Pierre Angelo Molina Motta " + (i + 1), "CC " + (1097493167 + i), "VENCIDA");
+    private void agregarPanelesCuota(ArrayList<Cuota> ListaCuotas) {
+    int alturaTotal = 0; // Variable para calcular la altura total de los paneles
+
+    for (Cuota cuotaActual : ListaCuotas) {
+        ConsultarCliente ConsultaCliente = new ConsultarCliente();
+        String NombreCliente = ConsultaCliente.consultarCliente(cuotaActual.getCedulaCliente());
+        JPanel nuevoPanel = crearPanelCuota(NombreCliente, cuotaActual.getCedulaCliente(), cuotaActual.getEstado());
+        
+        // Añadir panel al contenedor
         PanelCuotas.add(nuevoPanel);
-        // Añadir un strut para el espacio entre paneles
-        PanelCuotas.add(Box.createRigidArea(new Dimension(0, 10))); // 10 píxeles de separación vertical
+        PanelCuotas.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre los paneles
+
+        // Aumentar la altura total
+        alturaTotal += nuevoPanel.getPreferredSize().height + 10; // 10 es el espacio entre paneles
     }
-    // Actualiza el tamaño del PanelCuotas para que incluya todos los paneles
+
+    // Establecer el tamaño preferido del PanelCuotas según la cantidad de paneles
+    PanelCuotas.setPreferredSize(new java.awt.Dimension(PanelCuotas.getWidth(), alturaTotal));
+
+    // Actualizar la visualización del PanelCuotas
     PanelCuotas.revalidate();
     PanelCuotas.repaint();
 }
+
     
 
-
 private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, String estado) {
+
         JPanel panelCuota = new JPanel();
         panelCuota.setBackground(new java.awt.Color(255, 255, 255));
         panelCuota.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(175, 175, 175)));
@@ -57,28 +74,35 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
         
         // Cambiar a BoxLayout en vertical para el panel
         panelCuota.setLayout(new javax.swing.BoxLayout(panelCuota, javax.swing.BoxLayout.Y_AXIS));
-        
+         
         // Añadir espacio vertical para centrar los elementos
         panelCuota.add(Box.createVerticalGlue());
 
-        JPanel contenidoPanel = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 70, 0)); // centrar horizontalmente
+        JPanel contenidoPanel = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 60, 0)); // centrar horizontalmente
         contenidoPanel.setOpaque(false); // hacer que el panel sea transparente para mantener el fondo del panel principal
 
         JLabel labelNomCliente = new JLabel(nombreCliente);
-        labelNomCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25));
+        labelNomCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 23));
         labelNomCliente.setForeground(new java.awt.Color(102, 102, 102));
         labelNomCliente.setPreferredSize(new Dimension(350, 40));
 
         JLabel labelCedCliente = new JLabel(cedulaCliente);
-        labelCedCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25));
+        labelCedCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 23));
         labelCedCliente.setForeground(new java.awt.Color(102, 102, 102));
-        labelCedCliente.setPreferredSize(new Dimension(200, 40));
+        labelCedCliente.setPreferredSize(new Dimension(160, 40));
 
         JLabel labelEstado = new JLabel(estado);
-        labelEstado.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25));
+        labelEstado.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 23));
         labelEstado.setForeground(new java.awt.Color(102, 102, 102));
-        labelEstado.setPreferredSize(new Dimension(120, 40));
-        labelEstado.setForeground(Color.RED);
+        labelEstado.setPreferredSize(new Dimension(190, 40));
+
+        if (estado.equals("Proxima a vencer")){
+            labelEstado.setForeground(Color.GREEN);
+        }
+        else{
+            labelEstado.setForeground(Color.RED);
+        }
+
 
         // Agregar etiquetas al panel de contenido con espacio entre ellas
         contenidoPanel.add(labelNomCliente);
@@ -97,7 +121,8 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
         panelCuota.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                VentanaCuotaCliente CuotaCliente = new VentanaCuotaCliente();
+                String CedulaCliente = labelCedCliente.getText();
+                VentanaCuotaCliente CuotaCliente = new VentanaCuotaCliente(CedulaCliente);
                 dispose();
                 CuotaCliente.setVisible(true);
                
@@ -108,7 +133,7 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents() {
+        private void initComponents() {
 
         PanelPrincipalCuotas = new javax.swing.JPanel();
         LabelEstadoCuotas = new javax.swing.JLabel();
@@ -117,9 +142,9 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
         ScrollPaneCuotas = new javax.swing.JScrollPane();
         PanelCuotas = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-
+        BotonRegresarEC = new javax.swing.JButton();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Estado de Cuotas");
+        setTitle("SGPU - Estado de Cuotas");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -183,10 +208,25 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        BotonRegresarEC.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
+        BotonRegresarEC.setText("← Regresar");
+        BotonRegresarEC.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), null));
+        BotonRegresarEC.setContentAreaFilled(false);
+        BotonRegresarEC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BotonRegresarEC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonRegresarECActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelPrincipalCuotasLayout = new javax.swing.GroupLayout(PanelPrincipalCuotas);
         PanelPrincipalCuotas.setLayout(PanelPrincipalCuotasLayout);
         PanelPrincipalCuotasLayout.setHorizontalGroup(
             PanelPrincipalCuotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalCuotasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BotonRegresarEC, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61))
             .addGroup(PanelPrincipalCuotasLayout.createSequentialGroup()
                 .addGroup(PanelPrincipalCuotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelPrincipalCuotasLayout.createSequentialGroup()
@@ -210,7 +250,9 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
         PanelPrincipalCuotasLayout.setVerticalGroup(
             PanelPrincipalCuotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalCuotasLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(BotonRegresarEC, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(LabelEstadoCuotas)
                 .addGap(71, 71, 71)
                 .addGroup(PanelPrincipalCuotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +260,7 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
                     .addComponent(LabelLupa, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(ScrollPaneCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
             .addGroup(PanelPrincipalCuotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(PanelPrincipalCuotasLayout.createSequentialGroup()
                     .addGap(350, 350, 350)
@@ -230,15 +272,11 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelPrincipalCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(PanelPrincipalCuotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelPrincipalCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(PanelPrincipalCuotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -248,16 +286,13 @@ private JPanel crearPanelCuota(String nombreCliente, String cedulaCliente, Strin
         BarraBusqueda.setText("");
     }                                          
 
-    
-/*. (punto): Este símbolo representa cualquier carácter excepto un salto de línea.
-* (asterisco): Este símbolo significa que el carácter anterior (en este caso el punto) puede aparecer cero o más veces. Así que .* significa "cualquier carácter, cero o más veces".
-[a-zA-Z]: Este conjunto de caracteres se utiliza para representar cualquier letra del alfabeto.
-a-z significa cualquier letra minúscula de la 'a' a la 'z'.
-A-Z significa cualquier letra mayúscula de la 'A' a la 'Z'.
-Entonces, [a-zA-Z] cubre todas las letras del alfabeto en ambos casos.
-+ (más): Este símbolo significa que el carácter anterior (en este caso, el conjunto de letras) debe aparecer una o más veces. Así que [a-zA-Z]+ significa "una o más letras".
-.* (de nuevo): Similar a lo mencionado antes, esta parte indica que después de encontrar al menos una letra, puede haber cualquier carácter, cero o más veces.*/
-    
+    private void BotonRegresarECActionPerformed(java.awt.event.ActionEvent evt) {                                                
+       VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
+        this.dispose();
+        VentanaAsesor.setVisible(true);
+    }   
+
+
     
     private void LabelLupaMouseClicked(java.awt.event.MouseEvent evt) {                                       
         if (BarraBusqueda.getText().trim().isEmpty()) {
@@ -265,10 +300,15 @@ Entonces, [a-zA-Z] cubre todas las letras del alfabeto en ambos casos.
         } else if(BarraBusqueda.getText().matches(".*[a-zA-Z]+.*")){ 
             JOptionPane.showMessageDialog(this, "La cédula ingresada contiene letras \nIntente nuevamente", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
         }  
-             else{
-            VentanaCuotaCliente CuotaCliente = new VentanaCuotaCliente();
-            dispose();
-            CuotaCliente.setVisible(true);            
+            else{
+                ExistenciaCuotaCliente ExistenciaCuota = new ExistenciaCuotaCliente();
+                if (ExistenciaCuota.existenciaCuota(BarraBusqueda.getText())){
+                VentanaCuotaCliente CuotaCliente = new VentanaCuotaCliente(BarraBusqueda.getText());
+                dispose();
+                CuotaCliente.setVisible(true);      
+                }else{
+                JOptionPane.showMessageDialog(this, "No se encontró al cliente de cédula " + BarraBusqueda.getText() + "\no este no tiene ninguna cuota","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+                }
         }
     }                                      
 
@@ -289,6 +329,7 @@ Entonces, [a-zA-Z] cubre todas las letras del alfabeto en ambos casos.
     private javax.swing.JPanel PanelPrincipalCuotas;
     private javax.swing.JScrollPane ScrollPaneCuotas;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton BotonRegresarEC;
     // End of variables declaration                   
 
 }

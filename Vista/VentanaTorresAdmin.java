@@ -15,8 +15,7 @@ public class VentanaTorresAdmin extends javax.swing.JFrame {
 
 
     //Se establecen como atributos un objeto del tipo "FondoPanel2", un objeto del tipo "Admin", y un ArrayList de objetos del tipo "Torre"
-    FondoPanel2 fondo = new FondoPanel2();
-    Admin AdminActual;
+    private FondoPanel2 fondo = new FondoPanel2();
     private ArrayList<Torre> Torres;
     
    
@@ -27,14 +26,13 @@ public class VentanaTorresAdmin extends javax.swing.JFrame {
    de objetos del tipo Torre, el cual se asigna al atributo "Torres" de la clase. Luego, se establece el texto de cada uno de los botones de las torres, tomando en cuenta
    la torre correspondiente de la lista. Por ejemplo, para el BotonTorre1as se establece el número de la torre en la posición 0 de la lista. */
    
-    public VentanaTorresAdmin(Proyecto proyecto, Admin AdminActual) {
-        this.AdminActual = AdminActual;
+    public VentanaTorresAdmin() {
         this.setContentPane(fondo);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
-        LabelNombreProyecto.setText(proyecto.getNombre().toUpperCase());
+        LabelNombreProyecto.setText(Sesion.getProyectoActual().getNombre().toUpperCase());
         ConsultarTorre ConsultaTorre = new ConsultarTorre();
-        this.Torres = ConsultaTorre.devolverTorres(proyecto.getId());
+        this.Torres = ConsultaTorre.devolverTorres(Sesion.getProyectoActual().getId(), "admin", "admin");
         BotonTorre1as.setText("TORRE " + Torres.get(0).getNumTorre().toUpperCase());
         BotonTorre2as.setText("TORRE " + Torres.get(1).getNumTorre().toUpperCase());
         BotonTorre3as.setText("TORRE " + Torres.get(2).getNumTorre().toUpperCase());
@@ -54,7 +52,7 @@ public class VentanaTorresAdmin extends javax.swing.JFrame {
         BotonRegresar3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Torres");
+        setTitle("SGPU - Torres");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 

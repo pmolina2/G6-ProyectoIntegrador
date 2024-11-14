@@ -1,10 +1,8 @@
-
 package Vista;
-
 //Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
-import javax.swing.*;
 import CONTROLADOR.*;
 import Dominio.*;
+import javax.swing.*;
 
 public class VentanaInicioAdmin extends javax.swing.JFrame {
 
@@ -48,7 +46,7 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
         BotonProyecto4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Inicio");
+        setTitle("SGPU - Inicio");
         setResizable(false);
 
         PanelPrincipalA.setBackground(new java.awt.Color(255, 255, 255));
@@ -306,16 +304,19 @@ y se hace visible*/
 
 //Al presionar el botón GenerarReporte, se le muestra un mensaje al usuario que indica que esta ventana no está completada todavía, y no puede acceder a ella.
     private void BotonGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {
-    JOptionPane.showMessageDialog(this, "Lo sentimos, esta ventana esta en construcción","Mensaje de Información", JOptionPane.INFORMATION_MESSAGE);
+        VentanaReportes VentanaReportes = new VentanaReportes();
+        this.dispose();
+        VentanaReportes.setVisible(true);
     }
 
 
 /*Metodo para abrir la ventana de las torres del proyecto. Se crae un objeto del tipo VentanaTorresAdmin, pasandole como Parámetro, un objeto del tipo Proyecto, y el AdminActual, 
 que es un  atributo de la clase. Se cierra la ventana Actual, y se muestra la nueva ventana.*/
     private void abrirVentanaTorres(Proyecto proyecto) {
-        //VentanaTorresAdmin VentanaTorres = new VentanaTorresAdmin();
-        this.setVisible(false);
-       //VentanaTorres.setVisible(true);
+        Sesion.setProyecto(proyecto);
+        VentanaTorresAdmin VentanaTorres = new VentanaTorresAdmin();
+        this.dispose();
+        VentanaTorres.setVisible(true);
     }
 
     // Declaración de Variables

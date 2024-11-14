@@ -1,14 +1,17 @@
 
 package Vista;
 
+import CONTROLADOR.*;
+import Dominio.*;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 
-
 public class VentanaCuotaCliente extends javax.swing.JFrame {
 
+
+    Cuota CuotaAPagar;
    
-    public VentanaCuotaCliente() {
+    public VentanaCuotaCliente(String CedulaCliente) {
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
         
         initComponents();
@@ -22,8 +25,30 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
     
         // Hacer el panel principal transparente
         PanelPrincipalCC.setOpaque(false);
-        
+        LabelCedCliente.setText("CC " + CedulaCliente);
 
+        ConsultarCuotaCedula ConsultaCuota = new ConsultarCuotaCedula();
+        Cuota CuotaCliente = ConsultaCuota.devolverCuotaCedula(CedulaCliente);
+        this.CuotaAPagar = CuotaCliente;
+        
+        ConsultarCliente ConsultaCliente = new ConsultarCliente();
+        String nombre = ConsultaCliente.consultarCliente(CedulaCliente);
+
+        LabelNomCliente.setText(nombre.toUpperCase());
+        LabelEstadoCuota.setText(CuotaCliente.getEstado().toUpperCase());
+        LabelFechaPago.setText("Fecha: " + CuotaCliente.getFechaCuota());
+        LabelNumeroCuota.setText("Cuota: " + CuotaCliente.getNumeroCuota());
+        LabelValorCuota.setText("$" + CuotaCliente.getValor());
+
+
+        if (LabelEstadoCuota.getText().equals("PROXIMA A VENCER")){
+            PanelCuotaCliente.setBackground(new java.awt.Color(0, 102, 0));
+        }
+        else{
+            PanelCuotaCliente.setBackground(new java.awt.Color(150, 0, 0));
+
+        }
+      
     }
 
   
@@ -45,7 +70,7 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
         BotonRegresarCC = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Información de Cuota");
+        setTitle("SGPU - Información de Cuota");
         setResizable(false);
 
         PanelPrincipalCC.setBackground(new java.awt.Color(255, 255, 255));
@@ -87,20 +112,17 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
 
         LabelValorCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 60)); // NOI18N
         LabelValorCuota.setForeground(new java.awt.Color(255, 255, 255));
-        LabelValorCuota.setText("$10.800.000");
 
         LabelEstadoCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); // NOI18N
         LabelEstadoCuota.setForeground(new java.awt.Color(255, 255, 255));
         LabelEstadoCuota.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        LabelEstadoCuota.setText("ESTADO: VENCIDA");
 
         LabelFechaPago.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25)); // NOI18N
         LabelFechaPago.setForeground(new java.awt.Color(255, 255, 255));
-        LabelFechaPago.setText("Fecha: 03/09/2024");
-
+    
         LabelNumeroCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25)); // NOI18N
         LabelNumeroCuota.setForeground(new java.awt.Color(255, 255, 255));
-        LabelNumeroCuota.setText("Cuota: 24/60");
+    
 
         javax.swing.GroupLayout PanelCuotaClienteLayout = new javax.swing.GroupLayout(PanelCuotaCliente);
         PanelCuotaCliente.setLayout(PanelCuotaClienteLayout);
@@ -213,10 +235,11 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void BotonPagarCuotaActionPerformed(java.awt.event.ActionEvent evt) {                                                
-        VentanaPagoCuota PagoCuota = new VentanaPagoCuota();
+    private void BotonPagarCuotaActionPerformed(java.awt.event.ActionEvent evt) {    
+        VentanaPagoCuota VentanaPago = new VentanaPagoCuota(this.CuotaAPagar);
         this.dispose();
-        PagoCuota.setVisible(true);
+        VentanaPago.setVisible(true);
+
     }                                               
 
     private void BotonRegresarCCActionPerformed(java.awt.event.ActionEvent evt) {                                                
@@ -253,12 +276,6 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaCuotaCliente().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify                     

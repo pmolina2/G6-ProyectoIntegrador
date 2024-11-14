@@ -21,13 +21,13 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
    la torre correspondiente de la lista. Por ejemplo, para el BotonTorre1as se establece el número de la torre en la posición 0 de la lista. */
   
 
-    public VentanaTorresAsesor(Proyecto proyecto) {
+    public VentanaTorresAsesor() {
         this.setContentPane(fondoAs);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
-        LabelNombreProyecto.setText(proyecto.getNombre().toUpperCase());
+        LabelNombreProyecto.setText(Sesion.getProyectoActual().getNombre().toUpperCase());
         ConsultarTorre ConsultaTorre = new ConsultarTorre();
-        this.Torres = ConsultaTorre.devolverTorres(proyecto.getId());
+        this.Torres = ConsultaTorre.devolverTorres(Sesion.getProyectoActual().getId(),"asesor","asesor");
         BotonTorre1as.setText("TORRE " + Torres.get(0).getNumTorre().toUpperCase());
         BotonTorre2as.setText("TORRE " + Torres.get(1).getNumTorre().toUpperCase());
         BotonTorre3as.setText("TORRE " + Torres.get(2).getNumTorre().toUpperCase());
@@ -46,7 +46,7 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
         BotonRegresar4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Torres");
+        setTitle("SGPU - Torres");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 

@@ -9,6 +9,7 @@ import javax.swing.ButtonGroup;
 import java.awt.BorderLayout;
 import CONTROLADOR.*;
 import Dominio.*;
+import javax.swing.JOptionPane;
 
 
 
@@ -52,7 +53,7 @@ public class VerAptosAsesor extends javax.swing.JFrame {
         buttonGroup.add(BotonApto5As);
         ActualizarAparienciaBoton();
         ConsultarApartamento ConsultaApto = new ConsultarApartamento();
-        this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId());
+        this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId(), "asesor", "asesor");
         BotonApto1As.setText(Apartamentos.get(0).getNumApto());
         BotonApto2As.setText(Apartamentos.get(1).getNumApto());
         BotonApto3As.setText(Apartamentos.get(2).getNumApto());
@@ -94,7 +95,7 @@ public class VerAptosAsesor extends javax.swing.JFrame {
         BotonApto1As = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Visualizacion Aptos");
+        setTitle("SGPU - Apartamentos");
         setResizable(false);
 
         PanelPrincipalAptosAs.setBackground(new java.awt.Color(255, 255, 255));
@@ -309,9 +310,16 @@ public class VerAptosAsesor extends javax.swing.JFrame {
 implementó para esta segunda entrega).*/
 
     private void BotonVenderActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaRegistroVenta VentanaVenta = new VentanaRegistroVenta(AptoElegido);
-        this.dispose();
-        VentanaVenta.setVisible(true);
+
+        ConsultarMatriculaApto ConsultaMatricula = new ConsultarMatriculaApto();
+      
+        if (ConsultaMatricula.consultarMatricula(AptoElegido.getMatricula())) { 
+            JOptionPane.showMessageDialog(this, "Error: Este apartamento ya se vendió, \nintente con otro distinto", "Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            VentanaRegistroVenta VentanaVenta = new VentanaRegistroVenta(AptoElegido);
+            this.dispose();
+            VentanaVenta.setVisible(true);
+        }
     }
 
 
@@ -321,7 +329,11 @@ implementó para esta segunda entrega).*/
     apartamento en el ArrayList "Apartamentos", que es un atributo de la clase.*/
 
 
-    private void BotonRegresar2ActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void BotonRegresar2ActionPerformed(java.awt.event.ActionEvent evt) {   
+        VentanaTorresAsesor VentanaTorresAs = new VentanaTorresAsesor();
+        this.dispose();
+        VentanaTorresAs.setVisible(true);
+
 
     }      
 

@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
 
 public class VentanaRegistroVenta extends javax.swing.JFrame {
 
-    int TasaInteres;
-    Apartamento ApartamentoVenta;
+    private int TasaInteres;
+    private Apartamento ApartamentoVenta;
 
     public VentanaRegistroVenta(Apartamento AptoElegido) {
         initComponents();
@@ -30,25 +30,25 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         ConsultarNombreProyecto nombreProyecto = new ConsultarNombreProyecto();
         LabelProyecto2.setText("PROYECTO: " + nombreProyecto.devolverNombreProyecto(AptoElegido.getMatricula()).toUpperCase());
         ConsultarNumTorre numTorre = new ConsultarNumTorre();
-        LabelTorre2.setText("TORRE: " + numTorre.devolverNumTorre(AptoElegido.getMatricula()));
+        LabelTorre2.setText("TORRE: " + numTorre.devolverNumTorre(AptoElegido.getMatricula()).toUpperCase());
         LabelApartamento.setText("APARTAMENTO: " + AptoElegido.getNumApto());
         CampoFechaEscritura.getDocument().addDocumentListener(new FieldListener());
-        CampoCedulaCliente.getDocument().addDocumentListener(new FieldListener());
+        CampoCedulaCliente1.getDocument().addDocumentListener(new FieldListener());
         CampoFechaEscritura.getDocument().addDocumentListener(new FieldListener());
-        CampoCedulaCliente.setText(Sesion.getCedula());
+        CampoCedulaAsesor.setText(Sesion.getCedula());
         AsignarFechaActual();
     }
 
     private void revisarCampos() {
         boolean camposLlenos = !CampoFechaEscritura.getText().trim().isEmpty()
-                && !CampoCedulaCliente.getText().trim().isEmpty() && !CampoFechaEscritura.getText().trim().isEmpty();
+                && !CampoCedulaCliente1.getText().trim().isEmpty() && !CampoFechaEscritura.getText().trim().isEmpty();
         // Activa o desactiva el botón de registrar según el estado de los campos
         BotonRegistrar.setEnabled(camposLlenos);
         ActualizarAparienciaBoton();
     }
 
-     private void AsignarFechaActual() {
-        
+    private void AsignarFechaActual() {
+    
         // Se Obtiene la fecha actual
         LocalDate fechaHoy = LocalDate.now();
         
@@ -95,13 +95,17 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         PanelRegistroVenta = new javax.swing.JPanel();
         PanelLateralVenta = new javax.swing.JPanel();
         LabelImagen4 = new javax.swing.JLabel();
+        Nota1 = new javax.swing.JLabel();
+        Nota2 = new javax.swing.JLabel();
+        Nota3 = new javax.swing.JLabel();
+        BotonRegresoInicio = new javax.swing.JButton();
         LabelRegistroVenta = new javax.swing.JLabel();
         PanelInfoVenta = new javax.swing.JPanel();
         LabelTorre2 = new javax.swing.JLabel();
         LabelProyecto2 = new javax.swing.JLabel();
         LabelApartamento = new javax.swing.JLabel();
         CampoFechaEscritura = new javax.swing.JTextField();
-        CampoCedulaCliente = new javax.swing.JTextField();
+        CampoCedulaAsesor = new javax.swing.JTextField();
         LabelCedCliente = new javax.swing.JLabel();
         LabelFechaEscritura = new javax.swing.JLabel();
         LabelNomVendedor = new javax.swing.JLabel();
@@ -112,7 +116,7 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         CampoCedulaCliente1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Urbaniza - Registro de Venta");
+        setTitle("SGPU - Registro de Venta");
         setResizable(false);
 
         PanelRegistroVenta.setBackground(new java.awt.Color(255, 255, 255));
@@ -121,6 +125,26 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         PanelLateralVenta.setBackground(new java.awt.Color(240, 240, 240));
         PanelLateralVenta.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
+        Nota1.setForeground(new java.awt.Color(153, 153, 153));
+        Nota1.setText("Nota: El porcentaje de interés se aplica al valor ");
+
+        Nota2.setForeground(new java.awt.Color(153, 153, 153));
+        Nota2.setText("de cada cuota mensual, y no es un interés");
+
+        Nota3.setForeground(new java.awt.Color(153, 153, 153));
+        Nota3.setText("compuesto.");
+
+        BotonRegresoInicio.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
+        BotonRegresoInicio.setText("← Regresar al Inicio");
+        BotonRegresoInicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        BotonRegresoInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BotonRegresoInicio.setContentAreaFilled(false);
+        BotonRegresoInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonRegresoInicioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelLateralVentaLayout = new javax.swing.GroupLayout(PanelLateralVenta);
         PanelLateralVenta.setLayout(PanelLateralVentaLayout);
         PanelLateralVentaLayout.setHorizontalGroup(
@@ -128,14 +152,34 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
             .addGroup(PanelLateralVentaLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(LabelImagen4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLateralVentaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelLateralVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLateralVentaLayout.createSequentialGroup()
+                        .addGroup(PanelLateralVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Nota1)
+                            .addComponent(Nota3)
+                            .addComponent(Nota2))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLateralVentaLayout.createSequentialGroup()
+                        .addComponent(BotonRegresoInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65))))
         );
         PanelLateralVentaLayout.setVerticalGroup(
             PanelLateralVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelLateralVentaLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(LabelImagen4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(419, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(Nota1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Nota2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Nota3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                .addComponent(BotonRegresoInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         LabelRegistroVenta.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); // NOI18N
@@ -184,10 +228,11 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         CampoFechaEscritura.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
         CampoFechaEscritura.setEnabled(false);
 
-        CampoCedulaCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
-        CampoCedulaCliente.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
-        CampoCedulaCliente.setEnabled(false);
-        
+
+        CampoCedulaAsesor.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        CampoCedulaAsesor.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
+        CampoCedulaAsesor.setEnabled(false);
+
 
         LabelCedCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
         LabelCedCliente.setForeground(new java.awt.Color(51, 51, 51));
@@ -241,7 +286,7 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         PanelRegistroVentaLayout.setHorizontalGroup(
             PanelRegistroVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelRegistroVentaLayout.createSequentialGroup()
-                .addContainerGap(232, Short.MAX_VALUE)
+                .addContainerGap(246, Short.MAX_VALUE)
                 .addGroup(PanelRegistroVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelRegistroVentaLayout.createSequentialGroup()
                         .addGroup(PanelRegistroVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,7 +303,7 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
                                     .addComponent(CampoCedulaCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(72, 72, 72)
                                 .addGroup(PanelRegistroVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CampoCedulaCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                                    .addComponent(CampoCedulaAsesor, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                                     .addComponent(LavelNumCuotas)
                                     .addComponent(LabelNomVendedor)
                                     .addComponent(NoCuotasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -290,7 +335,7 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
                             .addComponent(LabelCedCliente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PanelRegistroVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(CampoCedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CampoCedulaAsesor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CampoCedulaCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addGroup(PanelRegistroVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -304,14 +349,17 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
                         .addGroup(PanelRegistroVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(LabelTasaInt, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(69, 69, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelRegistroVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelRegistroVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,23 +367,58 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>
+    }
 
+
+
+       private void BotonRegresoInicioActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+        VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
+        this.dispose();
+        VentanaAsesor.setVisible(true);
+    }                                                  
+   
     private void BotonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
         if (NoCuotasComboBox.getSelectedItem().equals("Seleccionar")) { // Verifica si no hay selección
-            JOptionPane.showMessageDialog(this, "Por favor elija la cantidad de cuotas.", "Mensaje de Error",
+            JOptionPane.showMessageDialog(this, "Por favor elija la cantidad de cuotas.", "Mensaje de advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if(CampoCedulaCliente1.getText().matches(".*[a-zA-Z].*")) {
+         JOptionPane.showMessageDialog(this, "La cédula ingresada contiene letras, \nintente nuevamente", "Mensaje de Error",
                     JOptionPane.ERROR_MESSAGE);
-        } else {
-            CrearVenta CrearVenta = new CrearVenta();
-            String seleccionCuotas = (String) NoCuotasComboBox.getSelectedItem(); // Obtener el elemento seleccionado
-                                                                                  // como String
-            int numeroCuotas = Integer.parseInt(seleccionCuotas); // Convertir el String a int
-            CrearVenta.GuardarVenta(CampoCedulaCliente1.getText(), Sesion.getCedula(), numeroCuotas, this.TasaInteres,
-                    CampoFechaEscritura.getText(), ApartamentoVenta);
-            JOptionPane.showMessageDialog(this, "¡Venta Exitosa!. \nSe ha creado la cuota de este cliente", "Mensaje de Confirmación",
-                    JOptionPane.INFORMATION_MESSAGE);
         }
+        else {
+            CrearVenta CrearVenta = new CrearVenta();
+            String seleccionCuotas = (String) NoCuotasComboBox.getSelectedItem();                                    
+            int numeroCuotas = Integer.parseInt(seleccionCuotas); 
+            String mensaje = CrearVenta.GuardarVenta(CampoCedulaCliente1.getText(), Sesion.getCedula(), numeroCuotas, this.TasaInteres,
+                    CampoFechaEscritura.getText(), ApartamentoVenta);
+            if (mensaje.contains("Error")){
+                 JOptionPane.showMessageDialog(this, mensaje, "Mensaje de Error",JOptionPane.ERROR_MESSAGE);}
+            else{
+
+                JOptionPane.showMessageDialog(this, mensaje, "Mensaje de Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                ActualizarFecha ActualizarFecha = new ActualizarFecha();
+                ActualizarFecha.actualizarFechaEscritura(ApartamentoVenta.getMatricula(),CampoFechaEscritura.getText());
+
+                //Ahora se pasa el ValorApto que es una string a entero para poder calcular el valor de cada cuota mensual.
+                String ValorApto = (String) ApartamentoVenta.getValorApto();                                    
+                int ValorAptoNumero = Integer.parseInt(ValorApto); 
+
+                //Se calcula el valor de la cuota. Se convierten las variables a double, con el fin de garantizar que la operacion si me devuelva un valor de tipo double.
+                double ValorCuota = ( (double) ValorAptoNumero / numeroCuotas); 
+                double ValorCuotaInteres = ValorCuota + (ValorCuota*((double)TasaInteres / 100));
+
+                CrearCuota CrearCuota = new CrearCuota();
+                CrearCuota.registrarCuota(ValorCuotaInteres, CampoFechaEscritura.getText(), CampoCedulaCliente1.getText()); 
+        
+                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
+                this.dispose();
+                VentanaAsesor.setVisible(true);
+
+            }
+            }
     }
+            
+        
 
     private void NoCuotasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
         String seleccion = (String) NoCuotasComboBox.getSelectedItem();
@@ -343,16 +426,16 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
             LabelTasaInt.setText("Tasa de Interés: N/a");
             this.TasaInteres = 0;
         } else if (seleccion.equals("60")) {
+            LabelTasaInt.setText("Tasa de Interés: 8%");
+            this.TasaInteres = 8;
+
+        } else if (seleccion.equals("120")) {
             LabelTasaInt.setText("Tasa de Interés: 10%");
             this.TasaInteres = 10;
 
-        } else if (seleccion.equals("120")) {
-            LabelTasaInt.setText("Tasa de Interés: 15%");
-            this.TasaInteres = 15;
-
         } else if (seleccion.equals("180")) {
-            LabelTasaInt.setText("Tasa de Interés: 20%");
-            this.TasaInteres = 20;
+            LabelTasaInt.setText("Tasa de Interés: 12%");
+            this.TasaInteres = 12;
 
         } else {
             LabelTasaInt.setText("Tasa de Interés: ");
@@ -384,10 +467,11 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton BotonRegistrar;
+ private javax.swing.JButton BotonRegistrar;
+    private javax.swing.JButton BotonRegresoInicio;
+    private javax.swing.JTextField CampoCedulaAsesor;
     private javax.swing.JTextField CampoCedulaCliente1;
     private javax.swing.JTextField CampoFechaEscritura;
-    private javax.swing.JTextField CampoCedulaCliente;
     private javax.swing.JLabel LabelApartamento;
     private javax.swing.JLabel LabelCedCliente;
     private javax.swing.JLabel LabelFechaEscritura;
@@ -399,6 +483,9 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
     private javax.swing.JLabel LabelTorre2;
     private javax.swing.JLabel LavelNumCuotas;
     private javax.swing.JComboBox<String> NoCuotasComboBox;
+    private javax.swing.JLabel Nota1;
+    private javax.swing.JLabel Nota2;
+    private javax.swing.JLabel Nota3;
     private javax.swing.JPanel PanelInfoVenta;
     private javax.swing.JPanel PanelLateralVenta;
     private javax.swing.JPanel PanelRegistroVenta;
