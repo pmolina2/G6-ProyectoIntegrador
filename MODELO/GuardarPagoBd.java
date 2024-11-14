@@ -37,14 +37,19 @@ public class GuardarPagoBd extends ConexionBd{
             // Cerrar el statement
             statement.close();
             mensaje = "Pago registrado exitosamente, se ha actualizado\nla cuota actual del cliente.";
-            System.out.println(mensaje);
             return mensaje;
 
         } catch (SQLException e) {
-            if(e.getErrorCode() == 20006){
-                mensaje = "Error: El pago se debe haber realizado en los últimos 3 días";
-            }else{
-                mensaje = ("Error al insertar el pago: " + e.getMessage());
+            switch (e.getErrorCode()) {
+                case 20006:
+                    mensaje = "Error: El pago se debe haber realizado en los últimos 3 días";
+                    break;
+                case 20007:
+                    mensaje = "Error: El numero de transferencia ya fue registrado";
+                    break;
+                default:
+                    mensaje = ("Error al insertar el pago: " + e.getMessage());
+                    break;
             }
         }
         closeConnection();

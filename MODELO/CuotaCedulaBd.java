@@ -44,6 +44,8 @@ public class CuotaCedulaBd extends ConexionBd{
             datosCuota.add(resultset.getString("numeroCuota"));
             datosCuota.add(resultset.getString("cedulaCliente"));
             datosCuota.add(resultset.getString("idVenta"));
+        } else {
+            return null;
         }
 
         //SE USA EL METODO close CON TODOS LOS OBJETOS

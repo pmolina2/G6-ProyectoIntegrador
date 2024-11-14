@@ -12,21 +12,28 @@ public class CuotasBd extends ConexionBd{
         Hashtable<String, ArrayList<String>> hashCuotas = new Hashtable<>();
 
         //PREPARAR EL PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR LOS ESTADOS
-        CallableStatement callableStatement = conexion.prepareCall("{call proyectointegrador.actualizarEstadoCuota}");
+        CallableStatement callableStatement = conexion.prepareCall("{call proyectointegrador.actualizarCuotasVencidas}");
+        CallableStatement callableStatement2 = conexion.prepareCall("{call proyectointegrador.actualizarCuotasNoVencidas}");
+        CallableStatement callableStatement3 = conexion.prepareCall("{call proyectointegrador.actualizarCuotasCompletadas}");
 
         try {
             callableStatement.execute();
+            callableStatement2.execute();
+            callableStatement3.execute();
         } catch (SQLException e) {
             System.out.println("Error al ejecutar el procedimiento: " + e.getMessage());
             throw e; 
         } finally {
             callableStatement.close();
+            callableStatement2.close();
+            callableStatement3.close();
         }
 
         //SENTENCIA SQL PARA CONSULTAR LAS CUOTAS
         String sentencia = """
                 SELECT *
                 FROM proyectointegrador.CUOTA
+                WHERE estado != 'Completada'
                 """;
         PreparedStatement statement = conexion.prepareStatement(sentencia);
         ResultSet resultset = statement.executeQuery();
