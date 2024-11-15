@@ -1,8 +1,8 @@
 package CONTROLADOR;
 
-import java.util.*;
-import MODELO.*;
 import Dominio.*;
+import MODELO.*;
+import java.util.*;
 
 //Clase encargada de obtener la informacion de las cuotas de un cliente en especifico, extiende la clase abstracta
 //ConexionControladorBd para facilitar la conexion a BD
