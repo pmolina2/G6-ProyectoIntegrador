@@ -1,34 +1,41 @@
 package Vista;
 
+/*En esta ventana se pueden visualizar todos los apartamentos de una torre específica seleccionada previamente. Se pueden además ver las características de cada uno
+e incluso seleccionarlo para la venta si así se desea.*/
 
-//Se importan las librerías necesarias, así como las clases que contiene el package controlador.
-import java.awt.Color;
-import javax.swing.ImageIcon;
-import java.util.ArrayList;
-import javax.swing.ButtonGroup;
-import java.awt.BorderLayout;
+
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador y la clases que contiene el package dominio. 
 import CONTROLADOR.*;
 import Dominio.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
 
 public class VerAptosAsesor extends javax.swing.JFrame {
 
-//Se definen como atributos, un objeto del tipo ButtonGroup, y un ArrayList de objetos del tipo Apartamento. 
+//Se definen como atributos, un objeto del tipo ButtonGroup, un ArrayList de objetos del tipo Apartamento, y un objeto del tipo Apartamento.
     private ButtonGroup buttonGroup;
     ArrayList <Apartamento> Apartamentos;
     Apartamento AptoElegido;
 
 
-    /*Método que inicializa la clase. Primero se inicializan los componentes, luego se establece el icono del Jframe, utilizando el método SetIconImage y la imagen "Logo Ventana" que 
-    se encuentra en la carpeta Iconos. Posteriormente se establece que LabelTorreAs sea opaco, y su texto sea el número de la torre pasada como parámetro. Luego se crea un objeto
-    de la clase ButtonGroup, y se añaden todos los botones que representan apartamentos, esto con el fin de hacer que solo se pueda presionar un botón a la vez. Después, se crea un
-    un objeto del tipo "ConsultarApartamento" y se ejecuta su método devolverApartamentos pasándole como parámetro el id de la torre pasada como parámetro. Este devuelve un ArrayList 
-    de objetos del tipo apartamento, que se asigna al atributo "Apartamentos" de la clase. 
-    Por último, se establece el texto de los botones de los apartamentos, usando el número del Apartamento correspondiente de la lista. Por ejemplo, Para el 
-    BotonApto1As, se asigna el número del apartamento en la posición 0. 
-    */
+/*Método que inicializa la clase. Primero se inicializan los componentes, 
+luego se crea una instancia del tipo FondoPanel, y se establece su layout, luego a este panel se le agrega el panel principal del jframe, y usando
+setContentPane hacemos que el fondo sea el fondo3. Posteriormente se establece que PanelPrincipalAptosAs sea transparente.
+Después se establece el icono del Jframe, utilizando el método SetIconImage y la imagen "Logo Ventana" que 
+se encuentra en la carpeta Iconos. Posteriormente se establece que LabelTorreAs sea opaco, y su texto sea el número de la torre pasada como parámetro. Luego se crea un objeto
+de la clase ButtonGroup, y se le añaden todos los botones que representan apartamentos, esto con el fin de hacer que solo se pueda presionar un botón a la vez. Luego se llama
+al método ActualizarAparienciaBoton(), y se crea un objeto del tipo "ConsultarApartamento" para ejecutar su método devolverApartamentos pasándole como parámetro 
+el id de la torre, así como el nombre y contraseña del usuario de la base de datos, que en este aso es "asesorg6" y "asesor" respectivamente. 
+Este devuelve un ArrayList de objetos del tipo apartamento, que se asigna al atributo "Apartamentos" de la clase. 
+Por último, se establece el texto de los botones de los apartamentos, usando el número del Apartamento correspondiente de la lista. Por ejemplo, Para el 
+BotonApto1As, se asigna el número del apartamento en la posición 0. 
+*/
 
     public VerAptosAsesor(Torre torre) {
         initComponents();
@@ -53,13 +60,14 @@ public class VerAptosAsesor extends javax.swing.JFrame {
         buttonGroup.add(BotonApto5As);
         ActualizarAparienciaBoton();
         ConsultarApartamento ConsultaApto = new ConsultarApartamento();
-        this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId(), "asesor", "asesor");
+        this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId(), "asesorg6", "asesor");
         BotonApto1As.setText(Apartamentos.get(0).getNumApto());
         BotonApto2As.setText(Apartamentos.get(1).getNumApto());
         BotonApto3As.setText(Apartamentos.get(2).getNumApto());
         BotonApto4As.setText(Apartamentos.get(3).getNumApto());
         BotonApto5As.setText(Apartamentos.get(4).getNumApto());
     }
+
 
 //Este método se usa para actualizar la apariencia de "BotonVender", dependiendo de si está o no habilitado.
     private void ActualizarAparienciaBoton() {
@@ -70,12 +78,12 @@ public class VerAptosAsesor extends javax.swing.JFrame {
             BotonVender.setBackground(new Color(0, 51, 102)); //Si el botón está habilitado, el color de fondo será azul, y el color del texto blanco.
             BotonVender.setForeground(Color.WHITE); 
         }
-        BotonVender.repaint(); //Se "refresca" la apariencia gráfica del botón. 
+        BotonVender.repaint(); //Al final, se "refresca" la apariencia gráfica del botón. 
     }
 
 
 
- /* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.  */
+ /* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.*/
        private void initComponents() {
 
         PanelPrincipalAptosAs = new javax.swing.JPanel();
@@ -155,8 +163,9 @@ public class VerAptosAsesor extends javax.swing.JFrame {
                 .addContainerGap(63, Short.MAX_VALUE))
         );
 
+        //Boton que redirige al asesor a la ventana de registrar una venta
         BotonVender.setBackground(new java.awt.Color(0, 51, 102));
-        BotonVender.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 21)); // NOI18N
+        BotonVender.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 21)); 
         BotonVender.setForeground(new java.awt.Color(255, 255, 255));
         BotonVender.setText("VENDER ESTE APARTAMENTO");
         BotonVender.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
@@ -168,8 +177,9 @@ public class VerAptosAsesor extends javax.swing.JFrame {
             }
         });
 
+        //Boton para regresar a la ventana anterior, que en este caso sería la ventana de las torres para el asesor.
         BotonRegresar2.setBackground(new java.awt.Color(240, 240, 240));
-        BotonRegresar2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); // NOI18N
+        BotonRegresar2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); 
         BotonRegresar2.setText("← Regresar");
         BotonRegresar2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         BotonRegresar2.setContentAreaFilled(false);
@@ -180,7 +190,7 @@ public class VerAptosAsesor extends javax.swing.JFrame {
             }
         });
 
-        BotonApto3As.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonApto3As.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonApto3As.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BotonApto3As.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,14 +310,17 @@ public class VerAptosAsesor extends javax.swing.JFrame {
     }                     
 
 
-//Este método unicamente sirve para habilitar el "BotonVender", y actualizar su apariencia.
+    //Este método unicamente sirve para habilitar el "BotonVender", y actualizar su apariencia.
     private void habilitarBotonVender() {
-    BotonVender.setEnabled(true);
-    ActualizarAparienciaBoton();
-}                               
+        BotonVender.setEnabled(true);
+        ActualizarAparienciaBoton();
+    }                               
 
-/*Al dar clic en el "BotonVender", se abre una ventana emergente con un mensaje, que le indica al usuario que esta ventana todavía no está habilitada. (Esto debido a que no se 
-implementó para esta segunda entrega).*/
+
+/*Al dar clic en el "BotonVender", se crea una instancia de la clase ConsultarMatriculaApto, luego, se valida si al ejecutar su método consultarMatricula, pasándole como
+parámetro la matrícula del apartamento elegido, si retorna algún valor quiere decir que se encontró la matrícula de dicho apartamento en una venta, por lo tanto
+se abre una ventana emergente que informa al usuario que este apartamento ya se vendió. Si por el contrario, retorna "false", entonces se crea una instancia de
+VentanaRegistroVenta, pasándole como parámetro el apartamento elegido, se desecha la ventana actual y se hace visible la nueva ventana.*/
 
     private void BotonVenderActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -323,21 +336,20 @@ implementó para esta segunda entrega).*/
     }
 
 
-/*Al presionar cualquiera de los botones, se muestra la información del Apartamento que representan. Se establece el texto de LabelAreaAs, usando el método "getArea" del objeto
-    del tipo "Apartamento", luego, se establece el texto de LabelValorAs, utilizando el método getValorApto de este mismo objeto, y por último el tipo de unidad, siguiendo el 
-    mismo proceso. El objeto Apartamento del cual se obtienen estos datos cambia dependiendo del botón, por ejemplo, en el caso de BotonApto1As, se usan los datos del primer
-    apartamento en el ArrayList "Apartamentos", que es un atributo de la clase.*/
-
-
+//Al presionar el botón regresar, se crea una nueva instancia de VentanaTorresAsesor, se desecha la ventana actual y se hace visible la nueva ventana.
     private void BotonRegresar2ActionPerformed(java.awt.event.ActionEvent evt) {   
         VentanaTorresAsesor VentanaTorresAs = new VentanaTorresAsesor();
         this.dispose();
         VentanaTorresAs.setVisible(true);
 
-
     }      
 
 
+/*Al presionar cualquiera de los botones, se muestra la información del Apartamento que representan. Se establece el texto de LabelAreaAs, usando el método "getArea" del objeto
+del tipo "Apartamento", luego, se establece el texto de LabelValorAs, utilizando el método getValorApto de este mismo objeto, y por último el tipo de unidad, siguiendo el 
+mismo proceso. El objeto Apartamento del cual se obtienen estos datos cambia dependiendo del botón, por ejemplo, en el caso de BotonApto1As, se usan los datos del primer
+apartamento en el ArrayList "Apartamentos", que es un atributo de la clase. Luego, se establece el valor del atributo "AptoElegido" teniendo en cuenta también cual botón
+fue el que se presionó*/
     private void BotonApto1AsActionPerformed(java.awt.event.ActionEvent evt) {    
         habilitarBotonVender();                                     
         LabelAreaAs.setText("AREA: " + Apartamentos.get(0).getArea() + "m2");

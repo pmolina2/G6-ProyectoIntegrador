@@ -1,4 +1,8 @@
 package Vista;
+
+/*Esta es la ventana principal del usuario Administrador. Aquí, se muestran en el encabezado su nombre y rol, además de un botón que le dirige a otra ventana
+donde podrá generar los reportes*/
+
 //Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
 import CONTROLADOR.*;
 import Dominio.*;
@@ -7,13 +11,10 @@ import javax.swing.*;
 public class VentanaInicioAdmin extends javax.swing.JFrame {
 
 
-    //Se definen dos atributos, un ArrayList de objetos del tipo Proyecto, y un objeto del tipo Admin.
-
-
-    /*Método constructor de la clase. Primero, se asignan a los atributos de la clase, el Administrador, y la lista de proyectos que se pasaron como parámetros, luego
-    se inicializan los componentes del Jframe, y se establece el icono de este, como la imagen "Logo Ventana" ubicada en la carpeta Iconos. Luego se coloca una imagen con
-    la ayuda de la interfaz Icon, y el LabelImagen2. Se establece que el LabelNombre sea opaco, se guarda en una variable el nombre del administrador pasado como parametro,
-    y luego se establece el texto del label nombre, como el nombre del administrador, y el texto de label rol, como la palabra "ADMINISTRADOR".*/
+    /*Método constructor de la clase. Primero, se inicializan los componentes del Jframe, y se establece el icono de este, como la imagen "Logo Ventana" ubicada en la carpeta 
+    Iconos. Luego, se coloca una imagen con la ayuda de la interfaz Icon, y el LabelImagen2. Se establece que el LabelNombre sea opaco y que su texto
+    sea el valor del campo "Nombre" de la clase sesión (En mayúsculas).
+    Luego, se establece el labelRol sea opaco, y su texto sea la palabra "ADMINISTRADOR".*/
 
     public VentanaInicioAdmin() {
 
@@ -55,8 +56,10 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
         PanelLateralA.setBackground(new java.awt.Color(240, 240, 240));
         PanelLateralA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
+
+        //Se crea un botón para cerrar la sesión, que regresa al usuario al inicio de sesion
         BotonCerrarSesionAdm.setBackground(new java.awt.Color(240, 240, 240));
-        BotonCerrarSesionAdm.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); // NOI18N
+        BotonCerrarSesionAdm.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); 
         BotonCerrarSesionAdm.setText("Cerrar Sesión");
         BotonCerrarSesionAdm.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         BotonCerrarSesionAdm.setContentAreaFilled(false);
@@ -67,8 +70,9 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
             }
         });
 
+        //Se crea el botón que lo redirige a la ventana de reportes
         BotonGenerarReporte.setBackground(new java.awt.Color(0, 51, 102));
-        BotonGenerarReporte.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        BotonGenerarReporte.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         BotonGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
         BotonGenerarReporte.setText("GENERAR REPORTE");
         BotonGenerarReporte.setBorder(null);
@@ -118,7 +122,7 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
                                 .addGap(27, 27, 27)));
 
         LabelRol.setBackground(new java.awt.Color(240, 240, 240));
-        LabelRol.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelRol.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelRol.setForeground(new java.awt.Color(102, 102, 102));
         LabelRol.setBorder(javax.swing.BorderFactory.createCompoundBorder(null,
                 javax.swing.BorderFactory.createCompoundBorder(
@@ -126,25 +130,26 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
                         javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1))));
 
         LabelNombre.setBackground(new java.awt.Color(240, 240, 240));
-        LabelNombre.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelNombre.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelNombre.setForeground(new java.awt.Color(102, 102, 102));
         LabelNombre.setBorder(javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)),
                 javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1)));
 
-        LabelProyectos.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelProyectos.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelProyectos.setText("PROYECTOS DISPONIBLES");
 
 
         /*En la parte de la declaración de los botones, además de establecer sus propiedades, se establece su texto, dependiendo de que
         proyecto representen, por ejemplo, el BotonProyecto1 representa el primer proyecto encontrado en la Base de Datos, por lo tanto, se establece su texto
-        como el nombre del proyecto en la posicion 0 del ArrayList "proyectos" que es un atributo de la clase. Además, a cada botón se le agrega un actionListener
+        como el nombre del proyecto en la posicion 0 del ArrayList "proyectos" que es un atributo de la clase sesión
+        Además, a cada botón se le agrega un actionListener
         que define que acción se va a realizar cuando el botón sea presionado. En cada caso, se ejecuta el método abrirVentanaTorres pasándole como parámetro el
-        proyecto correspondiente (por ejemplo, en el caso de BotonProyecto1 sería el primer proyecto), y el AdminActual que es un atributo de la clase.*/
+        proyecto correspondiente (por ejemplo, en el caso de BotonProyecto1 sería el primer proyecto del arraylist proyectos)*/
 
 
         BotonProyecto1.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonProyecto1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonProyecto1.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto1.setBorder(null);
         BotonProyecto1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -152,7 +157,7 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
         BotonProyecto1.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(0)));
 
         BotonProyecto2.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonProyecto2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20));
         BotonProyecto2.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto2.setBorder(null);
         BotonProyecto2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -160,7 +165,7 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
         BotonProyecto2.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(1)));
 
         BotonProyecto3.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonProyecto3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20));
         BotonProyecto3.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto3.setBorder(null);
         BotonProyecto3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -168,7 +173,7 @@ public class VentanaInicioAdmin extends javax.swing.JFrame {
         BotonProyecto3.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(2)));
 
         BotonProyecto4.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonProyecto4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonProyecto4.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto4.setBorder(null);
         BotonProyecto4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -302,16 +307,17 @@ y se hace visible*/
     }
 
 
-//Al presionar el botón GenerarReporte, se le muestra un mensaje al usuario que indica que esta ventana no está completada todavía, y no puede acceder a ella.
+//Al presionar el botón GenerarReporte, Se crea una instancia de VentanaReportes, se desecha la ventana actual, y la ventana de reportes se hace visible. 
     private void BotonGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaReportes VentanaReportes = new VentanaReportes();
+        VentanaReportes ventanaReportes = new VentanaReportes();
         this.dispose();
-        VentanaReportes.setVisible(true);
+        ventanaReportes.setVisible(true);
     }
 
 
-/*Metodo para abrir la ventana de las torres del proyecto. Se crae un objeto del tipo VentanaTorresAdmin, pasandole como Parámetro, un objeto del tipo Proyecto, y el AdminActual, 
-que es un  atributo de la clase. Se cierra la ventana Actual, y se muestra la nueva ventana.*/
+/*Metodo para abrir la ventana de las torres del proyecto seleccionado. 
+Se establece que el valor del campo proyecto de la sesión sea el proyecto que se le pasa como parámetro, luego se crea una instancia de VentanaTorresAdmin, 
+se desecha la ventana actual, y se hace visible la nueva ventana*/
     private void abrirVentanaTorres(Proyecto proyecto) {
         Sesion.setProyecto(proyecto);
         VentanaTorresAdmin VentanaTorres = new VentanaTorresAdmin();

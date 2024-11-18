@@ -1,31 +1,33 @@
 package Vista;
 
-//Se importan las librerías necesarias, así como las clases que contiene el package controlador.
-import javax.swing.ImageIcon;
-import java.util.ArrayList;
-import javax.swing.ButtonGroup;
-import java.awt.BorderLayout;
+//En esta ventana se pueden visualizar todos los apartamentos de una torre específica seleccionada previamente.
+
+
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador y la clases que contiene el package dominio. 
 import CONTROLADOR.*;
 import Dominio.*;
+import java.awt.BorderLayout;
+import java.util.ArrayList;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 
 
 
 public class VerAptosAdmin extends javax.swing.JFrame {
 
-
-
-
 //Se definen como atributos, un objeto del tipo ButtonGroup, y un ArrayList de objetos del tipo Apartamento. 
      private ButtonGroup buttonGroup;
      ArrayList <Apartamento> Apartamentos;
 
-
-
-/*Método que inicializa la clase. Primero se inicializan los componentes, luego se establece el icono del Jframe, utilizando el método SetIconImage y la imagen "Logo Ventana" que 
+/*Método que inicializa la clase. Primero se inicializan los componentes, 
+luego se crea una instancia del tipo FondoPanel, y se establece su layout, luego a este panel se le agrega el panel principal del jframe, y usando
+setContentPane hacemos que el fondo sea el fondo2. Posteriormente se establece que PanelPrincipalAptos sea transparente.
+Después se establece el icono del Jframe, utilizando el método SetIconImage y la imagen "Logo Ventana" que 
 se encuentra en la carpeta Iconos. Posteriormente se establece que LabelTorre sea opaco, y su texto sea el número de la torre pasada como parámetro. Luego se crea un objeto
-de la clase ButtonGroup, y se añaden todos los botones que representan apartamentos, esto con el fin de hacer que solo se pueda presionar un botón a la vez. Después, se crea un
-un objeto del tipo "ConsultarApartamento" y se ejecuta su método devolverApartamentos pasándole como parámetro el id de la torre pasada como parámetro. Este devuelve un ArrayList 
-de objetos del tipo apartamento, que se asigna al atributo "Apartamentos" de la clase. 
+de la clase ButtonGroup, y se le añaden todos los botones que representan apartamentos, esto con el fin de hacer que solo se pueda presionar un botón a la vez. Después, 
+se crea un objeto del tipo "ConsultarApartamento" y se ejecuta su método devolverApartamentos pasándole como parámetro el id de la torre, así como
+el nombre y contraseña del usuario de la base de datos, que en este aso es "adming6" y "admin" respectivamente. 
+Este devuelve un ArrayList de objetos del tipo apartamento, que se asigna al atributo "Apartamentos" de la clase. 
 Por último, se establece el texto de los botones de los apartamentos, usando el número del Apartamento correspondiente de la lista. Por ejemplo, Para el 
 BotonApto1, se asigna el número del apartamento en la posición 0. 
 */
@@ -33,18 +35,14 @@ BotonApto1, se asigna el número del apartamento en la posición 0.
 public VerAptosAdmin(Torre torre) {
     initComponents();
     
-    // Configurar el panel de fondo
     FondoPanel fondo2 = new FondoPanel();
     fondo2.setLayout(new BorderLayout());
     
-    // Agregar el panel principal al panel de fondo
-    fondo2.add(PanelPrincipalAptos);  // Asegúrate que este sea el nombre de tu panel principal
+    fondo2.add(PanelPrincipalAptos);  
     this.setContentPane(fondo2);
     
-    // Hacer el panel principal transparente
     PanelPrincipalAptos.setOpaque(false);
     
-    // Resto de las inicializaciones
     setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
     LabelTorre.setOpaque(true); 
     LabelTorre.setText("TORRE: " + torre.getNumTorre().toUpperCase());
@@ -56,7 +54,7 @@ public VerAptosAdmin(Torre torre) {
     buttonGroup.add(BotonApto5);
     
     ConsultarApartamento ConsultaApto = new ConsultarApartamento();
-    this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId(), "admin", "admin");
+    this.Apartamentos = ConsultaApto.devolverApartamentos(torre.getId(), "adming6", "admin");
     BotonApto1.setText(Apartamentos.get(0).getNumApto());
     BotonApto2.setText(Apartamentos.get(1).getNumApto());
     BotonApto3.setText(Apartamentos.get(2).getNumApto());
@@ -91,27 +89,27 @@ public VerAptosAdmin(Torre torre) {
         PanelPrincipalAptos.setBackground(new java.awt.Color(255, 255, 255));
         PanelPrincipalAptos.setPreferredSize(new java.awt.Dimension(1400, 800));
 
-        LabelApartamentos.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 35)); // NOI18N
+        LabelApartamentos.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 35)); 
         LabelApartamentos.setText("  APARTAMENTOS");
 
         LabelTorre.setBackground(new java.awt.Color(240, 240, 240));
-        LabelTorre.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelTorre.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelTorre.setText("TORRE: ");
         LabelTorre.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
 
         PanelInfo.setBackground(new java.awt.Color(238, 238, 238));
         PanelInfo.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-        LabelInfo.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 29)); // NOI18N
+        LabelInfo.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 29)); 
         LabelInfo.setText("ⓘ INFORMACIÓN DE LOS APTOS");
 
-        LabelArea.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); // NOI18N
+        LabelArea.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); 
         LabelArea.setText("AREA: ");
 
-        LabelValor.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); // NOI18N
+        LabelValor.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); 
         LabelValor.setText("VALOR: ");
 
-        LabelTipoUnidad.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); // NOI18N
+        LabelTipoUnidad.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); 
         LabelTipoUnidad.setText("TIPO DE UNIDAD: ");
 
         javax.swing.GroupLayout PanelInfoLayout = new javax.swing.GroupLayout(PanelInfo);
@@ -145,8 +143,10 @@ public VerAptosAdmin(Torre torre) {
                 .addContainerGap(63, Short.MAX_VALUE))
         );
 
+
+        //Boton para regresar a la ventana anterior, que en este caso sería la ventana de las torres para el administrador.
         BotonRegresar1.setBackground(new java.awt.Color(240, 240, 240));
-        BotonRegresar1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); // NOI18N
+        BotonRegresar1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); 
         BotonRegresar1.setText("← Regresar");
         BotonRegresar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         BotonRegresar1.setContentAreaFilled(false);
@@ -157,7 +157,7 @@ public VerAptosAdmin(Torre torre) {
             }
         });
 
-        BotonApto3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonApto3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonApto3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BotonApto3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +165,7 @@ public VerAptosAdmin(Torre torre) {
             }
         });
 
-        BotonApto5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonApto5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonApto5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BotonApto5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +173,7 @@ public VerAptosAdmin(Torre torre) {
             }
         });
 
-        BotonApto2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonApto2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonApto2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BotonApto2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +181,7 @@ public VerAptosAdmin(Torre torre) {
             }
         });
 
-        BotonApto4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonApto4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonApto4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BotonApto4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,7 +189,7 @@ public VerAptosAdmin(Torre torre) {
             }
         });
 
-        BotonApto1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonApto1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonApto1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BotonApto1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,16 +268,17 @@ public VerAptosAdmin(Torre torre) {
         pack();
     }
 
-
+//Al presionar el botón regresar, se crea una nueva instancia de VentanaTorresAdmin, se desecha la ventana actual y se hace visible la nueva ventana.
     private void BotonRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {      
         VentanaTorresAdmin VentanaTorresAd = new VentanaTorresAdmin();
         this.dispose();
         VentanaTorresAd.setVisible(true);
     }  
 
-    /*Al presionar cualquiera de los botones, se muestra la información del Apartamento que representan. Se establece el texto de LabelArea, usando el método "getArea" del objeto
-    del tipo "Apartamento", luego, se establece el texto de LabelValor, utilizando el método getValorApto de este mismo objeto, y por último el tipo de unidad, siguiendo el mismo
-    proceso. El objeto Apartamento del cual se obtienen estos datos cambia dependiendo del botón, por ejemplo, en el caso de BotonApto1, se usan los datos del primer
+    /*Al presionar cualquiera de los botones, se muestra la información del Apartamento que representan. Se establece el texto de LabelArea, 
+    usando el método "getArea" del objeto del tipo "Apartamento", luego, se establece el texto de LabelValor, utilizando el método getValorApto de este mismo objeto, 
+    y por último el tipo de unidad, siguiendo el mismo proceso. El objeto Apartamento del cual se obtienen estos datos cambia dependiendo del botón, 
+    por ejemplo, en el caso de BotonApto1, se usan los datos del primer
     apartamento en el ArrayList "Apartamentos", que es un atributo de la clase.*/
 
     private void BotonApto1ActionPerformed(java.awt.event.ActionEvent evt) {  
@@ -331,7 +332,6 @@ public VerAptosAdmin(Torre torre) {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VerAptosAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
     }
     // Declaración de Variables

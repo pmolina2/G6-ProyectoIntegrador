@@ -1,33 +1,37 @@
 
 package Vista;
+//En esta ventana se muestran todas las torres que pertenecen a un proyecto específico.
 
-//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
+
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador y la clases que contiene el package dominio. 
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import CONTROLADOR.*;
 import Dominio.*;
 
+
 public class VentanaTorresAsesor extends javax.swing.JFrame {
 
-    //Se establecen como atributos un objeto del tipo "FondoPanel2", un objeto del tipo "Asesor", y un ArrayList de objetos del tipo "Torre"
+    //Se establecen como atributos un objeto del tipo "FondoPanel", y un arraylist de objetos del tipo Torre.
     FondoPanel fondoAs = new FondoPanel();
     ArrayList <Torre> Torres;
     
-  /*Método constructor de la clase. Aqui se reciben como parámetros un objeto del tipo Proyecto, y un objeto del tipo Asesor. El objeto del tipo Asesor se le asigna al atributo
-   "AsesorActual" de la clase, luego, se utiliza el método setContentPane, pasandole como parámetro el objeto "fondo", para establecer el fondo del componente principal del 
-   Jframe. Se inicializan los componentes, se establece el icono del Jframe, utilizando la imagen "Logo Ventana" que se encuentra en la carpeta Iconos. Se crea un objeto del tipo
-   ConsultarTorre, y se llama a su método "devolverTorres", pasándole como parámetro el id del proyecto que se pasó como parámetro. Este método retorna un ArrayList
-   de objetos del tipo Torre, el cual se asigna al atributo "Torres" de la clase. Luego, se establece el texto de cada uno de los botones de las torres, tomando en cuenta
-   la torre correspondiente de la lista. Por ejemplo, para el BotonTorre1as se establece el número de la torre en la posición 0 de la lista. */
+  /*Método constructor de la clase. Primero, se utiliza el método setContentPane, pasandole como parámetro el objeto "fondoAs", para establecer el fondo del componente 
+   principal del Jframe. Se inicializan los componentes, se establece el icono del Jframe, utilizando la imagen "Logo Ventana" que se encuentra en la carpeta Iconos. 
+   Se crea un objeto del tipo ConsultarTorre, y se llama a su método "devolverTorres", pasándole como parámetro el id del proyecto contenido en el atributo "ProyectoActual" 
+   de la Sesión y el nombre y contraseña del usuario de la base de datos, que en este caso es asesorg6 y asesor respectivamente. 
+   Este método retorna un ArrayList de objetos del tipo Torre, el cual se asigna al atributo "Torres" de la clase. 
+   Luego, se establece el texto de cada uno de los botones de las torres, tomando en cuenta
+   la torre correspondiente de la lista. Por ejemplo, para el BotonTorre1as se establece el número de la torre en la posición 0 de la lista.*/
+   
   
-
     public VentanaTorresAsesor() {
         this.setContentPane(fondoAs);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
         LabelNombreProyecto.setText(Sesion.getProyectoActual().getNombre().toUpperCase());
         ConsultarTorre ConsultaTorre = new ConsultarTorre();
-        this.Torres = ConsultaTorre.devolverTorres(Sesion.getProyectoActual().getId(),"asesor","asesor");
+        this.Torres = ConsultaTorre.devolverTorres(Sesion.getProyectoActual().getId(),"asesorg6","asesor");
         BotonTorre1as.setText("TORRE " + Torres.get(0).getNumTorre().toUpperCase());
         BotonTorre2as.setText("TORRE " + Torres.get(1).getNumTorre().toUpperCase());
         BotonTorre3as.setText("TORRE " + Torres.get(2).getNumTorre().toUpperCase());
@@ -35,7 +39,8 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
         
     }
 
-  /*Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.  */                
+
+  /*Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros. */                
     private void initComponents() {
 
         LabelNombreProyecto = new javax.swing.JLabel();
@@ -100,6 +105,8 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
             }
         });
 
+
+        //Boton para poder regresar a la ventana anterior, que en este caso es la ventana de inicio del asesor.
         BotonRegresar4.setBackground(new java.awt.Color(240, 240, 240));
         BotonRegresar4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); // NOI18N
         BotonRegresar4.setText("← Regresar");
@@ -156,10 +163,9 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
         pack();
     }                    
 
-
 /*Al presionar alguno de los botones que representan una torre, se cierra la ventana actual, luego, se crea un objeto del tipo Torre, al cual se le asigna la torre
-     correspondiente del ArrayList "Torres", que es un atributo de la clase, posteriormente, se crea la ventana de Apartamentos para el asesor, pasándole como 
-     parámetro el objeto de tipo Torre creado previamente, para finalmente hacer visible esta nueva ventana*/                    
+correspondiente del ArrayList "Torres", que es un atributo de la clase, posteriormente, se crea la ventana de Apartamentos para el asesor, pasándole como 
+parámetro el objeto de tipo Torre creado previamente, para finalmente hacer visible esta nueva ventana*/                    
 
 
     private void BotonTorre1asActionPerformed(java.awt.event.ActionEvent evt) {                                              
@@ -193,14 +199,11 @@ public class VentanaTorresAsesor extends javax.swing.JFrame {
                                        
 
 
-/*Al presionar el botón "Regresar", se crea un objeto del tipo ConsultarProyecto, para ejecutar su método "devolverProyectos", que retornará un ArrayList de objetos del tipo
-    proyecto, la cual se guarda en una variable, para pasarsela al método VolverInicioAsesor, que recibe tanto la lista de proyectos, como el AsesorActual, que es un atributo
-    de la clase*/
+//Al presionar el botón regresar, se crea una nueva instancia de VentanaInicioAsesor, se desecha la ventana actual y se hace visible la nueva ventana.
     private void BotonRegresar4ActionPerformed(java.awt.event.ActionEvent evt) {    
         VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(); 
         this.dispose();
-        VentanaAsesor.setVisible(true);
-                     
+        VentanaAsesor.setVisible(true);              
     }                                              
 
 

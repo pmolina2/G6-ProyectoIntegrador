@@ -1,20 +1,20 @@
 
 package Vista;
 
-//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
+/*Esta es la ventana principal del usuario Asesor. Aquí, se muestran en el encabezado su nombre y rol, además de dos botontes, uno lo dirige a la ventana de las cuotas
+y el otro lo dirige a la ventana de registro de clientes*/
 
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
 import CONTROLADOR.*;
 import Dominio.*;
 import javax.swing.*;
 
 
-
 public class VentanaInicioAsesor extends javax.swing.JFrame {
 
-/*Método constructor de la clase. Primero, se asignan a los atributos de la clase, el Asesor, y la lista de proyectos que se pasaron como parámetros, luego
-    se inicializan los componentes del Jframe, y se establece el icono de este, como la imagen "Logo Ventana" ubicada en la carpeta Iconos. Luego se coloca una imagen con
-    la ayuda de la interfaz Icon, y el LabelImagen3. Se establece que el LabelNombre2 sea opaco, se guarda en una variable el nombre del asesor pasado como parametro,
-    y luego se establece el texto del label nombre2, como el nombre del asesor, se establece que el LabelRol2 se opaco, y su texto sea la palabra "ASESOR".*/
+/*Método constructor de la clase. Primero se inicializan los componentes del Jframe, y se establece el icono de este, como la imagen "Logo Ventana" ubicada en la carpeta 
+Iconos. Luego se coloca una imagen con la ayuda de la interfaz Icon, y el LabelImagen3. Se establece que el LabelNombre2 sea opaco y que su texto
+sea el valor del campo "Nombre" de la clase sesión (En mayúsculas). Luego, se establece el labelRol2 sea opaco, y su texto sea la palabra "ASESOR".*/
 
     public VentanaInicioAsesor() {
         initComponents();
@@ -55,6 +55,8 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         PanelLateralAs.setBackground(new java.awt.Color(240, 240, 240));
         PanelLateralAs.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
+
+        //Se crea el botón que redirige al asesor a la ventana de cuotas
         BotonConsultarCuotas.setBackground(new java.awt.Color(0, 51, 102));
         BotonConsultarCuotas.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
         BotonConsultarCuotas.setForeground(new java.awt.Color(255, 255, 255));
@@ -67,6 +69,7 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
             }
         });
 
+        //Se crea un botón para cerrar la sesión, que regresa al usuario al inicio de sesion
         BotonCerrarSesionAs.setBackground(new java.awt.Color(240, 240, 240));
         BotonCerrarSesionAs.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); // NOI18N
         BotonCerrarSesionAs.setText("Cerrar Sesion");
@@ -79,6 +82,7 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
             }
         });
 
+        //Se crea el botón que redirige al asesor a la ventana de registro de clientes.
         BotonRegistrarCliente.setBackground(new java.awt.Color(0, 51, 102));
         BotonRegistrarCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
         BotonRegistrarCliente.setForeground(new java.awt.Color(255, 255, 255));
@@ -125,20 +129,45 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         );
 
         LabelRol2.setBackground(new java.awt.Color(240, 240, 240));
-        LabelRol2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelRol2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelRol2.setForeground(new java.awt.Color(51, 51, 51));
         LabelRol2.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1)));
 
         LabelNombre2.setBackground(new java.awt.Color(240, 240, 240));
-        LabelNombre2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelNombre2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelNombre2.setForeground(new java.awt.Color(51, 51, 51));
         LabelNombre2.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1)));
 
-        LabelProyectos2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelProyectos2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelProyectos2.setText("PROYECTOS DISPONIBLES");
 
+
+        /*En la parte de la declaración de los botones, además de establecer sus propiedades, se establece su texto, dependiendo de que
+        proyecto representen, por ejemplo, el BotonProyecto5 en este caso representa el primer proyecto encontrado en la Base de Datos, 
+        por lo tanto, se establece su texto como el nombre del proyecto en la posicion 0 del ArrayList "proyectos" que es un atributo de la clase sesión
+        Además, a cada botón se le agrega un actionListener que define que acción se va a realizar cuando el botón sea presionado. 
+        En cada caso, se ejecuta el método abrirVentanaTorres pasándole como parámetro el
+        proyecto correspondiente (por ejemplo, en el caso de BotonProyecto5 sería el primer proyecto del arraylist proyectos)*/
+
+
+        BotonProyecto5.setBackground(new java.awt.Color(170, 170, 170));
+        BotonProyecto5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
+        BotonProyecto5.setForeground(new java.awt.Color(102, 102, 102));
+        BotonProyecto5.setBorder(null);
+        BotonProyecto5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BotonProyecto5.setText(Sesion.getListaProyectos().get(0).getNombre().toUpperCase());
+        BotonProyecto5.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(0)));
+
+        BotonProyecto6.setBackground(new java.awt.Color(170, 170, 170));
+        BotonProyecto6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
+        BotonProyecto6.setForeground(new java.awt.Color(102, 102, 102));
+        BotonProyecto6.setBorder(null);
+        BotonProyecto6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BotonProyecto6.setText(Sesion.getListaProyectos().get(1).getNombre().toUpperCase());
+        BotonProyecto6.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(1)));
+
         BotonProyecto7.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonProyecto7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonProyecto7.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto7.setBorder(null);
         BotonProyecto7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -146,28 +175,15 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         BotonProyecto7.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(2)));
 
         BotonProyecto8.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonProyecto8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20));
         BotonProyecto8.setForeground(new java.awt.Color(102, 102, 102));
         BotonProyecto8.setBorder(null);
         BotonProyecto8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BotonProyecto8.setText(Sesion.getListaProyectos().get(3).getNombre().toUpperCase());
         BotonProyecto8.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(3)));
 
-        BotonProyecto6.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
-        BotonProyecto6.setForeground(new java.awt.Color(102, 102, 102));
-        BotonProyecto6.setBorder(null);
-        BotonProyecto6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto6.setText(Sesion.getListaProyectos().get(1).getNombre().toUpperCase());
-        BotonProyecto6.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(1)));
-
-        BotonProyecto5.setBackground(new java.awt.Color(170, 170, 170));
-        BotonProyecto5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
-        BotonProyecto5.setForeground(new java.awt.Color(102, 102, 102));
-        BotonProyecto5.setBorder(null);
-        BotonProyecto5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BotonProyecto5.setText(Sesion.getListaProyectos().get(0).getNombre().toUpperCase());
-        BotonProyecto5.addActionListener(e -> abrirVentanaTorres(Sesion.getListaProyectos().get(0)));
+     
+        
 
         javax.swing.GroupLayout PanelPrincipalAsLayout = new javax.swing.GroupLayout(PanelPrincipalAs);
         PanelPrincipalAs.setLayout(PanelPrincipalAsLayout);
@@ -240,6 +256,9 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
         pack();
     }
 
+
+
+    //Al presionar el botón consultar cuotas, se crea una instancia de VentanaCuotas, se desecha la ventana actual y se hace visible la nueva ventana.
     private void BotonConsultarCuotasActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaCuotas VentanaCuotas = new VentanaCuotas();
         this.dispose();
@@ -247,10 +266,11 @@ public class VentanaInicioAsesor extends javax.swing.JFrame {
     }
 
 
+    //Al presionar el botón registrar cliente, se crea una instancia de VentanaRegistroCliente, se desecha la ventana actual y se hace visible la nueva ventana.
     private void BotonRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-    VentanaRegistroCliente VentanaCliente = new VentanaRegistroCliente();
-    this.dispose();
-    VentanaCliente.setVisible(true);
+        VentanaRegistroCliente VentanaCliente = new VentanaRegistroCliente();
+        this.dispose();
+        VentanaCliente.setVisible(true);
     }    
 
 /*Al presionar el Boton CerrarSesion, se le muestra al usuario un mensaje confirmándole su acción, se cierra la ventana actual, se crea una nueva ventana de inicio de Sesion
@@ -263,9 +283,11 @@ y se hace visible*/
         InicioSes.setVisible(true);
     }
 
-/*Metodo para abrir la ventana de las torres del proyecto. Se crae un objeto del tipo VentanaTorresAsesor, pasandole como Parámetro, un objeto del tipo Proyecto, y el AsesorActual, 
-que es un atributo de la clase. Se cierra la ventana Actual, y se muestra la nueva ventana.*/
-   private void abrirVentanaTorres(Proyecto proyecto) {
+
+/*Metodo para abrir la ventana de las torres del proyecto seleccionado.
+Se establece que el valor del campo proyecto de la sesión sea el proyecto que se le pasa como parámetro, luego se crea una instancia de VentanaTorresAsesor, 
+se desecha la ventana actual, y se hace visible la nueva ventana*/
+    private void abrirVentanaTorres(Proyecto proyecto) {
         Sesion.setProyecto(proyecto);
         VentanaTorresAsesor VentanaTorresAsesor = new VentanaTorresAsesor();
         this.dispose();

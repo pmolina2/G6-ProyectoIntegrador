@@ -1,61 +1,84 @@
 package Vista;
 
+/*En esta ventana se puede registrar el pago de la cuota actual de un cliente, para ello se deben ingresar una serie de datos. Al registrar 
+el pago la cuota del cliente esta se actualizará automáticamente*/
+
+
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador y el package dominio. 
+import CONTROLADOR.*;
 import Dominio.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.JOptionPane;
-import CONTROLADOR.*;
 
 public class VentanaPagoCuota extends javax.swing.JFrame {
 
-    Cuota CuotaPago;
+    Cuota CuotaPago; //Se define un atributo del tipo Cuota.
 
-    public VentanaPagoCuota(Cuota CuotaActual) {
-        this.CuotaPago = CuotaActual;
-        initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
-        FondoPanel fondo = new FondoPanel();
-        fondo.setLayout(new BorderLayout());
+    public VentanaPagoCuota(Cuota CuotaActual) { //Recibe un objeto del tipo Cuota
+        this.CuotaPago = CuotaActual; //Establece el valor del atributo CuotaPago como la cuota pasada como parametro.
+        initComponents(); //Se inician los componentes
+        setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage()); //Se establece el icono de la ventana
+        
+        FondoPanel fondo = new FondoPanel(); //Se crea una instancia de la clase Jpanel
+        fondo.setLayout(new BorderLayout()); //Se establece el layout del fondo
 
-        // Agregar el panel principal al panel de fondo
+        //Agregar el panel principal al panel de fondo
         fondo.add(PanelPrincipalPC);
 
-        this.setContentPane(fondo);
+        this.setContentPane(fondo); //Se establece el fondo de la ventana.
 
         // Hacer el panel principal transparente
         PanelPrincipalPC.setOpaque(false);
 
+        //Se añaden DocumentListeners a tres de los campos
         CampoFechaPago.getDocument().addDocumentListener(new FieldListener());
         CampoNoTransferencia.getDocument().addDocumentListener(new FieldListener());
         CampoValorPago.getDocument().addDocumentListener(new FieldListener());
 
+        //Se establece el texto del CampoValorPago como el valor de la Cuota pasada como parametro
         CampoValorPago.setText("$" + CuotaActual.getValor());
-        CampoValorPago.setEditable(false);
+        CampoValorPago.setEditable(false); //Se hace que este campo no sea editable
 
     }
 
+    /*Este método verifica si cada uno de los campos contienen texto, utilizando isEmpty(). Si ninguno de los campos de texto están vacíos (es decir, están llenos), entonces
+    el valor de "camposLlenos" será true, y se habilitará el botón "BotonConfirmarPago", en caso de que alguno de los campos esté vacío, su valor será false, y "BotonConfirmarPago"
+    no se activará. Al final se ejecuta el método ActualizarAparienciaBoton()*/
     private void revisarCampos() {
         boolean camposLlenos = !CampoFechaPago.getText().trim().isEmpty()
                 && !CampoNoTransferencia.getText().trim().isEmpty() && !CampoValorPago.getText().trim().isEmpty()
                 && !MetodoPagoComboBox.getSelectedItem().equals("Seleccionar");
-        // Activa o desactiva el botón de registrar según el estado de los campos
+        // Activa o desactiva el botón de confirmar pago según el estado de los campos
         BotonConfirmarPago.setEnabled(camposLlenos);
         ActualizarAparienciaBoton();
     }
 
+//Este método actualiza la apariencia del BotonConfirmarPago dependiendo de si está o no habilitado.
     private void ActualizarAparienciaBoton() {
-        if (!BotonConfirmarPago.isEnabled()) {
+        if (!BotonConfirmarPago.isEnabled()) { //Si no está habilitado
             BotonConfirmarPago.setBackground(Color.GRAY); // Color de fondo gris
             BotonConfirmarPago.setForeground(new Color(100, 100, 100)); // Color de texto negro
-        } else {
-            BotonConfirmarPago.setBackground(new Color(0, 51, 102)); // Color de fondo orx|iginal
-            BotonConfirmarPago.setForeground(Color.WHITE); // Color de texto original
+        } else { //Si está habilitado
+            BotonConfirmarPago.setBackground(new Color(0, 51, 102)); // Color de fondo azul
+            BotonConfirmarPago.setForeground(Color.WHITE); // Color de texto blanco
         }
-        BotonConfirmarPago.repaint();
+        BotonConfirmarPago.repaint(); //Se redibuja el componente para que se reflejen los cambios realizados
     }
+
+
+/*Cuando se presiona el boton de confirmar pago, primero se valida que la fecha ingresada en CampoFechaPago esté en el formato dd/mm/yyyy, de lo contrario se abre una ventana 
+emergente con un mensaje de error. Después se verifica que se haya seleccionado una opción distinta a la opción por defecto del ComboBox, de no ser así, ocurre lo mismo, 
+se genera un mensaje de error. Si pasa estas dos validaciones, se crea una instancia de la clase RegistrarPago, y el mensaje que devuelva su metodo "registrarPago", al pasarle
+como parametros el valor de algunos campos y de algunos atributos del objeto de tipo Cuota (que es en sí mismo un atributo de la clase), se almacena en una variable de tipo string.
+Si el mensaje contiene la palabra error, no se puedo registrar el pago, y se muestra una ventana emergente con un mensaje de error, de lo contrario, se muestra un mensaje
+de confirmación y se crea una instancia de la clase ActualizarCuota, para ejecutar su método actualizarCuota pasándole como parámetro el id de la CuotaPago. Luego, se instancia
+una nueva ventana de inicio de asesor, se desecha la ventana actual, y la nueva se hace visible.
+*/
+
 
     private void BotonConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {
         if (!CampoFechaPago.getText().matches("^\\d{2}/\\d{2}/\\d{4}$")) {
@@ -83,25 +106,32 @@ public class VentanaPagoCuota extends javax.swing.JFrame {
         }
     }
 
+
+/*El propósito de esta clase es reaccionar a los cambios en el contenido de cada campo de texto y ejecutar el método revisarCampos.*/
     private class FieldListener implements DocumentListener {
         @Override
-        public void insertUpdate(DocumentEvent e) {
+        public void insertUpdate(DocumentEvent e) { //Se invoca cuando se inserta texto
             revisarCampos();
         }
 
         @Override
-        public void removeUpdate(DocumentEvent e) {
+        public void removeUpdate(DocumentEvent e) { //Se invoca cuando se elimina texto
             revisarCampos();
         }
 
         @Override
-        public void changedUpdate(DocumentEvent e) {
+        public void changedUpdate(DocumentEvent e) { //Se invoca cuando cambian los atributos del texto
             revisarCampos();
         }
     }
 
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
+
+
+/* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.*/
     private void initComponents() {
 
         PanelPrincipalPC = new javax.swing.JPanel();
@@ -170,6 +200,8 @@ public class VentanaPagoCuota extends javax.swing.JFrame {
         MetodoPagoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
                 new String[] { "Seleccionar", "Transferencia Bancaria", "PSE", "Cheque" }));
 
+
+        //Boton que confirma el pago, y redirige al asesor a la ventana de inicio.
         BotonConfirmarPago.setBackground(new java.awt.Color(0, 51, 102));
         BotonConfirmarPago.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 16)); // NOI18N
         BotonConfirmarPago.setForeground(new java.awt.Color(255, 255, 255));
@@ -289,6 +321,9 @@ public class VentanaPagoCuota extends javax.swing.JFrame {
         pack();
     }
 
+
+
+//Metodo main definido por defecto por Netbeans
     public static void main(String args[]) {
 
         try {
@@ -313,7 +348,7 @@ public class VentanaPagoCuota extends javax.swing.JFrame {
         }
     }
 
-    // Variables declaration - do not modify
+    // Declaración de Variables
     private javax.swing.JButton BotonConfirmarPago;
     private javax.swing.JTextField CampoFechaPago;
     private javax.swing.JTextField CampoNoTransferencia;
@@ -326,6 +361,6 @@ public class VentanaPagoCuota extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> MetodoPagoComboBox;
     private javax.swing.JPanel PanelPagoCuota;
     private javax.swing.JPanel PanelPrincipalPC;
-    // End of variables declaration
+    //Fin de la Declaración de Variables
 
 }

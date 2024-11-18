@@ -1,6 +1,9 @@
-
 package Vista;
+/*En esta ventana se muestra un scroll pane, con todas las cuotas actuales de los clientes que tienen una venta activa. Así mismo, hay una barra de búsqueda
+para obtener la cuota actual de un cliente específico de manera rápida.*/
 
+
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador y las que contiene el package Dominio. 
 import CONTROLADOR.*;
 import Dominio.*;
 import java.awt.BorderLayout;
@@ -8,44 +11,52 @@ import javax.swing.ImageIcon;
 
 public class VentanaCuotaCliente extends javax.swing.JFrame {
 
-
+    //Se define un atributo del tipo Cuota.
     Cuota CuotaAPagar;
    
-    public VentanaCuotaCliente(String CedulaCliente) {
-        setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage());
+   //Metodo constructor de la clase. 
+    public VentanaCuotaCliente(String CedulaCliente) { //Recibe como parámetro la Cedula de un cliente.
+        setIconImage(new ImageIcon(getClass().getResource("/Iconos/Logo Ventana.png")).getImage()); //Se establece el icono del jframe.
         
-        initComponents();
+        initComponents(); //Se inicializan los componentes 
         
-        FondoPanel fondo = new FondoPanel();
-        fondo.setLayout(new BorderLayout());
+        //Se establece el fondo del panel principal, para ello:
+
+        FondoPanel fondo = new FondoPanel();      //Instancia de la clase panel
+        fondo.setLayout(new BorderLayout());  //Se establece su layout
     
-        // Agregar el panel principal al panel de fondo
+        //Se agrega el panel principal al panel de fondo
         fondo.add(PanelPrincipalCC);  
         this.setContentPane(fondo);
     
-        // Hacer el panel principal transparente
+        //Se hace el panel principal transparente
         PanelPrincipalCC.setOpaque(false);
-        LabelCedCliente.setText("CC " + CedulaCliente);
 
-        ConsultarCuotaCedula ConsultaCuota = new ConsultarCuotaCedula();
-        Cuota CuotaCliente = ConsultaCuota.devolverCuotaCedula(CedulaCliente);
-        this.CuotaAPagar = CuotaCliente;
+        LabelCedCliente.setText("CC " + CedulaCliente); //Se establece el texto de LabelCedCliente como la cédula recibida como parametro.
+
+        ConsultarCuotaCedula ConsultaCuota = new ConsultarCuotaCedula(); //Se crea una instancia de la clase ConsultarCuotaCedula.
+        Cuota CuotaCliente = ConsultaCuota.devolverCuotaCedula(CedulaCliente); /*Se ejecuta su método devolverCuotaCedula, pasándole como parámetro la cedula del cliente. 
+        Este devuelve un objeto del tipo cuota que se almacena en una variable*/
+        this.CuotaAPagar = CuotaCliente; //El atributo CuotaAPagar de la clase será este objeto de tipo Cuota.
         
-        ConsultarCliente ConsultaCliente = new ConsultarCliente();
-        String nombre = ConsultaCliente.consultarCliente(CedulaCliente);
+        ConsultarCliente ConsultaCliente = new ConsultarCliente(); //Se crea una instancia de la clase ConsultarCliente
+        String nombre = ConsultaCliente.consultarCliente(CedulaCliente);  /*Se ejecuta su método consultarCliente, pasándole como parámetro la cedula del cliente. 
+        Este devuelve un nombre, que se almacena en una variable de tipo String*/
 
-        LabelNomCliente.setText(nombre.toUpperCase());
-        LabelEstadoCuota.setText(CuotaCliente.getEstado().toUpperCase());
-        LabelFechaPago.setText("Fecha: " + CuotaCliente.getFechaCuota());
+
+        //Se establecen los textos de los labels utilizando el nombre obtenido anteriormente, y los atributos del objeto de tipo Cuota, también creado con anterioridad.
+        LabelNomCliente.setText(nombre.toUpperCase()); 
+        LabelEstadoCuota.setText(CuotaCliente.getEstado().toUpperCase()); 
+        LabelFechaPago.setText("Fecha: " + CuotaCliente.getFechaCuota()); 
         LabelNumeroCuota.setText("Cuota: " + CuotaCliente.getNumeroCuota());
         LabelValorCuota.setText("$" + CuotaCliente.getValor());
 
-
-        if (LabelEstadoCuota.getText().equals("PROXIMA A VENCER")){
-            PanelCuotaCliente.setBackground(new java.awt.Color(0, 102, 0));
-        }
+       
+        if (LabelEstadoCuota.getText().equals("PROXIMA A VENCER")){ //Si el texto de LabelEstadoCuota es proxima a vencer
+            PanelCuotaCliente.setBackground(new java.awt.Color(0, 102, 0)); //El color de fondo del panel será verde
+        } //De lo contrario, la cuota está vencida
         else{
-            PanelCuotaCliente.setBackground(new java.awt.Color(150, 0, 0));
+            PanelCuotaCliente.setBackground(new java.awt.Color(150, 0, 0)); //El color de fondo del panel será rojo
 
         }
       
@@ -53,7 +64,10 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
 
   
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">   
+
+
+    /* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.*/                       
     private void initComponents() {
 
         PanelPrincipalCC = new javax.swing.JPanel();
@@ -80,11 +94,11 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
 
         EncabezadoCuota.setBackground(new java.awt.Color(51, 51, 51));
 
-        LabelNomCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelNomCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelNomCliente.setForeground(new java.awt.Color(255, 255, 255));
         LabelNomCliente.setText("Pierre Angelo Molina Motta");
 
-        LabelCedCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
+        LabelCedCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); 
         LabelCedCliente.setForeground(new java.awt.Color(255, 255, 255));
         LabelCedCliente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         LabelCedCliente.setText("CC. 1097493167");
@@ -110,17 +124,17 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        LabelValorCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 60)); // NOI18N
+        LabelValorCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 60)); 
         LabelValorCuota.setForeground(new java.awt.Color(255, 255, 255));
 
-        LabelEstadoCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); // NOI18N
+        LabelEstadoCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); 
         LabelEstadoCuota.setForeground(new java.awt.Color(255, 255, 255));
         LabelEstadoCuota.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        LabelFechaPago.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25)); // NOI18N
+        LabelFechaPago.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25)); 
         LabelFechaPago.setForeground(new java.awt.Color(255, 255, 255));
     
-        LabelNumeroCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25)); // NOI18N
+        LabelNumeroCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 25)); 
         LabelNumeroCuota.setForeground(new java.awt.Color(255, 255, 255));
     
 
@@ -161,8 +175,10 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
                 .addGap(0, 74, Short.MAX_VALUE))
         );
 
+
+        //Boton que redirige al asesor a la ventana de pago de la cuota.
         BotonPagarCuota.setBackground(new java.awt.Color(0, 51, 102));
-        BotonPagarCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonPagarCuota.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonPagarCuota.setForeground(new java.awt.Color(255, 255, 255));
         BotonPagarCuota.setText("REGISTRAR PAGO");
         BotonPagarCuota.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -173,10 +189,11 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
             }
         });
 
-        LabelTituloCC.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 60)); // NOI18N
+        LabelTituloCC.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 60)); 
         LabelTituloCC.setText("INFORMACIÓN DE LA CUOTA");
 
-        BotonRegresarCC.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
+        //Boton para regresar a la ventana anterior, en este caso, a la ventana de todas las cuotas de los clientes.
+        BotonRegresarCC.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); 
         BotonRegresarCC.setText("← Regresar");
         BotonRegresarCC.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         BotonRegresarCC.setContentAreaFilled(false);
@@ -233,8 +250,10 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }          
 
+/*Al presionar el BotonPagarCuota, se crea una instancia de VentanaPagoCuota, pasandole como parametro, la cuota a pagar, que es una atributo de la clase.
+Se se desecha la ventana actual y se hace visible la nueva ventana.*/
     private void BotonPagarCuotaActionPerformed(java.awt.event.ActionEvent evt) {    
         VentanaPagoCuota VentanaPago = new VentanaPagoCuota(this.CuotaAPagar);
         this.dispose();
@@ -242,6 +261,7 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
 
     }                                               
 
+//Al hacer clic en el botón regresar, se crea una nueva instancia de VentanaCuotas, se desecha la ventana actual y se hace visible la nueva ventana. 
     private void BotonRegresarCCActionPerformed(java.awt.event.ActionEvent evt) {                                                
        VentanaCuotas VentanaCuotas = new VentanaCuotas();
        this.dispose();
@@ -252,12 +272,9 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+
+    //Metodo main definido por defecto por Netbeans
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -278,7 +295,7 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
 
     }
 
-    // Variables declaration - do not modify                     
+     // Declaración de Variables                
     private javax.swing.JButton BotonPagarCuota;
     private javax.swing.JButton BotonRegresarCC;
     private javax.swing.JPanel EncabezadoCuota;
@@ -291,5 +308,5 @@ public class VentanaCuotaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel LabelValorCuota;
     private javax.swing.JPanel PanelCuotaCliente;
     private javax.swing.JPanel PanelPrincipalCC;
-    // End of variables declaration                   
+     // Fin de la declaración de Variables               
 }
