@@ -1,9 +1,12 @@
+/*En esta se puede realizar la venta de un apartamento previamente seleccionado. Aquí se pedirán unos datos, y se registrará la venta en la base de datos. Así mismo se creará
+de manera automática la primera cuota del cliente.*/
 
 package Vista;
 
-import java.awt.Color;
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador y la clase Apartamento del package dominio.
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.JOptionPane;
@@ -12,10 +15,22 @@ import Dominio.Apartamento;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
 public class VentanaRegistroVenta extends javax.swing.JFrame {
 
+
+//Se establecen como atributos una variable de tipo int, y un objeto del tipo Apartamento
     private int TasaInteres;
     private Apartamento ApartamentoVenta;
+
+/*Método constructor de la clase. Este recibe un objeto del tipo apartamento como parámetro. Primero se incializan los componentes, y se establece que el valor del atributo
+ApartamentoVenta de la clase sea igual a dicho objeto que se recibe. Luego se establece el icono del Jframe, utilizando la imagen "Logo Ventana" que se encuentra en la carpeta
+ Iconos. Se llama al método ActualizarAparienciaBoton(), luego se crea una instancia de la clase ConsultarNombreProyecto y se establece que el texto de LabelProyecto2
+ sea lo que retorna el método devolverNombreProyecto de dicha clase, al pasarle la matrícula del apartamento elegido. Luego se crea una instancia de la clase 
+ ConsultarNumTorre y se establece que el texto de LabelTorre2 sea lo que retorna el método devolverNumTorre de dicha clase, al pasarle la matrícula del apartamento elegido.
+ En el caso de LabelApartamento, su texto será el numero del apartamento elegido. Luego se añade un DocumentListener a cada campo de texto, 
+ con el fin de monitorear los cambios que ocurren en su contenido en tiempo real. Por último se llama al método AsignarFechaActual()
+*/
 
     public VentanaRegistroVenta(Apartamento AptoElegido) {
         initComponents();
@@ -25,8 +40,6 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
                 .getScaledInstance(LabelImagen4.getWidth(), LabelImagen4.getHeight(), 0));
         LabelImagen4.setIcon(miIcono);
         ActualizarAparienciaBoton();
-
-        // Método para obtener el número de la torre con el id del apartamento dado
         ConsultarNombreProyecto nombreProyecto = new ConsultarNombreProyecto();
         LabelProyecto2.setText("PROYECTO: " + nombreProyecto.devolverNombreProyecto(AptoElegido.getMatricula()).toUpperCase());
         ConsultarNumTorre numTorre = new ConsultarNumTorre();
@@ -39,10 +52,14 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         AsignarFechaActual();
     }
 
+
+    /*Este método verifica si cada uno de los campos contienen texto, utilizando isEmpty(). Si ninguno de los campos de texto están vacíos (es decir, están llenos), entonces
+    el valor de "camposLlenos" será true, y se habilitará el botón "BotonRegistrar", en caso de que alguno de los campos esté vacío, su valor será false, y "BotonRegistrar"
+    no se activará. Al final se ejecuta el método ActualizarAparienciaBoton()*/
+
     private void revisarCampos() {
         boolean camposLlenos = !CampoFechaEscritura.getText().trim().isEmpty()
                 && !CampoCedulaCliente1.getText().trim().isEmpty() && !CampoFechaEscritura.getText().trim().isEmpty();
-        // Activa o desactiva el botón de registrar según el estado de los campos
         BotonRegistrar.setEnabled(camposLlenos);
         ActualizarAparienciaBoton();
     }
@@ -56,40 +73,45 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fechaFormateada = fechaHoy.format(formato);
         
-        // Asignar la fecha formateada al JTextField
+        /*Se asigna la fecha formateada al CampoFechaEscritura, que por defecto está deshabilitado. Esto para que el asesor no ingrese la fecha manualmente
+        si no que esta sea siempre la fecha actual del sistema*/
         CampoFechaEscritura.setText(fechaFormateada);
     }
 
 
+/*El propósito de esta clase es reaccionar a los cambios en el contenido de cada campo de texto y ejecutar el método revisarCampos.*/
+
     private class FieldListener implements DocumentListener {
         @Override
-        public void insertUpdate(DocumentEvent e) {
+        public void insertUpdate(DocumentEvent e) {  //Se invoca cuando se inserta texto
             revisarCampos();
         }
 
         @Override
-        public void removeUpdate(DocumentEvent e) {
+        public void removeUpdate(DocumentEvent e) { //Se invoca cuando se elimina texto
             revisarCampos();
         }
 
         @Override
-        public void changedUpdate(DocumentEvent e) {
+        public void changedUpdate(DocumentEvent e) { //Se invoca cuando cambian los atributos del texto
             revisarCampos();
         }
     }
 
-    private void ActualizarAparienciaBoton() {
+
+//Este método actualiza la apariencia del BotonRegistrar dependiendo de si está o no habilitado.
+    private void ActualizarAparienciaBoton() { //Si no está habilitado
         if (!BotonRegistrar.isEnabled()) {
             BotonRegistrar.setBackground(Color.GRAY); // Color de fondo gris
             BotonRegistrar.setForeground(new Color(100, 100, 100)); // Color de texto negro
-        } else {
-            BotonRegistrar.setBackground(new Color(0, 51, 102)); // Color de fondo original
-            BotonRegistrar.setForeground(Color.WHITE); // Color de texto original
+        } else { //Si está habilitado
+            BotonRegistrar.setBackground(new Color(0, 51, 102)); // Color de fondo azul
+            BotonRegistrar.setForeground(Color.WHITE); // Color de texto blanco
         }
-        BotonRegistrar.repaint();
+        BotonRegistrar.repaint(); //Se redibuja el componente para que se reflejen los cambios realizados
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    /* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.*/
     private void initComponents() {
 
         PanelRegistroVenta = new javax.swing.JPanel();
@@ -134,6 +156,7 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         Nota3.setForeground(new java.awt.Color(153, 153, 153));
         Nota3.setText("compuesto.");
 
+        //Botón que envia al asesor devuelta a su ventana de inicio.
         BotonRegresoInicio.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
         BotonRegresoInicio.setText("← Regresar al Inicio");
         BotonRegresoInicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -182,21 +205,21 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
                 .addGap(27, 27, 27))
         );
 
-        LabelRegistroVenta.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); // NOI18N
+        LabelRegistroVenta.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 30)); 
         LabelRegistroVenta.setText("REGISTRAR UNA VENTA");
 
         PanelInfoVenta.setBackground(new java.awt.Color(240, 240, 240));
         PanelInfoVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        LabelTorre2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 26)); // NOI18N
+        LabelTorre2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 26)); 
         LabelTorre2.setForeground(new java.awt.Color(51, 51, 51));
         LabelTorre2.setText("Torre:  ");
 
-        LabelProyecto2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 26)); // NOI18N
+        LabelProyecto2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 26)); 
         LabelProyecto2.setForeground(new java.awt.Color(51, 51, 51));
         LabelProyecto2.setText("Proyecto:");
 
-        LabelApartamento.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 26)); // NOI18N
+        LabelApartamento.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 26)); 
         LabelApartamento.setForeground(new java.awt.Color(51, 51, 51));
         LabelApartamento.setText("Apartamento:");
 
@@ -224,39 +247,39 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        CampoFechaEscritura.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        CampoFechaEscritura.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         CampoFechaEscritura.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
         CampoFechaEscritura.setEnabled(false);
 
 
-        CampoCedulaAsesor.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        CampoCedulaAsesor.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         CampoCedulaAsesor.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
         CampoCedulaAsesor.setEnabled(false);
 
 
-        LabelCedCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        LabelCedCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         LabelCedCliente.setForeground(new java.awt.Color(51, 51, 51));
         LabelCedCliente.setText("Cedula del Cliente*");
 
-        LabelFechaEscritura.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        LabelFechaEscritura.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         LabelFechaEscritura.setForeground(new java.awt.Color(51, 51, 51));
         LabelFechaEscritura.setText("Fecha de Escritura*");
 
-        LabelNomVendedor.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        LabelNomVendedor.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         LabelNomVendedor.setForeground(new java.awt.Color(51, 51, 51));
         LabelNomVendedor.setText("Cédula del Asesor*");
 
-        LavelNumCuotas.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        LavelNumCuotas.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         LavelNumCuotas.setForeground(new java.awt.Color(51, 51, 51));
         LavelNumCuotas.setText("Numero de Cuotas*");
 
-        LabelTasaInt.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        LabelTasaInt.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         LabelTasaInt.setForeground(new java.awt.Color(51, 51, 51));
         LabelTasaInt.setText("Tasa de Interés:    ");
         LabelTasaInt.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
 
         BotonRegistrar.setBackground(new java.awt.Color(0, 51, 102));
-        BotonRegistrar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        BotonRegistrar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         BotonRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         BotonRegistrar.setText("REGISTRAR");
         BotonRegistrar.setBorder(null);
@@ -268,7 +291,7 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
             }
         });
 
-        NoCuotasComboBox.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        NoCuotasComboBox.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         NoCuotasComboBox.setForeground(new java.awt.Color(102, 102, 102));
         NoCuotasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "1", "60", "120", "180" }));
         NoCuotasComboBox.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1)));
@@ -278,7 +301,7 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
             }
         });
 
-        CampoCedulaCliente1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        CampoCedulaCliente1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         CampoCedulaCliente1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
 
         javax.swing.GroupLayout PanelRegistroVentaLayout = new javax.swing.GroupLayout(PanelRegistroVenta);
@@ -370,13 +393,27 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
     }
 
 
-
+//Al presionar el botón de regresar al inicio, se crea una nueva instancia de VentanaInicioAsesor, se desecha la ventana actual y se hace visible la nueva ventana
        private void BotonRegresoInicioActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
         this.dispose();
         VentanaAsesor.setVisible(true);
     }                                                  
    
+
+/*Al presionar el botón registrar. Primero se verifica si la opción seleccionada del ComboBox es "Seleccionar", en este caso significa que el usuario no ha elegido
+otra opción distinta a la opción por defecto, entonces se abre una ventana emergente que le informa al usuario que debe elegir una cantidad de cuotas. Luego, si el 
+CampoCedulaCliente1, contiene alguna letra, entonces se abre una ventana emergente que le informa al usuario que la cédula no puede contener letras. De lo contrario
+Si pasa estas dos validaciones, entonces sea crea una instancia de la cllase CrearVenta, luego se guarda en una variable String, el item seleccionado del ComboBox y esa variable
+se pasa después a tipo int. Luego se almacena en una variable string llamada mensaje, el valor que retorna el método "GuardarVenta" de la instancia de la clase CrearVenta,
+al cual se le pasan como parámetro la cédula ingresada del cliente, la cédula del asesor que tiene la sesión activa, el numero de cuotas, la tasa de interés, que está almacenada
+en un atributo de la clase, la fecha de escritura, y el apartamento que se está vendiendo.
+Entonces, si el mensaje contiene la palabra error, no se puedo guardar la venta en la base de datos, entonces se muestra su contenido en una ventana emergente de error,
+de lo contrario, la acción se pudo realizar Entonces se muestra un mensaje de confirmación, y se agrega la fecha de escritura al apartamento que se vendió.
+Posteriormente se calcula el valor de cada cuota mensual con el interés correspondiente, y se crea la cuota, pasándole el porcentaje de interés, la fecha de escritura
+y la cédula del cliente. Finalmente se vuelve a la ventana de inicio del asesor.*/
+
+
     private void BotonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
         if (NoCuotasComboBox.getSelectedItem().equals("Seleccionar")) { // Verifica si no hay selección
             JOptionPane.showMessageDialog(this, "Por favor elija la cantidad de cuotas.", "Mensaje de advertencia",
@@ -386,40 +423,41 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
         else {
-            CrearVenta CrearVenta = new CrearVenta();
-            String seleccionCuotas = (String) NoCuotasComboBox.getSelectedItem();                                    
-            int numeroCuotas = Integer.parseInt(seleccionCuotas); 
-            String mensaje = CrearVenta.GuardarVenta(CampoCedulaCliente1.getText(), Sesion.getCedula(), numeroCuotas, this.TasaInteres,
-                    CampoFechaEscritura.getText(), ApartamentoVenta);
-            if (mensaje.contains("Error")){
-                 JOptionPane.showMessageDialog(this, mensaje, "Mensaje de Error",JOptionPane.ERROR_MESSAGE);}
-            else{
+                CrearVenta CrearVenta = new CrearVenta();
+                String seleccionCuotas = (String) NoCuotasComboBox.getSelectedItem();                                    
+                int numeroCuotas = Integer.parseInt(seleccionCuotas); 
+                String mensaje = CrearVenta.GuardarVenta(CampoCedulaCliente1.getText(), Sesion.getCedula(), numeroCuotas, this.TasaInteres,
+                        CampoFechaEscritura.getText(), ApartamentoVenta);
+                if (mensaje.contains("Error")){
+                    JOptionPane.showMessageDialog(this, mensaje, "Mensaje de Error",JOptionPane.ERROR_MESSAGE);}
+                else{
 
-                JOptionPane.showMessageDialog(this, mensaje, "Mensaje de Confirmación",JOptionPane.INFORMATION_MESSAGE);
-                ActualizarFecha ActualizarFecha = new ActualizarFecha();
-                ActualizarFecha.actualizarFechaEscritura(ApartamentoVenta.getMatricula(),CampoFechaEscritura.getText());
+                    JOptionPane.showMessageDialog(this, mensaje, "Mensaje de Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                    ActualizarFecha ActualizarFecha = new ActualizarFecha();
+                    ActualizarFecha.actualizarFechaEscritura(ApartamentoVenta.getMatricula(),CampoFechaEscritura.getText());
 
-                //Ahora se pasa el ValorApto que es una string a entero para poder calcular el valor de cada cuota mensual.
-                String ValorApto = (String) ApartamentoVenta.getValorApto();                                    
-                int ValorAptoNumero = Integer.parseInt(ValorApto); 
+                    //Ahora se pasa el ValorApto que es una string a entero para poder calcular el valor de cada cuota mensual.
+                    String ValorApto = (String) ApartamentoVenta.getValorApto();                                    
+                    int ValorAptoNumero = Integer.parseInt(ValorApto); 
 
-                //Se calcula el valor de la cuota. Se convierten las variables a double, con el fin de garantizar que la operacion si me devuelva un valor de tipo double.
-                double ValorCuota = ( (double) ValorAptoNumero / numeroCuotas); 
-                double ValorCuotaInteres = ValorCuota + (ValorCuota*((double)TasaInteres / 100));
+                    //Se calcula el valor de la cuota. Se convierten las variables a double, con el fin de garantizar que la operacion si me devuelva un valor de tipo double.
+                    double ValorCuota = ( (double) ValorAptoNumero / numeroCuotas); 
+                    double ValorCuotaInteres = ValorCuota + (ValorCuota*((double)TasaInteres / 100));
 
-                CrearCuota CrearCuota = new CrearCuota();
-                CrearCuota.registrarCuota(ValorCuotaInteres, CampoFechaEscritura.getText(), CampoCedulaCliente1.getText()); 
-        
-                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
-                this.dispose();
-                VentanaAsesor.setVisible(true);
-
-            }
+                    CrearCuota CrearCuota = new CrearCuota();
+                    CrearCuota.registrarCuota(ValorCuotaInteres, CampoFechaEscritura.getText(), CampoCedulaCliente1.getText()); 
+            
+                    VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
+                    this.dispose();
+                    VentanaAsesor.setVisible(true);
+                }
             }
     }
             
         
 
+
+    //Método que define la acción del ComboBox. Dependiendo de la cantidad de cuotas que elija el usuario, se establecera una tasa de interés u otra. 
     private void NoCuotasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
         String seleccion = (String) NoCuotasComboBox.getSelectedItem();
         if (seleccion.equals("1")) {
@@ -442,6 +480,8 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         }
     }
 
+
+//Método main definido por defecto por Netbeans.
     public static void main(String args[]) {
 
         try {
@@ -466,8 +506,8 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
         }
     }
 
-    // Variables declaration - do not modify
- private javax.swing.JButton BotonRegistrar;
+    // Declaración de Variables
+    private javax.swing.JButton BotonRegistrar;
     private javax.swing.JButton BotonRegresoInicio;
     private javax.swing.JTextField CampoCedulaAsesor;
     private javax.swing.JTextField CampoCedulaCliente1;
@@ -489,5 +529,5 @@ public class VentanaRegistroVenta extends javax.swing.JFrame {
     private javax.swing.JPanel PanelInfoVenta;
     private javax.swing.JPanel PanelLateralVenta;
     private javax.swing.JPanel PanelRegistroVenta;
-    // End of variables declaration
+    // Fin de la Declaración de Variables
 }

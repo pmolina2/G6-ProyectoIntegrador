@@ -1,6 +1,10 @@
+
 package Vista;
 
-//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador. 
+/*Esta es la ventana inicial del programa, aquí, los usuarios ingresarán sus credenciales para iniciar sesión, y una vez habiendo validado que sean correctas
+se les abrirá otra ventana*/
+
+//Se importan todas las librerías necesarias, además de las clases que contiene el package controlador y las clases que contiene el package dominio. 
 import java.awt.Color;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -14,7 +18,7 @@ public class InicioSesion extends javax.swing.JFrame {
     //Se crea un objeto del tipo FondoPanel
     FondoPanel fondo = new FondoPanel();
 
-    /*Método constructor de la clase. En este, se utiliza el método setContentPane, pasandole como parámetro el objeto creado, para establecer el 
+    /*Método constructor de la clase. En este, se utiliza el método setContentPane, pasandole como parámetro el objeto creado (fondo), para establecer el 
     fondo del componente principal del Jframe. Además, se establece el icono del Jframe, utilizando la imagen "Logo Ventana" que se encuentra en la carpeta Iconos.
     Luego se coloca una imagen, con ayuda de la interfaz Icon, y el LabelImagen. Por último se establece que el LabelInicioSesion sea opaco, y su fondo sea de color blanco.
     */
@@ -30,7 +34,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
     }
 
-    /* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros.  */
+    /* Método que inicializa todos los componentes que va a contener el Jframe, como los labels, botones, campos de texto, entre otros. */
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -61,26 +65,26 @@ public class InicioSesion extends javax.swing.JFrame {
         setResizable(false);
 
         LabelInicioSesion.setBackground(new java.awt.Color(255, 255, 255));
-        LabelInicioSesion.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 32)); // NOI18N
+        LabelInicioSesion.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 32)); 
         LabelInicioSesion.setText("   INICIAR SESIÓN");
         LabelInicioSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         PanelInicioSesion.setBackground(new java.awt.Color(255, 255, 255));
         PanelInicioSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        LabelContraseña.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 22)); // NOI18N
+        LabelContraseña.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 22)); 
         LabelContraseña.setText("Contraseña");
 
-        LabelCedula.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 22)); // NOI18N
+        LabelCedula.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 22));
         LabelCedula.setText("Cédula");
 
-        CampoContraseña.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        CampoContraseña.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         CampoContraseña.setForeground(new java.awt.Color(102, 102, 102));
         CampoContraseña.setBorder(javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)),
                 javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1)));
 
-        CampoCedula.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        CampoCedula.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); 
         CampoCedula.setForeground(new java.awt.Color(102, 102, 102));
         CampoCedula.setBorder(javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)),
@@ -88,7 +92,7 @@ public class InicioSesion extends javax.swing.JFrame {
         CampoCedula.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         BotonEntrar.setBackground(new java.awt.Color(0, 51, 102));
-        BotonEntrar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        BotonEntrar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); 
         BotonEntrar.setForeground(new java.awt.Color(255, 255, 255));
         BotonEntrar.setText("ENTRAR");
         BotonEntrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -175,55 +179,75 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     /*Método que establece las acciones que se van a realizar cuando el botón "Entrar" sea presionado. Se obtienen los valores introducidos en los Campos de texto y 
-    se guardan en variables, luego, sea crea un objeto del tipo "InicioSesionC", "ConsultarAsesor", "ConsultarAdmin" y "ConsultarProyecto". Posterioromente se 
+    se guardan en variables, luego, sea crea un objeto del tipo "InicioSesionC", "ConsultarAsesor", "ConsultarAdmin" y "ConsultarProyecto". Posteriormente se 
     guarda en un ArrayList de strings, el ArrayList que devuelve el método "verificacionInicio" del objeto del tipo "InicioSesionC"*/
 
-    private void BotonEntrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotonEntrarActionPerformed
+    private void BotonEntrarActionPerformed(java.awt.event.ActionEvent evt) {
         String cedulaUsuario = CampoCedula.getText();
         String contraseñaUsuario = CampoContraseña.getText();
         InicioSesionC inicio = new InicioSesionC();
         ConsultarAsesor ConsultaAsesor = new ConsultarAsesor();
         ConsultarAdmin ConsultaAdmin = new ConsultarAdmin();
-        ConsultarProyecto ConsultarProyectos = new ConsultarProyecto();
+        ConsultarProyecto ConsultarProyectos = new ConsultarProyecto(); 
 
         ArrayList<String> datos = inicio.verificacionInicio(cedulaUsuario, contraseñaUsuario);
 
+        /*Condicional que maneja el inicio de Sesión. 
 
-        /*Condicional que maneja el inicio de Sesión. Si la Lista no está vacía, quiere decir que se encontró a algún usuario con las credenciales ingresadas, entonces, en
-        la posición 0, se encontraría su cedula, en la 1, su contraseña, y en la 2, su rol.
-        Si los datos concuerdan, y el rol es administrador, se guarda en un objeto del tipo Admin, el objeto que retorna el método "devolverAdmin" de la clase
-        "ConsultaAdmin" al pasarle como parámetro la cedula del usuario, luego en un ArrayList de objetos del tipo Proyecto, se guarda el ArrayList que devuelve 
-        el método "devolverProyectos" de la clase "ConsultarProyectos". Ahora, se inicializa la ventana del Adminstrador, pasandole como parámetros el AdminActual, 
+        . Ahora, se inicializa la ventana del Adminstrador, pasandole como parámetros el AdminActual, 
         y la lista de proyectos. Se cierra la ventana actual y se muestra la nueva ventana. Este mismo proceso se realiza cuando el rol es asesor, solo que se abre
         la ventana del asesor.*/
         
-        if (datos.size() != 0) {
+        /*Si la Lista no está vacía, quiere decir que se encontró a algún usuario con las credenciales ingresadas, entonces, en
+        la posición 0, se encontraría su cedula, en la 1, su contraseña, y en la 2, su rol.*/
+        if (datos.size() != 0) { 
 
+        
+        /*Si los datos concuerdan, y el rol es administrador, se guarda en un objeto del tipo Admin, el objeto que retorna el método "devolverAdmin" de la clase
+        "ConsultarAdmin" al pasarle como parámetro la cedula del usuario, luego en un ArrayList de objetos del tipo Proyecto, se guarda el ArrayList que devuelve 
+        el método "devolverProyectos" de la clase "ConsultarProyectos. A este método se le pasan como parámetros el nombre del usuario y la contraseña de la base de datos.
+        En este caso, como es un administrador, el usuario es adming6 y la contraseña admin.
+        "*/
             if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("administrador")) {
                 Admin AdminActual = ConsultaAdmin.devolverAdmin(cedulaUsuario);
-                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos("admin", "admin");
+                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos("adming6", "admin");
                 
                 @SuppressWarnings("unused")
                 Sesion SesionActual = new Sesion(AdminActual.getCedula(), AdminActual.getNombreCompleto(), Proyectos);
+                /*Se crea una instancia de la clase Sesion, la cual se implementa como un singletone, por lo que esta instancia es única.
+                A esta se le pasan la cédula y nombreCompleto del objeto AdminActual y la lista de objetos del tipo proyecto.
+                Esto se realiza para que en cualquier otra ventana del package vista podamos acceder al valor de los atributos de esta clase y 
+                tengamos siempre presente cual es el usuario que tiene la sesión iniciada.
+                */
         
-                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin();
-                this.dispose();
-                VentanaAdmin.setVisible(true);
+                VentanaInicioAdmin VentanaAdmin = new VentanaInicioAdmin(); //Se crea una instancia de VentanaInicioAdmin
+                this.dispose(); //Se desecha la ventana actual
+                VentanaAdmin.setVisible(true); //Se hace visible la ventana de inicio del administrador.
+
+
+        /*Una lógica muy similar se aplica cuando la cédula y contraseña ingresada concuerdan y el usuario es un asesor. Se guarda en un objeto del tipo Asesor, 
+        el objeto que retorna el método "devolverAsesor" de la clase "ConsultarAsesor al pasarle como parámetro la cedula del usuario. luego en un ArrayList de objetos 
+        del tipo Proyecto, se guarda el ArrayList que devuelve el método "devolverProyectos" de la clase "ConsultarProyectos. En este caso se pasan como parámetros 
+        el nombre del usuario "asesorg6" y la contraseña asesor*/
 
             } else if (datos.get(0).equals(cedulaUsuario) && datos.get(1).equals(contraseñaUsuario) && datos.get(2).equals("asesor")) {
                 Asesor AsesorActual = ConsultaAsesor.devolverAsesor(cedulaUsuario);
-                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos("asesor","asesor");
+                ArrayList<Proyecto> Proyectos = ConsultarProyectos.devolverProyectos("asesorg6","asesor");
                
                 @SuppressWarnings("unused")
                 Sesion SesionActual = new Sesion(AsesorActual.getCedula(), AsesorActual.getNombreCompleto(), Proyectos);
+                /*Se hace exactamente lo mismo, creando una instancia de la clase Sesion, solo que aqui ahora se le pasan la cédula y el nombre completo del objeto de
+                tipo asesor, además del arraylist de objetos del tipo proyecto*/
 
-                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor();
-                this.dispose();
-                VentanaAsesor.setVisible(true);
+                VentanaInicioAsesor VentanaAsesor = new VentanaInicioAsesor(); //Se crea una instancia de VentanaInicioAsesor
+                this.dispose();  //Se desecha la ventana actual
+                VentanaAsesor.setVisible(true); //Se hace visible la ventana de inicio del asesor.
             } 
+
+        //Si el arraylist "datos" está vacio quiere decir que no se encontró a ningún usuario con las credenciales ingresadas.     
         } else {
-                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta, \nintente nuevamente", //Si la lista está vacía, se le indica al usuario que no se 
-                "Mensaje de Error", JOptionPane.ERROR_MESSAGE);       //encontró ninguna persona en la base de datos con esas credenciales                                                 
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta, \nintente nuevamente", //Se muestra una ventana emergente que informa al usuario que no
+                "Mensaje de Error", JOptionPane.ERROR_MESSAGE);       //se encontró ninguna persona en la base de datos con esas credenciales                                                 
         }
 
     }
@@ -251,7 +275,6 @@ public class InicioSesion extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         }
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InicioSesion().setVisible(true);
