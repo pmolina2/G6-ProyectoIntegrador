@@ -1,4 +1,5 @@
 package MODELO;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -11,13 +12,13 @@ public class CuotaCedulaBd extends ConexionBd{
 
         //SE INICIALIZA LA CONEXION Y LA LISTA DONDE SE GUARDARAN LOS DATOS DE LA CONSULTA.
         //SE USA UN ARRAYLIST DE TIPO STRING EN LUGAR DE UN RESULTSET PORQUE LA CONSULTA SOLO DEVOLVERA UN RESULTADO.
-        Connection conexion = this.getConnection("asesor", "asesor");
+        Connection conexion = this.getConnection("asesorg6", "asesor");
         ArrayList<String> datosCuota = new ArrayList<>();
 
         //SENTENCIA SQL
         String sentencia = """
                 SELECT *
-                FROM proyectoIntegrador.cuota
+                FROM proyectoIntegradorg6.cuota
                 WHERE cedulaCliente = ?
                 """;
 

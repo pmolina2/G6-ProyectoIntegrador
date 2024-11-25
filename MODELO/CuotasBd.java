@@ -8,13 +8,13 @@ public class CuotasBd extends ConexionBd{
     public Hashtable<String, ArrayList<String>> consultarCuotas() throws SQLException {
      
         //SE INICIALIZA LA CONEXION Y EL HASH DONDE SE GUARDARAN LOS DATOS DE LA CONSULTA
-        Connection conexion = this.getConnection("asesor", "asesor");
+        Connection conexion = this.getConnection("asesorg6", "asesor");
         Hashtable<String, ArrayList<String>> hashCuotas = new Hashtable<>();
 
         //PREPARAR EL PROCEDIMIENTO ALMACENADO PARA ACTUALIZAR LOS ESTADOS
-        CallableStatement callableStatement = conexion.prepareCall("{call proyectointegrador.actualizarCuotasVencidas}");
-        CallableStatement callableStatement2 = conexion.prepareCall("{call proyectointegrador.actualizarCuotasNoVencidas}");
-        CallableStatement callableStatement3 = conexion.prepareCall("{call proyectointegrador.actualizarCuotasCompletadas}");
+        CallableStatement callableStatement = conexion.prepareCall("{call proyectointegradorg6.actualizarCuotasVencidas}");
+        CallableStatement callableStatement2 = conexion.prepareCall("{call proyectointegradorg6.actualizarCuotasNoVencidas}");
+        CallableStatement callableStatement3 = conexion.prepareCall("{call proyectointegradorg6.actualizarCuotasCompletadas}");
 
         try {
             callableStatement.execute();
@@ -32,7 +32,7 @@ public class CuotasBd extends ConexionBd{
         //SENTENCIA SQL PARA CONSULTAR LAS CUOTAS
         String sentencia = """
                 SELECT *
-                FROM proyectointegrador.CUOTA
+                FROM proyectointegradorg6.CUOTA
                 WHERE estado != 'Completada'
                 """;
         PreparedStatement statement = conexion.prepareStatement(sentencia);

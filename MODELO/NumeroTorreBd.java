@@ -3,14 +3,18 @@ import java.sql.*;
 
 public class NumeroTorreBd extends ConexionBd{
     
+    /**
+     * Método principal de la clase, encargado de obtener el número de la torre
+     * del que el apartamento cuya matricula sea parte de dicha torre.
+     */
     public String consultarNumTorre(String matricula) throws SQLException{
 
-        Connection conexion = this.getConnection("asesor","asesor");
+        Connection conexion = this.getConnection("asesorg6","asesor");
 
         String sentencia = """
                 SELECT t.numTorre
-                FROM proyectointegrador.apartamento a
-                JOIN proyectointegrador.torre t ON a.idTorre = t.id
+                FROM proyectointegradorg6.apartamento a
+                JOIN proyectointegradorg6.torre t ON a.idTorre = t.id
                 WHERE a.matricula = ?
                 """;
         PreparedStatement statement = conexion.prepareStatement(sentencia);

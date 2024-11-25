@@ -17,7 +17,7 @@ public class ConexionBd {
     //VARIABLES DE LA CLASE
 
     //ENCARGADA DE REALIZAR LA CONEXION, LOS DATOS SE OBTIENEN DEL ARCHIVO LISTENER.ORA EN LOS ARCHIVOS DE ORACLE
-    private final String url = "jdbc:oracle:thin:@localhost:1521:XE";
+    private final String url = "jdbc:oracle:thin:@192.168.254.215:1521:orcl";
 
     //OBJETO Connection con QUE ALMACENA LA CONEXION EN UNA VARIABLE, VALOR POR DEFECTO NULL.
     public Connection con = null;

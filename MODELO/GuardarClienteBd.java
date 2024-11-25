@@ -7,13 +7,23 @@ import java.sql.SQLException;
 
 public class GuardarClienteBd extends ConexionBd{
     
+    /**
+     * Método principal de la clase que se encarga de registrar clientes
+     * pasándole como parámetros los datos del cliente, retorna una variable de tipoString
+     * 
+     * 
+     * Se crea la sentencia y se cambian los valores de los signos ? por los valores
+     * de las variables en los parámetros en el orden especificado, se ejecuta la sentencia y se devuelve un mensaje
+     * especificando el resultado de la consulta
+     */
     public String registrarClienteBd(String cedula, String nombreCompleto, String sisben, String subsidio,String direccion,String telefono , String correoElectronico) {
 
-        Connection conexion = this.getConnection("asesor", "asesor");
+        //se crea la conexión con el usuario asesorg6 y la contraseña asesor
+        Connection conexion = this.getConnection("asesorg6", "asesor");
         String mensaje = "";
 
         String sentencia = """
-                INSERT INTO proyectoIntegrador.cliente
+                INSERT INTO proyectoIntegradorg6.cliente
                 VALUES(?, ?, ?, ?, ?, ?,?)
                 """;
         

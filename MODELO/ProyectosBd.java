@@ -1,9 +1,16 @@
 package MODELO;
-import java.util.*;
 import java.sql.*;
+import java.util.*;
 
 public class ProyectosBd extends ConexionBd{
     
+    /**
+     * 
+     * Método principal de la clase encargado de realizar la consulta de proyectos. Se pasan como parámetros el usuario y la contraseña
+     * a la base de datos porque tanto el administrador como el asesor tendrán acceso a esta sección del programa.
+     * Este método devuelve un hashtable con todos los registros de la tabla Proyecto
+     * 
+     */
     public Hashtable<String, ArrayList<String>> consultarProyectos(String usuario, String contraseña) throws SQLException{
 
         Connection conexion = this.getConnection(usuario, contraseña);
@@ -11,7 +18,7 @@ public class ProyectosBd extends ConexionBd{
         Hashtable<String, ArrayList<String>> hashProyectos = new Hashtable<>();
         String sentencia = """
                 SELECT * 
-                FROM proyectoIntegrador.PROYECTO
+                FROM proyectoIntegradorg6.PROYECTO
                 """;
         PreparedStatement statement = conexion.prepareStatement(sentencia);
         ResultSet resultset = statement.executeQuery();

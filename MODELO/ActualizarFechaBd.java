@@ -5,40 +5,53 @@ import java.text.SimpleDateFormat;
 
 public class ActualizarFechaBd extends ConexionBd{
 
+    /*método principal de la clase para actualizar la fecha de la escritura en la tabla apartamento 
+      al momento de hacer la venta
+    */
     public void actualizarFechaEscritura(String matricula, String fecha){
 
-        Connection conexion = this.getConnection("asesor", "asesor");
+        //se crea la conexión con el usuario asesorg6 y la contraseña asesor
+        Connection conexion = this.getConnection("asesorg6", "asesor");
 
+        //se define la sentencia a ejecutar
         String sentencia = """
-                UPDATE proyectoIntegrador.apartamento
+                UPDATE proyectoIntegradorg6.apartamento
                 SET fechaEscritura = ?
                 WHERE matricula = ?
                 """;
 
-        try {
+        try (PreparedStatement statement = conexion.prepareStatement(sentencia)){
            
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); // Ajusta este formato según el formato de la fecha que recibas
-            java.util.Date fechaUtil = null;
+            /*
+                Ajuste del dato de la fecha para poder almacenarla en la tabla
+                esto se realiza porque SQL tiene un tipo de dato definido para las fechas
+                con su formato, si queremos guardar la fecha como una string o como un tipo de dato fecha
+                de la libreria java.util.Date dará error
+             */
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
             java.sql.Date fechaSql = null;
             
             try {
-                fechaUtil = formato.parse(fecha);
+                java.util.Date fechaUtil = formato.parse(fecha);
                 fechaSql = new java.sql.Date(fechaUtil.getTime());
             } catch (ParseException e) {
                 System.out.println("Error al convertir la fecha: " + e.getMessage());
             }
 
-            PreparedStatement statement = conexion.prepareStatement(sentencia);
+            // creación de los parametros de la PreparedStatement para reemplazar el simbolo ? con las variables en la sentencia
             statement.setDate(1, fechaSql);
             statement.setString(2, matricula);
             statement.executeUpdate(); 
 
+            // cierre del statement
             statement.close();
 
+        //Prevención de errores SQL,  en caso de que ocurra algo inesperado saltará el código dentro de las llaves
         } catch (SQLException e) {
             System.out.println("Error "+e.getMessage());
         }
 
+        // cierre de la conexión
         closeConnection();
     }
 

@@ -6,15 +6,20 @@ import java.sql.SQLException;
 
 public class GuardarPagoBd extends ConexionBd{
 
+    /**
+     * Método principal de la clase que se encarga de guardar un registro en la tabla Pago de la base de datos
+     * pasándole como parámetros los datos de las columnas, se reemplazan los signos ? con los valores de las variables
+     * de los parámetros y se ejecuta la sentencia para guardar un pago
+     */
     public String guardarPagoBd(String numeroReferencia, String metodoPago, String valorPago, String fecha, String cedulaCliente, String idCuota, String numeroCuota){
         
-        String mensaje="";
-        Connection conexion = this.getConnection("asesor", "asesor");
+        String mensaje = "";
+        Connection conexion = this.getConnection("asesorg6", "asesor");
 
         // Procedimiento PL/SQL que invoca el procedimiento almacenado insertarPago
         String bloquePLSQL = """
             BEGIN
-                proyectointegrador.insertarPago(?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'), ?, ?, ?);
+                proyectointegradorg6.insertarPago(?, ?, ?, TO_DATE(?, 'DD/MM/YYYY'), ?, ?, ?);
             END;
         """;
 

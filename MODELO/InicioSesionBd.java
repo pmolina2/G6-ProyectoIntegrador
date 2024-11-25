@@ -19,7 +19,7 @@ public class InicioSesionBd extends ConexionBd{
         //SENTENCIA SQL
         String sentencia = String.format("""
                 SELECT cedula, contrasenna
-                FROM proyectoIntegrador.%s
+                FROM proyectoIntegradorg6.%s
                 WHERE cedula = ? 
                 AND contrasenna = ?
                 """, nombreTabla);

@@ -17,7 +17,7 @@ public class ApartamentoBd extends ConexionBd{
         //SE INICIALIZAN EL HASHTABLE hashApartamentos PARA ALMACENAR LOS DATOS DEL RESULTSET
         //Y LA VARIABLE SENTENCIA QUE CONTIENE LA SENTENCIA SQL
         Hashtable<String, ArrayList<String>> hashApartamentos = new Hashtable<>();
-        String sentencia = "SELECT * FROM proyectoIntegrador.apartamento where idTorre = ? ";
+        String sentencia = "SELECT * FROM proyectoIntegradorg6.apartamento where idTorre = ? ";
 
         //SE INICIALIZAN LOS OBJETOS DE LA LIBRERIA SQL PreparedStatement y ResultSet PARA REALIZAR LA CONSULTA
         PreparedStatement statement = conexion.prepareStatement(sentencia);

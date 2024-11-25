@@ -1,9 +1,14 @@
 package MODELO;
-import java.util.*;
 import java.sql.*;
+import java.util.*;
 
 public class UsuarioBd extends ConexionBd{
     
+    /**
+     * Método principal de la clase. Encargado de hacer una consulta de usuario,
+     * que hace referencia tanto al asesor como al administrador pues ambos comparten los mismos atributos
+     * en la base de datos. El método retorna un ArrayList de tipo string con la fila devuelta en la consulta
+     */
     public ArrayList<String> consultarUsuario(String nombreTabla, String cedula){
 
         Connection conexion = this.getConnection("userInicio", "userInicio");
@@ -12,7 +17,7 @@ public class UsuarioBd extends ConexionBd{
 
         String sentencia = String.format("""
                 SELECT *
-                FROM proyectoIntegrador.%s
+                FROM proyectoIntegradorg6.%s
                 WHERE cedula = ?
                 """, nombreTabla);
         
@@ -33,6 +38,7 @@ public class UsuarioBd extends ConexionBd{
 
             }
 
+            // cierre del statement y el resultset
             statement.close();
             resultset.close();
             
@@ -40,6 +46,7 @@ public class UsuarioBd extends ConexionBd{
             System.out.println("Error "+e.getMessage());
         }
 
+        // cierre de la conexión y la lista
         closeConnection();
         return datosUsuario;
 

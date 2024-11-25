@@ -5,14 +5,19 @@ import java.text.SimpleDateFormat;
 
 public class VentaBd extends ConexionBd {
 
+    /**
+     * Método principal de la clase encargado de guardar un registro en la tabla Venta pasandole los datos
+     * de la fila como parámetros los datos de las columnas
+     */
     public String registrarVenta(String precio, int numCuotas, int intereses, String cedulaAsesor, String matricula, String cedulaCliente, String fechaEscritura) {
 
-        Connection conexion = this.getConnection("asesor", "asesor");
+        // se realiza la conexión a la base de datos con el usuario asesorg6 y contraseña asesor
+        Connection conexion = this.getConnection("asesorg6", "asesor");
         String mensaje = "";
 
         String sentencia = """
-                INSERT INTO proyectoIntegrador.venta
-                VALUES(proyectoIntegrador.venta_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO proyectoIntegradorg6.venta
+                VALUES(proyectoIntegradorg6.venta_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?)
                 """;
         
         try {
@@ -23,6 +28,7 @@ public class VentaBd extends ConexionBd {
             statement.setString(4, cedulaAsesor);
             statement.setString(5, matricula);
 
+            // adaptación de la fecha a formato SQL DATE para su ingreso
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             java.util.Date fechaUtil; 
             java.sql.Date fechaSql = null;
@@ -35,10 +41,12 @@ public class VentaBd extends ConexionBd {
                 return mensaje;
             }
 
+            // Reemplazar los signos ? por las variables en orden
             statement.setString(6, cedulaCliente);
             statement.setDate(7, fechaSql);
             statement.executeQuery();
 
+            // asignación del mensaje y cerrar el statement y la conexión
             mensaje = "Venta registrada exitosamente \n Se ha creado la cuota actual de este cliente.";
             statement.close();
             closeConnection();
